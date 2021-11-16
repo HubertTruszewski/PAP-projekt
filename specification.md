@@ -1,4 +1,4 @@
-# Program do obsługi przychodni
+# Program do obsługi przychodni - **_Medcomplexsoft_**
 
 ## Wymagania
 Celem projektu jest stworzenie aplikacji usprawniającej zarządzanie przychodnią przez możliwość umawiania wizyt oraz przechowywania danych o lekarzach i pacjentach.
