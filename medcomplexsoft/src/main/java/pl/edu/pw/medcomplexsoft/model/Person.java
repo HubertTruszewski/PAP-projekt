@@ -13,7 +13,7 @@ public abstract class Person {
     private long id;
     private String name;
     private String surname;
-    private LocalDate brithDate;
+    private LocalDate birthDate;
     private String username;
     private String password;
     private String pesel;
@@ -25,12 +25,12 @@ public abstract class Person {
     public Person() {
     }
 
-    public Person(long id, String name, String surname, LocalDate brithDate, String username, String password,
+    public Person(long id, String name, String surname, LocalDate birthDate, String username, String password,
             String pesel, char gender, Address address, String mailAddress) {
         this.id = id;
         this.name = name;
         this.surname = surname;
-        this.brithDate = brithDate;
+        this.birthDate = birthDate;
         this.username = username;
         this.password = password;
         this.pesel = pesel;
@@ -63,12 +63,12 @@ public abstract class Person {
         this.surname = surname;
     }
 
-    public LocalDate getBrithDate() {
-        return brithDate;
+    public LocalDate getBirthDate() {
+        return birthDate;
     }
 
-    public void setBrithDate(LocalDate brithDate) {
-        this.brithDate = brithDate;
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
     }
 
     public String getUsername() {
@@ -117,5 +117,9 @@ public abstract class Person {
 
     public void setMailAddress(String mailAddress) {
         this.mailAddress = mailAddress;
+    }
+
+    public String getFullName() {
+        return name + " " + surname;
     }
 }

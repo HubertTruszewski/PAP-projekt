@@ -1,14 +1,23 @@
 package pl.edu.pw.medcomplexsoft.model;
 
+import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.github.cliftonlabs.json_simple.JsonObject;
+import com.github.cliftonlabs.json_simple.Jsonable;
+
+
 @Entity
-public class Appointment {
+public class Appointment implements Jsonable{
     @Id
     private long id;
     private LocalDateTime date;
@@ -73,5 +82,29 @@ public class Appointment {
     public void setServices(List<Service> services) {
         this.services = services;
     }
+	@Override
+	public String toJson() {
+		final StringWriter writable = new StringWriter();
+        try {
+            this.toJson(writable);
+        } catch (final IOException e) {
+        }
+        return writable.toString();
+	}
 
+
+	@Override
+	public void toJson(Writer writer) throws IOException {
+		JsonObject json = new JsonObject();
+        json.put("id", id);
+        json.put("date", date.format(DateTimeFormatter.ISO_DATE));
+        json.put("doctor", doctor.getId());
+        json.put("patient", patient.getId());
+        json.put("duration", duration);
+        json.put("offie", office);
+        ArrayList<Long> servicesidlist = new ArrayList<Long>();
+        for(var i : services)
+                servicesidlist.add(i.getId());
+        json.toJson(writer);
+	}
 }

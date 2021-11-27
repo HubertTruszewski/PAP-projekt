@@ -1,9 +1,16 @@
 package pl.edu.pw.medcomplexsoft.model;
 
+import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
+
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-public class PrescriptionPosition {
+import com.github.cliftonlabs.json_simple.JsonObject;
+import com.github.cliftonlabs.json_simple.Jsonable;
+
+public class PrescriptionPosition implements Jsonable {
     @Id
     private long id;
     private String dosage;
@@ -33,5 +40,22 @@ public class PrescriptionPosition {
         this.medicine = medicine;
     }
     public PrescriptionPosition(){
+    }
+    @Override
+    public String toJson() {
+        final StringWriter writable = new StringWriter();
+        try {
+            this.toJson(writable);
+        } catch (final IOException e) {
+        }
+        return writable.toString();
+    }
+    @Override
+    public void toJson(Writer writer) throws IOException {
+        JsonObject json = new JsonObject();
+        json.put("id", id);
+        json.put("dosage", dosage);
+        json.put("medicine", medicine.getId());
+        json.toJson(writer);
     }
 }

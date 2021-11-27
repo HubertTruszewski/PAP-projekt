@@ -1,10 +1,15 @@
 package pl.edu.pw.medcomplexsoft.model;
 
+import com.github.cliftonlabs.json_simple.JsonObject;
+import com.github.cliftonlabs.json_simple.Jsonable;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-public class Address {
+public class Address implements Jsonable{
     @Id
     private long id;
     private String street;
@@ -68,6 +73,29 @@ public class Address {
     }
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    @Override
+    public String toJson() {
+        final StringWriter writable = new StringWriter();
+        try {
+            this.toJson(writable);
+        } catch (final IOException e) {
+        }
+        return writable.toString();
+    }
+
+    @Override
+    public void toJson(Writer writer) throws IOException {
+        JsonObject json = new JsonObject();
+        json.put("id", id);
+        json.put("street", street);
+        json.put("homeNumber", houseNumber);
+        json.put("flatNumber", flatNumber);
+        json.put("city", city);
+        json.put("postalCode", postalCode);
+        json.put("country", country);
+        json.toJson(writer);
     }
 
 
