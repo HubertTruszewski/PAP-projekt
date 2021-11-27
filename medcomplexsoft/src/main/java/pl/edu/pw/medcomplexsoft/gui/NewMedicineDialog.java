@@ -8,12 +8,12 @@ package pl.edu.pw.medcomplexsoft.gui;
  *
  * @author hubert
  */
-public class NewMedicine extends javax.swing.JFrame {
+public class NewMedicineDialog extends javax.swing.JFrame {
 
     /**
      * Creates new form NewMedicine
      */
-    public NewMedicine() {
+    public NewMedicineDialog() {
         initComponents();
     }
 
@@ -32,7 +32,7 @@ public class NewMedicine extends javax.swing.JFrame {
         manufactuerField = new javax.swing.JTextField();
         addButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Nowy lek");
         setResizable(false);
 
@@ -97,20 +97,21 @@ public class NewMedicine extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NewMedicine.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewMedicineDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NewMedicine.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewMedicineDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NewMedicine.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewMedicineDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NewMedicine.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewMedicineDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new NewMedicine().setVisible(true);
+                new NewMedicineDialog().setVisible(true);
             }
         });
     }

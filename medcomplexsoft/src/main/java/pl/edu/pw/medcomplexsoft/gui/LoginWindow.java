@@ -35,6 +35,7 @@ public class LoginWindow extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Ekran logowania");
+        setLocationByPlatform(true);
         setResizable(false);
 
         loginLabel.setText("Login:");
@@ -100,6 +101,7 @@ public class LoginWindow extends javax.swing.JFrame {
         {
             DoctorPanel panel = new DoctorPanel();
             panel.setVisible(true);
+            this.setVisible(false);
         }
         else if(loginField.getText().equals("receptionist"))
         {
