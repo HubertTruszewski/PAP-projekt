@@ -10,6 +10,7 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class Prescription {
+
     @Id
     private long id;
     @ManyToOne
@@ -18,53 +19,76 @@ public class Prescription {
     private Patient recivingPatient;
     private LocalDate issueDate;
     private LocalDate expirationDate;
+    private String status;
     @OneToMany
     private List<PrescriptionPosition> postions;
 
     public Prescription() {
     }
+
     public Prescription(long id, Doctor prescribingDoctor, Patient recivingPatient, LocalDate issueDate,
-            LocalDate expirationDate, List<PrescriptionPosition> postions) {
+            LocalDate expirationDate, String status, List<PrescriptionPosition> postions) {
         this.id = id;
         this.prescribingDoctor = prescribingDoctor;
         this.recivingPatient = recivingPatient;
         this.issueDate = issueDate;
         this.expirationDate = expirationDate;
+        this.status = status;
         this.postions = postions;
     }
+
     public long getId() {
         return id;
     }
+
     public void setId(long id) {
         this.id = id;
     }
+
     public Doctor getPrescribingDoctor() {
         return prescribingDoctor;
     }
+
     public void setPrescribingDoctor(Doctor prescribingDoctor) {
         this.prescribingDoctor = prescribingDoctor;
     }
+
     public Patient getRecivingPatient() {
         return recivingPatient;
     }
+
     public void setRecivingPatient(Patient recivingPatient) {
         this.recivingPatient = recivingPatient;
     }
+
     public LocalDate getIssueDate() {
         return issueDate;
     }
+
     public void setIssueDate(LocalDate issueDate) {
         this.issueDate = issueDate;
     }
+
     public LocalDate getExpirationDate() {
         return expirationDate;
     }
+
     public void setExpirationDate(LocalDate expirationDate) {
         this.expirationDate = expirationDate;
     }
+    
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(int String) {
+        this.status = status;
+    }
+
     public List<PrescriptionPosition> getPostions() {
         return postions;
     }
+
     public void setPostions(List<PrescriptionPosition> postions) {
         this.postions = postions;
     }
