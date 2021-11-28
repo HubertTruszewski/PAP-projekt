@@ -82,15 +82,15 @@ public class AppointmentsList extends javax.swing.JDialog {
         String[] list = {"2021-11-29 | 12:00-12:15 | Jan Kowalski",
                          "2021-11-29 | 12:20-12:30 | Anna Nowak",
                          "2021-11-29 | 13:00-13:30 | Zbigniew Nowak"};
-        
+
         appointmentList.setListData(list);
     }
-    
+
     public void showDialog() {
         loadData();
         setVisible(true);
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -98,7 +98,7 @@ public class AppointmentsList extends javax.swing.JDialog {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {

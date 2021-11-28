@@ -39,6 +39,11 @@ public class PatientListDialog extends javax.swing.JDialog {
         jScrollPane1.setViewportView(patientList);
 
         newButton.setText("Nowy");
+        newButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newButtonActionPerformed(evt);
+            }
+        });
 
         editButton.setText("Edytuj");
 
@@ -87,6 +92,11 @@ public class PatientListDialog extends javax.swing.JDialog {
         setVisible(false);
         dispose();
     }//GEN-LAST:event_okButtonActionPerformed
+
+    private void newButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_newButtonActionPerformed
     
     private void loadData(){
         String[] list = {"Jan Kowalski", "Anna Nowak", "Janusz Sito",

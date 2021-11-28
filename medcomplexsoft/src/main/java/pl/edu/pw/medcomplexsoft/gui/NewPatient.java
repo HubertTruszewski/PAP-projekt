@@ -4,6 +4,11 @@
  */
 package pl.edu.pw.medcomplexsoft.gui;
 
+import java.time.LocalDate;
+import java.util.Date;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import pl.edu.pw.medcomplexsoft.model.*;
 /**
  *
  * @author Grzesiek
@@ -32,9 +37,7 @@ public class NewPatient extends javax.swing.JDialog {
         surnameLabel = new javax.swing.JLabel();
         surnameField = new javax.swing.JTextField();
         birthDateLabel = new javax.swing.JLabel();
-        daySpinner = new javax.swing.JSpinner();
-        monthSpinner = new javax.swing.JSpinner();
-        yearSpinner = new javax.swing.JSpinner();
+        dateSpinner = new javax.swing.JSpinner();
         peselLabel = new javax.swing.JLabel();
         peselField = new javax.swing.JTextField();
         genderLabel = new javax.swing.JLabel();
@@ -80,7 +83,8 @@ public class NewPatient extends javax.swing.JDialog {
 
         birthDateLabel.setText("Data urodzenia");
 
-        daySpinner.setOpaque(false);
+        dateSpinner.setModel(new javax.swing.SpinnerDateModel());
+        dateSpinner.setOpaque(false);
 
         peselLabel.setText("PESEL");
 
@@ -147,32 +151,29 @@ public class NewPatient extends javax.swing.JDialog {
                     .addComponent(countryLabel)
                     .addComponent(loginLabel)
                     .addComponent(emailLabel))
-                .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(daySpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(monthSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(yearSpinner))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
+                        .addGap(48, 69, Short.MAX_VALUE)
                         .addComponent(cancelButton)
                         .addGap(18, 18, 18)
                         .addComponent(addButton))
-                    .addComponent(loginField)
-                    .addComponent(countryField)
-                    .addComponent(postalCodeField)
-                    .addComponent(cityField)
-                    .addComponent(flatField)
-                    .addComponent(houseField)
-                    .addComponent(streetField)
-                    .addComponent(genderField)
-                    .addComponent(peselField)
-                    .addComponent(nameField)
-                    .addComponent(surnameField)
-                    .addComponent(emailField)
-                    .addComponent(passwordField))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(loginField)
+                            .addComponent(countryField)
+                            .addComponent(postalCodeField)
+                            .addComponent(cityField)
+                            .addComponent(flatField)
+                            .addComponent(houseField)
+                            .addComponent(streetField)
+                            .addComponent(genderField)
+                            .addComponent(peselField)
+                            .addComponent(nameField)
+                            .addComponent(surnameField)
+                            .addComponent(emailField)
+                            .addComponent(passwordField)
+                            .addComponent(dateSpinner))))
                 .addGap(55, 55, 55))
         );
         layout.setVerticalGroup(
@@ -187,13 +188,9 @@ public class NewPatient extends javax.swing.JDialog {
                     .addComponent(surnameLabel)
                     .addComponent(surnameField))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(birthDateLabel)
-                        .addComponent(daySpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(yearSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(monthSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(birthDateLabel)
+                    .addComponent(dateSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(peselLabel)
@@ -260,8 +257,36 @@ public class NewPatient extends javax.swing.JDialog {
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        // TODO add your handling code here:
+        setVisible(false);
+        dispose();
     }//GEN-LAST:event_addButtonActionPerformed
+
+    public Patient showDialog()
+    {
+        setVisible(true);
+        Address address = new Address(
+                streetField.getText(),
+                Long.parseLong(houseField.getText()),
+                Long.parseLong(flatField.getText()),
+                cityField.getText(),
+                postalCodeField.getText(),
+                countryField.getText()
+        );
+        Patient result = new Patient(
+            new ArrayList<Integer>(),
+            new ArrayList<Integer>(),
+            nameField.getText(),
+            surnameField.getText(),
+            ((Date)dateSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
+            loginField.getText(),
+            String.copyValueOf(passwordField.getPassword()),
+            peselField.getText(),
+            genderField.getText().charAt(0),
+            address,
+            emailField.getText()
+        );
+        return result;
+    }
 
     /**
      * @param args the command line arguments
@@ -270,7 +295,7 @@ public class NewPatient extends javax.swing.JDialog {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -313,7 +338,7 @@ public class NewPatient extends javax.swing.JDialog {
     private javax.swing.JLabel cityLabel;
     private javax.swing.JTextField countryField;
     private javax.swing.JLabel countryLabel;
-    private javax.swing.JSpinner daySpinner;
+    private javax.swing.JSpinner dateSpinner;
     private javax.swing.JTextField emailField;
     private javax.swing.JLabel emailLabel;
     private javax.swing.JTextField flatField;
@@ -324,7 +349,6 @@ public class NewPatient extends javax.swing.JDialog {
     private javax.swing.JLabel houseLabel;
     private javax.swing.JTextField loginField;
     private javax.swing.JLabel loginLabel;
-    private javax.swing.JSpinner monthSpinner;
     private javax.swing.JTextField nameField;
     private javax.swing.JLabel nameLabel;
     private javax.swing.JPasswordField passwordField;
@@ -337,6 +361,5 @@ public class NewPatient extends javax.swing.JDialog {
     private javax.swing.JLabel streetLabel;
     private javax.swing.JTextField surnameField;
     private javax.swing.JLabel surnameLabel;
-    private javax.swing.JSpinner yearSpinner;
     // End of variables declaration//GEN-END:variables
 }

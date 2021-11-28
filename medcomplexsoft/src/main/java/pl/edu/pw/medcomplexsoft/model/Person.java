@@ -25,6 +25,20 @@ public abstract class Person {
     public Person() {
     }
 
+    public Person(String name, String surname, LocalDate birthDate, String username, String password, String pesel, char gender, Address address, String mailAddress) {
+        this.name = name;
+        this.surname = surname;
+        this.birthDate = birthDate;
+        this.username = username;
+        this.password = password;
+        this.pesel = pesel;
+        this.gender = gender;
+        this.address = address;
+        this.mailAddress = mailAddress;
+    }
+
+    
+    
     public Person(long id, String name, String surname, LocalDate birthDate, String username, String password,
             String pesel, char gender, Address address, String mailAddress) {
         this.id = id;

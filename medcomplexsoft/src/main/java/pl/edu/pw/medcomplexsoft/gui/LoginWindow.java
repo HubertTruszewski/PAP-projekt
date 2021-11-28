@@ -105,6 +105,9 @@ public class LoginWindow extends javax.swing.JFrame {
         }
         else if(loginField.getText().equals("receptionist"))
         {
+            ReceptionistPanel panel = new ReceptionistPanel();
+            panel.setVisible(true);
+            this.setVisible(false);
 
         }
         else if(loginField.getText().equals("patient"))

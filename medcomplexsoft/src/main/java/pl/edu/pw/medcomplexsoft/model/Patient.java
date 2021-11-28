@@ -4,28 +4,45 @@ import java.io.IOException;
 import java.io.Writer;
 import java.io.StringWriter;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
+import java.util.ArrayList;
 
 import javax.persistence.OneToMany;
 
 import com.github.cliftonlabs.json_simple.JsonObject;
 import com.github.cliftonlabs.json_simple.Jsonable;
+import java.time.LocalDate;
 
 public class Patient extends Person implements Jsonable {
     @OneToMany
-    private List<Prescription> prescriptions;
+    private ArrayList<Integer> prescriptions;
     @OneToMany
-    private List<Appointment> appointments;
+    private ArrayList<Integer> appointments;
 
-    public List<Prescription> getPrescriptions() {
+    public ArrayList<Integer> getPrescriptions() {
         return this.prescriptions;
     }
 
-    public List<Appointment> getAppointments() {
+    public ArrayList<Integer> getAppointments() {
         return this.appointments;
     }
 
+
+
+    public void setPrescriptions(ArrayList<Integer> prescriptions) {
+        this.prescriptions = prescriptions;
+    }
+
+    public void setAppointments(ArrayList<Integer> appointments) {
+        this.appointments = appointments;
+    }
+
     public Patient(){
+    }
+
+    public Patient(ArrayList<Integer> prescriptions, ArrayList<Integer> appointments, String name, String surname, LocalDate birthDate, String username, String password, String pesel, char gender, Address address, String mailAddress) {
+        super(name, surname, birthDate, username, password, pesel, gender, address, mailAddress);
+        this.prescriptions = prescriptions;
+        this.appointments = appointments;
     }
 
     @Override
@@ -48,9 +65,11 @@ public class Patient extends Person implements Jsonable {
         json.put("username", getUsername());
         json.put("password", getPassword());
         json.put("pesel", this.getPesel());
-        json.put("gender", this.getGender());
+        json.put("gender", String.valueOf(getGender()));
         json.put("address", getAddress().getId());
         json.put("mailAddress", getMailAddress());
+        json.put("appointments", appointments);
+        json.put("prescriptions", prescriptions);
         json.toJson(writer);
     }
 }

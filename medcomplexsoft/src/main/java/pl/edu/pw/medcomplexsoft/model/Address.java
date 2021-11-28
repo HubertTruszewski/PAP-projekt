@@ -85,6 +85,14 @@ public class Address implements Jsonable{
         return writable.toString();
     }
 
+    public Address(String street, long houseNumber, long flatNumber, String city, String postalCode, String country) {
+        this.street = street;
+        this.houseNumber = houseNumber;
+        this.flatNumber = flatNumber;
+        this.city = city;
+        this.postalCode = postalCode;
+        this.country = country;
+    }
     @Override
     public void toJson(Writer writer) throws IOException {
         JsonObject json = new JsonObject();

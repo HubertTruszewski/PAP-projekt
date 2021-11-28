@@ -4,6 +4,19 @@
  */
 package pl.edu.pw.medcomplexsoft.gui;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.github.cliftonlabs.json_simple.JsonArray;
+import com.github.cliftonlabs.json_simple.JsonObject;
+import com.github.cliftonlabs.json_simple.Jsoner;
+
+import pl.edu.pw.medcomplexsoft.model.Patient;
+
 /**
  *
  * @author hubert
@@ -30,6 +43,7 @@ public class DoctorPanel extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
@@ -58,6 +72,14 @@ public class DoctorPanel extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Pacjenci");
+
+        jMenuItem2.setText("Nowy pacjent");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem2);
 
         jMenuItem3.setText("Lista");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
@@ -181,6 +203,35 @@ public class DoctorPanel extends javax.swing.JFrame {
         appointmentsList.showDialog();
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        NewPatient newPatientDialog = new NewPatient(null, true);
+        Patient res = newPatientDialog.showDialog();
+        File file = new File("patients.txt");
+        JsonArray patientList;
+        try {
+            FileReader fileReader = new FileReader(file);
+            patientList = (JsonArray) Jsoner.deserialize(fileReader);
+            fileReader.close();
+        } catch (Exception e)
+        {
+            patientList = new JsonArray();
+        }
+        res.setId((long)patientList.size());
+        patientList.add(res);
+
+        try {
+            FileWriter writer = new FileWriter(file);
+            JsonArray jArray = new JsonArray(patientList);
+            writer.write(jArray.toJson());
+            writer.close();
+        } catch (IOException e)
+        {
+
+        }
+
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -188,7 +239,7 @@ public class DoctorPanel extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -224,6 +275,7 @@ public class DoctorPanel extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
