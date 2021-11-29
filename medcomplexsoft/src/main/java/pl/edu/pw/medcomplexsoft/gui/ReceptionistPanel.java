@@ -4,6 +4,9 @@
  */
 package pl.edu.pw.medcomplexsoft.gui;
 
+import pl.edu.pw.medcomplexsoft.data.DataKeeper;
+import pl.edu.pw.medcomplexsoft.model.Patient;
+
 /**
  *
  * @author Grzesiek
@@ -34,8 +37,6 @@ public class ReceptionistPanel extends javax.swing.JFrame {
         deletePatientItem = new javax.swing.JMenuItem();
         patientListItem = new javax.swing.JMenuItem();
         prescriptionMenu = new javax.swing.JMenu();
-        newPrescriptionItem = new javax.swing.JMenuItem();
-        deletePrescriptionItem = new javax.swing.JMenuItem();
         prescriptionListItem = new javax.swing.JMenuItem();
         medicineMenu = new javax.swing.JMenu();
         newMedicineItem = new javax.swing.JMenuItem();
@@ -89,22 +90,6 @@ public class ReceptionistPanel extends javax.swing.JFrame {
         jMenuBar1.add(patientMenu);
 
         prescriptionMenu.setText("Recepty");
-
-        newPrescriptionItem.setText("Nowa recepta");
-        newPrescriptionItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                newPrescriptionItemActionPerformed(evt);
-            }
-        });
-        prescriptionMenu.add(newPrescriptionItem);
-
-        deletePrescriptionItem.setText("Usuń receptę");
-        deletePrescriptionItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deletePrescriptionItemActionPerformed(evt);
-            }
-        });
-        prescriptionMenu.add(deletePrescriptionItem);
 
         prescriptionListItem.setText("Lista recept");
         prescriptionListItem.addActionListener(new java.awt.event.ActionListener() {
@@ -188,12 +173,10 @@ public class ReceptionistPanel extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void newPrescriptionItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newPrescriptionItemActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_newPrescriptionItemActionPerformed
-
     private void patientListItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_patientListItemActionPerformed
         // TODO add your handling code here:
+        PatientListDialog patientsListDialog = new PatientListDialog(null, true);
+        patientsListDialog.showDialog();
     }//GEN-LAST:event_patientListItemActionPerformed
 
     private void exitItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitItemActionPerformed
@@ -202,22 +185,29 @@ public class ReceptionistPanel extends javax.swing.JFrame {
 
     private void newPatientItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newPatientItemActionPerformed
         // TODO add your handling code here:
+        NewPatient newPatientDialog = new NewPatient(null, true);
+        Patient res = newPatientDialog.showDialog();
+        if(DataKeeper.patientsList.isEmpty())
+            res.setId(0);
+        else
+            res.setId(DataKeeper.patientsList.get(DataKeeper.patientsList.size()-1).getId());
+        DataKeeper.patientsList.add(res);
     }//GEN-LAST:event_newPatientItemActionPerformed
 
     private void deletePatientItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletePatientItemActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_deletePatientItemActionPerformed
 
-    private void deletePrescriptionItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletePrescriptionItemActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_deletePrescriptionItemActionPerformed
-
     private void prescriptionListItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prescriptionListItemActionPerformed
         // TODO add your handling code here:
+        ReceiptListDialog receiptListDialog = new ReceiptListDialog(null, true);
+        receiptListDialog.showDialog();
     }//GEN-LAST:event_prescriptionListItemActionPerformed
 
     private void newMedicineItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newMedicineItemActionPerformed
         // TODO add your handling code here:
+                NewMedicineDialog window = new NewMedicineDialog();
+        window.setVisible(true);
     }//GEN-LAST:event_newMedicineItemActionPerformed
 
     private void deleteMedicineItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteMedicineItemActionPerformed
@@ -226,6 +216,9 @@ public class ReceptionistPanel extends javax.swing.JFrame {
 
     private void medicineListItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_medicineListItemActionPerformed
         // TODO add your handling code here:
+        MedicineListDialog medicineListDialog = new MedicineListDialog(null, true);
+        int result = medicineListDialog.showDialog();
+        System.out.println(result);
     }//GEN-LAST:event_medicineListItemActionPerformed
 
     private void newAppointmentItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newAppointmentItemActionPerformed
@@ -281,7 +274,6 @@ public class ReceptionistPanel extends javax.swing.JFrame {
     private javax.swing.JMenuItem deleteAppointmentItem;
     private javax.swing.JMenuItem deleteMedicineItem;
     private javax.swing.JMenuItem deletePatientItem;
-    private javax.swing.JMenuItem deletePrescriptionItem;
     private javax.swing.JMenuItem exitItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenuBar jMenuBar1;
@@ -290,7 +282,6 @@ public class ReceptionistPanel extends javax.swing.JFrame {
     private javax.swing.JMenuItem newAppointmentItem;
     private javax.swing.JMenuItem newMedicineItem;
     private javax.swing.JMenuItem newPatientItem;
-    private javax.swing.JMenuItem newPrescriptionItem;
     private javax.swing.JMenuItem patientListItem;
     private javax.swing.JMenu patientMenu;
     private javax.swing.JMenuItem prescriptionListItem;

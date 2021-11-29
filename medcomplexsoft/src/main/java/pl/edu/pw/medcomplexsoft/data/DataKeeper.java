@@ -28,6 +28,16 @@ public class DataKeeper {
                                     "jan@example.com", new ArrayList<Prescription>(), new ArrayList<Appointment>()));
         DataKeeper.medicinesList.add(new Medicine(2, "APAP", "USP"));
         DataKeeper.medicinesList.add(new Medicine(3, "Ibuprom", "USP"));
+        Medicine medicine = new Medicine(3, "APAP", "USP Zdrowie");
+        Medicine medicine2 = new Medicine(5, "Ibuprom", "USP Zdrowie");
+        PrescriptionPosition prescriptionPosition = new PrescriptionPosition(2, "codziennie 3x dziennie", medicine);
+        PrescriptionPosition prescriptionPosition2 = new PrescriptionPosition(3, "raz na tydzien", medicine2);
+        ArrayList<PrescriptionPosition> prescriptionPositions = new ArrayList<PrescriptionPosition>();
+        prescriptionPositions.add(prescriptionPosition);
+        prescriptionPositions.add(prescriptionPosition2);
+        Prescription prescription = new Prescription(3, new Doctor(), patient1, LocalDate.now(), LocalDate.now(), "wystawiona", prescriptionPositions);
+        patient1.getPrescriptions().add(prescription);
+        DataKeeper.prescriptionsList.add(prescription);
     }
 
 }
