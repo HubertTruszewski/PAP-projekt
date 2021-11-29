@@ -4,6 +4,12 @@
  */
 package pl.edu.pw.medcomplexsoft.gui;
 
+import java.util.Vector;
+
+import pl.edu.pw.medcomplexsoft.data.DataKeeper;
+import pl.edu.pw.medcomplexsoft.model.Patient;
+import pl.edu.pw.medcomplexsoft.model.Prescription;
+
 /**
  *
  * @author hubert
@@ -50,6 +56,11 @@ public class ReceiptListDialog extends javax.swing.JDialog {
         exitButton.setText("Zamknij");
 
         showReceiptButton.setText("Wyswietl");
+        showReceiptButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showReceiptButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -87,14 +98,22 @@ public class ReceiptListDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_cancelReceiptButtonActionPerformed
 
+    private void showReceiptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showReceiptButtonActionPerformed
+        // TODO add your handling code here:
+        Prescription prescription = DataKeeper.prescriptionsList.get(receiptsList.getSelectedIndex());
+        PrescpriptionViewDialog prescpriptionViewDialog = new PrescpriptionViewDialog(null, true, prescription);
+        prescpriptionViewDialog.showDialog();
+    }//GEN-LAST:event_showReceiptButtonActionPerformed
+
     public void showDialog(){
-        String[] list = {"Recepta nr 00001 | Jan Kowalski",
-                         "Recepta nr 00002 | Anna Nowak",
-                         "Recepta nr 00003 | Zbigniew Kowalski"};
-        receiptsList.setListData(list);
+        Vector<String> prescriptionList = new Vector<String>();
+        for (Patient p : DataKeeper.patientsList)
+            for(var pos : p.getPrescriptions())
+                prescriptionList.add("Recepta dla: " + p.getFullName());
+        receiptsList.setListData(prescriptionList);
         setVisible(true);
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -102,7 +121,7 @@ public class ReceiptListDialog extends javax.swing.JDialog {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {

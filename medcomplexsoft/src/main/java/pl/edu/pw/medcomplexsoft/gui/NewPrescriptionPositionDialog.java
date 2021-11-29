@@ -4,12 +4,17 @@
  */
 package pl.edu.pw.medcomplexsoft.gui;
 
+import pl.edu.pw.medcomplexsoft.data.DataKeeper;
+import pl.edu.pw.medcomplexsoft.model.Medicine;
+import pl.edu.pw.medcomplexsoft.model.PrescriptionPosition;
+
 /**
  *
  * @author hubert
  */
 public class NewPrescriptionPositionDialog extends javax.swing.JDialog {
 
+    private Medicine choosenMedicine;
     /**
      * Creates new form NewPrescriptionPositionDialog
      */
@@ -32,17 +37,27 @@ public class NewPrescriptionPositionDialog extends javax.swing.JDialog {
         chooseMedicineButton = new javax.swing.JButton();
         dosageLabel = new javax.swing.JLabel();
         dosageField = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        okButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         medicineLabel.setText("Lek:");
 
         chooseMedicineButton.setText("Wybierz");
+        chooseMedicineButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chooseMedicineButtonActionPerformed(evt);
+            }
+        });
 
         dosageLabel.setText("Dawkowanie");
 
-        jButton2.setText("Ok");
+        okButton.setText("Ok");
+        okButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                okButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -51,7 +66,7 @@ public class NewPrescriptionPositionDialog extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(53, 53, 53)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(okButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(dosageLabel)
@@ -68,27 +83,42 @@ public class NewPrescriptionPositionDialog extends javax.swing.JDialog {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(65, 65, 65)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(medicineLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(medicineNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(28, 28, 28))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(chooseMedicineButton)
-                        .addGap(18, 18, 18)))
+                .addGap(63, 63, 63)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(medicineNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(medicineLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(chooseMedicineButton))
+                .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(dosageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(dosageField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(54, 54, 54)
-                .addComponent(jButton2)
+                .addComponent(okButton)
                 .addContainerGap(65, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
+        setVisible(false);
+        dispose();
+    }//GEN-LAST:event_okButtonActionPerformed
+
+    private void chooseMedicineButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseMedicineButtonActionPerformed
+        // TODO add your handling code here:
+        MedicineListDialog medicineListDialog = new MedicineListDialog(null, true);
+        int choosenMedicinePosition = medicineListDialog.showDialog();
+        choosenMedicine = DataKeeper.medicinesList.get(choosenMedicinePosition);
+        medicineLabel.setText(choosenMedicine.getName());
+    }//GEN-LAST:event_chooseMedicineButtonActionPerformed
+
+    public PrescriptionPosition showDialog()
+    {
+        setVisible(true);
+        return new PrescriptionPosition(0, dosageField.getText(), choosenMedicine);
+    }
 
     /**
      * @param args the command line arguments
@@ -97,7 +127,7 @@ public class NewPrescriptionPositionDialog extends javax.swing.JDialog {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -136,8 +166,8 @@ public class NewPrescriptionPositionDialog extends javax.swing.JDialog {
     private javax.swing.JButton chooseMedicineButton;
     private javax.swing.JTextField dosageField;
     private javax.swing.JLabel dosageLabel;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel medicineLabel;
     private javax.swing.JLabel medicineNameLabel;
+    private javax.swing.JButton okButton;
     // End of variables declaration//GEN-END:variables
 }

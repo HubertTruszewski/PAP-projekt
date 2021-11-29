@@ -4,6 +4,9 @@
  */
 package pl.edu.pw.medcomplexsoft.gui;
 
+import pl.edu.pw.medcomplexsoft.data.DataKeeper;
+import pl.edu.pw.medcomplexsoft.model.Medicine;
+
 /**
  *
  * @author hubert
@@ -41,6 +44,11 @@ public class NewMedicineDialog extends javax.swing.JFrame {
         manufactuerLabel.setText("Producent:");
 
         addButton.setText("Dodaj");
+        addButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -80,14 +88,28 @@ public class NewMedicineDialog extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        // TODO add your handling code here:
+        DataKeeper.medicinesList.add(new Medicine(DataKeeper.medicinesList.size(), nameField.getText(), manufactuerField.getText()));
+        setVisible(false);
+        dispose();
+    }//GEN-LAST:event_addButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
+
+    public void showDialog()
+    {
+        setVisible(true);
+    }
+
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {

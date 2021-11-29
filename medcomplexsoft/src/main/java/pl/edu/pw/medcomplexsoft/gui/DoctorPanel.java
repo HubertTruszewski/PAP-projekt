@@ -15,6 +15,7 @@ import com.github.cliftonlabs.json_simple.JsonArray;
 import com.github.cliftonlabs.json_simple.JsonObject;
 import com.github.cliftonlabs.json_simple.Jsoner;
 
+import pl.edu.pw.medcomplexsoft.data.DataKeeper;
 import pl.edu.pw.medcomplexsoft.model.Patient;
 
 /**
@@ -207,28 +208,11 @@ public class DoctorPanel extends javax.swing.JFrame {
         // TODO add your handling code here:
         NewPatient newPatientDialog = new NewPatient(null, true);
         Patient res = newPatientDialog.showDialog();
-        File file = new File("patients.txt");
-        JsonArray patientList;
-        try {
-            FileReader fileReader = new FileReader(file);
-            patientList = (JsonArray) Jsoner.deserialize(fileReader);
-            fileReader.close();
-        } catch (Exception e)
-        {
-            patientList = new JsonArray();
-        }
-        res.setId((long)patientList.size());
-        patientList.add(res);
-
-        try {
-            FileWriter writer = new FileWriter(file);
-            JsonArray jArray = new JsonArray(patientList);
-            writer.write(jArray.toJson());
-            writer.close();
-        } catch (IOException e)
-        {
-
-        }
+        if(DataKeeper.patientsList.isEmpty())
+            res.setId(0);
+        else
+            res.setId(DataKeeper.patientsList.get(DataKeeper.patientsList.size()-1).getId());
+        DataKeeper.patientsList.add(res);
 
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 

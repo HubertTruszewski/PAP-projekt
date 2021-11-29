@@ -14,32 +14,32 @@ import java.time.LocalDate;
 
 public class Patient extends Person implements Jsonable {
     @OneToMany
-    private ArrayList<Integer> prescriptions;
+    private ArrayList<Prescription> prescriptions;
     @OneToMany
-    private ArrayList<Integer> appointments;
+    private ArrayList<Appointment> appointments;
 
-    public ArrayList<Integer> getPrescriptions() {
+    public ArrayList<Prescription> getPrescriptions() {
         return this.prescriptions;
     }
 
-    public ArrayList<Integer> getAppointments() {
+    public ArrayList<Appointment> getAppointments() {
         return this.appointments;
     }
 
 
 
-    public void setPrescriptions(ArrayList<Integer> prescriptions) {
+    public void setPrescriptions(ArrayList<Prescription> prescriptions) {
         this.prescriptions = prescriptions;
     }
 
-    public void setAppointments(ArrayList<Integer> appointments) {
+    public void setAppointments(ArrayList<Appointment> appointments) {
         this.appointments = appointments;
     }
 
     public Patient(){
     }
 
-    public Patient(ArrayList<Integer> prescriptions, ArrayList<Integer> appointments, String name, String surname, LocalDate birthDate, String username, String password, String pesel, char gender, Address address, String mailAddress) {
+    public Patient(ArrayList<Prescription> prescriptions, ArrayList<Appointment> appointments, String name, String surname, LocalDate birthDate, String username, String password, String pesel, char gender, Address address, String mailAddress) {
         super(name, surname, birthDate, username, password, pesel, gender, address, mailAddress);
         this.prescriptions = prescriptions;
         this.appointments = appointments;
@@ -53,6 +53,14 @@ public class Patient extends Person implements Jsonable {
         } catch (final IOException e) {
         }
         return writable.toString();
+    }
+
+    public Patient(long id, String name, String surname, LocalDate birthDate, String username, String password,
+            String pesel, char gender, Address address, String mailAddress, ArrayList<Prescription> prescriptions,
+            ArrayList<Appointment> appointments) {
+        super(id, name, surname, birthDate, username, password, pesel, gender, address, mailAddress);
+        this.prescriptions = prescriptions;
+        this.appointments = appointments;
     }
 
     @Override

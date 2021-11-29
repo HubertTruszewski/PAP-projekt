@@ -4,6 +4,11 @@
  */
 package pl.edu.pw.medcomplexsoft.gui;
 
+import java.util.Vector;
+
+import pl.edu.pw.medcomplexsoft.data.DataKeeper;
+import pl.edu.pw.medcomplexsoft.model.Patient;
+
 /**
  *
  * @author hubert
@@ -33,6 +38,7 @@ public class PatientListDialog extends javax.swing.JDialog {
         editButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
         okButton = new javax.swing.JButton();
+        showDataButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -56,6 +62,13 @@ public class PatientListDialog extends javax.swing.JDialog {
             }
         });
 
+        showDataButton.setText("Pokaż dane");
+        showDataButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showDataButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -65,9 +78,10 @@ public class PatientListDialog extends javax.swing.JDialog {
                 .addGap(78, 78, 78)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(newButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(editButton, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE)
+                    .addComponent(editButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(deleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(okButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(okButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(showDataButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 83, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -80,7 +94,9 @@ public class PatientListDialog extends javax.swing.JDialog {
                 .addComponent(editButton)
                 .addGap(40, 40, 40)
                 .addComponent(deleteButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 490, Short.MAX_VALUE)
+                .addGap(144, 144, 144)
+                .addComponent(showDataButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 318, Short.MAX_VALUE)
                 .addComponent(okButton)
                 .addGap(48, 48, 48))
         );
@@ -95,21 +111,28 @@ public class PatientListDialog extends javax.swing.JDialog {
 
     private void newButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_newButtonActionPerformed
-    
+
+    private void showDataButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showDataButtonActionPerformed
+        // TODO add your handling code here:
+        PatientDataViewDialog patientDataViewDialog = new PatientDataViewDialog(null, true, DataKeeper.patientsList.get(patientList.getSelectedIndex()));
+        patientDataViewDialog.showDialog();
+    }//GEN-LAST:event_showDataButtonActionPerformed
+
     private void loadData(){
-        String[] list = {"Jan Kowalski", "Anna Nowak", "Janusz Sito",
-                         "Zbigniew Nowy", "Alina Nowak"};
-        patientList.setListData(list);
+        Vector<String> listData = new Vector<String>();
+        for (Patient p : DataKeeper.patientsList)
+            listData.add(p.getFullName());
+        patientList.setListData(listData);
     }
-    
+
     public int showDialog() {
         loadData();
         setVisible(true);
         return patientList.getSelectedIndex();
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -117,7 +140,7 @@ public class PatientListDialog extends javax.swing.JDialog {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -159,5 +182,6 @@ public class PatientListDialog extends javax.swing.JDialog {
     private javax.swing.JButton newButton;
     private javax.swing.JButton okButton;
     private javax.swing.JList<String> patientList;
+    private javax.swing.JButton showDataButton;
     // End of variables declaration//GEN-END:variables
 }

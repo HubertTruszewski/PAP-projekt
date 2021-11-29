@@ -273,8 +273,7 @@ public class NewPatient extends javax.swing.JDialog {
                 countryField.getText()
         );
         Patient result = new Patient(
-            new ArrayList<Integer>(),
-            new ArrayList<Integer>(),
+            (long)8,
             nameField.getText(),
             surnameField.getText(),
             ((Date)dateSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
@@ -283,7 +282,9 @@ public class NewPatient extends javax.swing.JDialog {
             peselField.getText(),
             genderField.getText().charAt(0),
             address,
-            emailField.getText()
+            emailField.getText(),
+            new ArrayList<Prescription>(),
+            new ArrayList<Appointment>()
         );
         return result;
     }
