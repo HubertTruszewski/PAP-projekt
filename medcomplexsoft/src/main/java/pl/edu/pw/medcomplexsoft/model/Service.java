@@ -1,40 +1,24 @@
 package pl.edu.pw.medcomplexsoft.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Data @NoArgsConstructor
 public class Service {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
     private String name;
     private double price;
-    public long getId() {
-        return id;
-    }
-    public void setId(long id) {
-        this.id = id;
-    }
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-    public double getPrice() {
-        return price;
-    }
-    public void setPrice(double price) {
-        this.price = price;
-    }
-    public Service(){
-    }
-
-    public Service(long id, String name, double price) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-    }
-
-
+    @ManyToMany
+    private List<Appointment> appointments;
 }
