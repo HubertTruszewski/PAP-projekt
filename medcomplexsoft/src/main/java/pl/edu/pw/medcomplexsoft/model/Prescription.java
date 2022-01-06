@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,12 +21,13 @@ import lombok.NoArgsConstructor;
 public class Prescription {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "prescription_gen")
+    @SequenceGenerator(name = "prescription_seq", sequenceName = "prescription_seq", allocationSize = 1)
     private long id;
     @ManyToOne
     private Doctor prescribingDoctor;
     @ManyToOne
-    private Patient recivingPatient;
+    private Patient receivingPatient;
     private LocalDate issueDate;
     private LocalDate expirationDate;
     @Enumerated(EnumType.STRING)

@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,7 +17,8 @@ import lombok.NoArgsConstructor;
 @Data @NoArgsConstructor
 public abstract class Person {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "person_gen")
+    @SequenceGenerator(name = "person_gen", sequenceName = "person_seq", allocationSize = 1)
     private long id;
     private String name;
     private String surname;

@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,8 @@ import lombok.NoArgsConstructor;
 @Data @NoArgsConstructor
 public class Medicine {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "medicine_gen")
+    @SequenceGenerator(name = "medicine_gen", sequenceName = "medicine_seq", allocationSize = 1)
     private long id;
     private String name;
     private String manufacturer;

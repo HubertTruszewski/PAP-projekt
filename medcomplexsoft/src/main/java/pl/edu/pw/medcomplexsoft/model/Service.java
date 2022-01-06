@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.SequenceGenerator;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,8 @@ import lombok.NoArgsConstructor;
 @Data @NoArgsConstructor
 public class Service {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "service_gen")
+    @SequenceGenerator(name = "service_gen", sequenceName = "service_seq", allocationSize = 1)
     private long id;
     private String name;
     private double price;
