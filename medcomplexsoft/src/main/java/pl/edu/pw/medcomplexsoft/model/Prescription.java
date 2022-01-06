@@ -22,7 +22,7 @@ public class Prescription {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "prescription_gen")
-    @SequenceGenerator(name = "prescription_seq", sequenceName = "prescription_seq", allocationSize = 1)
+    @SequenceGenerator(name = "prescription_gen", sequenceName = "prescription_seq", allocationSize = 1)
     private long id;
     @ManyToOne
     private Doctor prescribingDoctor;
