@@ -22,7 +22,7 @@ public class Appointment{
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
-    private LocalDateTime date;
+    private LocalDateTime appointmentDate;
     @ManyToOne
     private Doctor doctor;
     @ManyToOne
