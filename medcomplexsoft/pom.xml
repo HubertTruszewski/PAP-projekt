@@ -45,17 +45,6 @@
         <artifactId>javax.persistence-api</artifactId>
         <version>2.2</version>
     </dependency>
-    <dependency>
-      <groupId>com.toedter</groupId>
-      <artifactId>jcalendar</artifactId>
-      <version>1.4</version>
-    </dependency>
-
-    <dependency>
-        <groupId>com.github.cliftonlabs</groupId>
-        <artifactId>json-simple</artifactId>
-        <version>4.0.0</version>
-        </dependency>
 
     <dependency>
         <groupId>com.oracle.database.jdbc</groupId>
@@ -63,6 +52,14 @@
         <version>21.1.0.0</version>
         <type>pom</type>
     </dependency>
+
+    <dependency>
+      <groupId>commons-codec</groupId>
+      <artifactId>commons-codec</artifactId>
+      <version>1.15</version>
+    </dependency>
+
+
   </dependencies>
 
   <build>
