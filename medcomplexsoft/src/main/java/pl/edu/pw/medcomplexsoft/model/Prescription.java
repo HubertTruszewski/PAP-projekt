@@ -3,6 +3,7 @@ package pl.edu.pw.medcomplexsoft.model;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -32,6 +33,6 @@ public class Prescription {
     private LocalDate expirationDate;
     @Enumerated(EnumType.STRING)
     private Status status;
-    @OneToMany
-    private List<PrescriptionPosition> postions;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<PrescriptionPosition> positions;
 }

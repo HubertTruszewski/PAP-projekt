@@ -1,7 +1,7 @@
 package pl.edu.pw.medcomplexsoft.model;
 
 public enum Status {
-    SCHEDULED,
+    ACTIVE,
     REALISED,
     CANCELLED
 }

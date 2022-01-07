@@ -4,11 +4,13 @@
  */
 package pl.edu.pw.medcomplexsoft.gui;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import javax.swing.JOptionPane;
 
 import pl.edu.pw.medcomplexsoft.database.Database;
 import pl.edu.pw.medcomplexsoft.model.Medicine;
@@ -39,19 +41,36 @@ public class MedicineListDialog extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         medicineList = new javax.swing.JList<>();
         newButton = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        changeButton = new javax.swing.JButton();
+        deleteButton = new javax.swing.JButton();
         okButton = new javax.swing.JButton();
+        medicineObjectList = new ArrayList<Medicine>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        medicineList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(medicineList);
 
         newButton.setText("Nowy");
+        newButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newButtonActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Zmień");
+        changeButton.setText("Zmień");
+        changeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                changeButtonActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("Usuń");
+        deleteButton.setText("Usuń");
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteButtonActionPerformed(evt);
+            }
+        });
 
         okButton.setText("Ok");
         okButton.addActionListener(new java.awt.event.ActionListener() {
@@ -70,9 +89,9 @@ public class MedicineListDialog extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(newButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                        .addComponent(changeButton, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
                         .addComponent(okButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 75, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -82,9 +101,9 @@ public class MedicineListDialog extends javax.swing.JDialog {
                 .addGap(53, 53, 53)
                 .addComponent(newButton)
                 .addGap(40, 40, 40)
-                .addComponent(jButton2)
+                .addComponent(changeButton)
                 .addGap(40, 40, 40)
-                .addComponent(jButton3)
+                .addComponent(deleteButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(okButton)
                 .addGap(95, 95, 95))
@@ -99,22 +118,75 @@ public class MedicineListDialog extends javax.swing.JDialog {
         dispose();
     }//GEN-LAST:event_okButtonActionPerformed
 
+    private void newButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
+        NewMedicineDialog newMedicineDialog = new NewMedicineDialog();
+        newMedicineDialog.showDialog();
+        loadData();
+    }//GEN-LAST:event_newButtonActionPerformed
+
+    private void changeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeButtonActionPerformed
+        int selectedMedicineIndex = medicineList.getSelectedIndex();
+        if(selectedMedicineIndex != -1)
+        {
+            Medicine selectedMedicine = medicineObjectList.get(selectedMedicineIndex);
+            NewMedicineDialog newMedicineDialog = new NewMedicineDialog(selectedMedicine);
+            newMedicineDialog.showDialog();
+            loadData();
+        } else {
+            JOptionPane.showMessageDialog(this, "Nie wybrano żadnego leku z listy",
+                                              "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_changeButtonActionPerformed
+
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+        EntityManager entityManager = Database.getEntityManager();
+        int selectedMedicineIndex = medicineList.getSelectedIndex();
+        if(medicineList.getSelectedIndex() != -1)
+        {
+            Medicine removingMedicine = medicineObjectList.get(selectedMedicineIndex);
+            int selection = JOptionPane.showConfirmDialog(this, "Czy potwierdzasz usuniecie leku " + removingMedicine.getName()+"?",
+                                                    "Potwierdzenie",
+                                                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if(selection == JOptionPane.OK_OPTION)
+            {
+                if(removingMedicine.getPositions().size() != 0)
+                {
+                    JOptionPane.showMessageDialog(this, "Nie można usunąć leku, który znajduje się na receptach",
+                                                "Błąd", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    var tx = entityManager.getTransaction();
+                    tx.begin();
+                    entityManager.remove(removingMedicine);
+                    tx.commit();
+                    loadData();
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Nie wybrano żadnego leku z listy",
+                                              "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_deleteButtonActionPerformed
+
     private void loadData() {
         EntityManager entityManager = Database.getEntityManager();
         TypedQuery<Medicine> typedQuery = entityManager.createQuery("SELECT m FROM Medicine m", Medicine.class);
-        List<Medicine> resultList = typedQuery.getResultList();
+        medicineObjectList = typedQuery.getResultList();
         Vector<String> stringMedicineVector = new Vector<String>();
-        for(int i=1; i<=resultList.size(); ++i)
+        for(int i=1; i<=medicineObjectList.size(); ++i)
         {
-            var medicine = resultList.get(i-1);
+            var medicine = medicineObjectList.get(i-1);
             stringMedicineVector.add(i + ". " + medicine.getName() + " " + medicine.getManufacturer());
         }
         medicineList.setListData(stringMedicineVector);
     }
 
-    public void showDialog() {
+    public Medicine showDialog() {
         loadData();
         setVisible(true);
+        int selectedIndex = medicineList.getSelectedIndex();
+        if(selectedIndex != -1)
+            return medicineObjectList.get(selectedIndex);
+        return null;
     }
 
     /**
@@ -160,11 +232,12 @@ public class MedicineListDialog extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton changeButton;
+    private javax.swing.JButton deleteButton;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList<String> medicineList;
     private javax.swing.JButton newButton;
     private javax.swing.JButton okButton;
+    private List<Medicine> medicineObjectList;
     // End of variables declaration//GEN-END:variables
 }

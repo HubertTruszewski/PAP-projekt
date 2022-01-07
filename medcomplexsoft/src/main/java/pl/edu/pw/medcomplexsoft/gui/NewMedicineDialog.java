@@ -23,6 +23,13 @@ public class NewMedicineDialog extends javax.swing.JDialog {
         initComponents();
     }
 
+    public NewMedicineDialog(Medicine medicine) {
+        initComponents();
+        nameField.setText(medicine.getName());
+        manufactuerField.setText(medicine.getManufacturer());
+        changiingMedicineId = medicine.getId();
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -45,7 +52,7 @@ public class NewMedicineDialog extends javax.swing.JDialog {
 
         manufactuerLabel.setText("Producent:");
 
-        addButton.setText("Dodaj");
+        addButton.setText("Ok");
         addButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addButtonActionPerformed(evt);
@@ -92,6 +99,8 @@ public class NewMedicineDialog extends javax.swing.JDialog {
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         Medicine medicine = new Medicine();
+        if(changiingMedicineId != -1)
+            medicine.setId(changiingMedicineId);
         medicine.setName(nameField.getText());
         medicine.setManufacturer(manufactuerField.getText());
         int selection = JOptionPane.showConfirmDialog(this, "Czy potwierdzasz dodanie leku?", "Potwierdzenie",
@@ -101,11 +110,20 @@ public class NewMedicineDialog extends javax.swing.JDialog {
             EntityManager entityManager = Database.getEntityManager();
             var tx = entityManager.getTransaction();
             tx.begin();
-            entityManager.persist(medicine);
+            if(changiingMedicineId != -1)
+                entityManager.merge(medicine);
+            else
+                entityManager.persist(medicine);
             tx.commit();
             dispose();
         }
     }//GEN-LAST:event_addButtonActionPerformed
+
+    public void showDialog()
+    {
+        setModal(true);
+        setVisible(true);
+    }
 
     /**
      * @param args the command line arguments
@@ -150,5 +168,6 @@ public class NewMedicineDialog extends javax.swing.JDialog {
     private javax.swing.JLabel manufactuerLabel;
     private javax.swing.JTextField nameField;
     private javax.swing.JLabel nameLabel;
+    private long changiingMedicineId = -1;
     // End of variables declaration//GEN-END:variables
 }

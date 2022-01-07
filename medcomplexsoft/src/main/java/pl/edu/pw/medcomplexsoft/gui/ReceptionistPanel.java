@@ -4,7 +4,6 @@
  */
 package pl.edu.pw.medcomplexsoft.gui;
 
-import pl.edu.pw.medcomplexsoft.data.DataKeeper;
 import pl.edu.pw.medcomplexsoft.model.Patient;
 
 /**
@@ -186,12 +185,7 @@ public class ReceptionistPanel extends javax.swing.JFrame {
     private void newPatientItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newPatientItemActionPerformed
         // TODO add your handling code here:
         NewPatient newPatientDialog = new NewPatient(null, true);
-        Patient res = newPatientDialog.showDialog();
-        if(DataKeeper.patientsList.isEmpty())
-            res.setId(0);
-        else
-            res.setId(DataKeeper.patientsList.get(DataKeeper.patientsList.size()-1).getId());
-        DataKeeper.patientsList.add(res);
+        // Patient res = newPatientDialog.showDialog();
     }//GEN-LAST:event_newPatientItemActionPerformed
 
     private void deletePatientItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletePatientItemActionPerformed
@@ -200,7 +194,7 @@ public class ReceptionistPanel extends javax.swing.JFrame {
 
     private void prescriptionListItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prescriptionListItemActionPerformed
         // TODO add your handling code here:
-        ReceiptListDialog receiptListDialog = new ReceiptListDialog(null, true);
+        PrescriptionListDialog receiptListDialog = new PrescriptionListDialog(null, true, null);
         receiptListDialog.showDialog();
     }//GEN-LAST:event_prescriptionListItemActionPerformed
 
@@ -217,8 +211,8 @@ public class ReceptionistPanel extends javax.swing.JFrame {
     private void medicineListItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_medicineListItemActionPerformed
         // TODO add your handling code here:
         MedicineListDialog medicineListDialog = new MedicineListDialog(null, true);
-        int result = medicineListDialog.showDialog();
-        System.out.println(result);
+        // int result = medicineListDialog.showDialog();
+        // System.out.println(result);
     }//GEN-LAST:event_medicineListItemActionPerformed
 
     private void newAppointmentItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newAppointmentItemActionPerformed
@@ -240,7 +234,7 @@ public class ReceptionistPanel extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {

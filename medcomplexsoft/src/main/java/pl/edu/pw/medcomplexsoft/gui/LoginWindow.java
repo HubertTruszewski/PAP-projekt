@@ -131,7 +131,7 @@ public class LoginWindow extends javax.swing.JFrame {
             Person user = result.get(0);
             if(user instanceof Doctor)
             {
-                DoctorPanel panel = new DoctorPanel();
+                DoctorPanel panel = new DoctorPanel((Doctor)user);
                 panel.setVisible(true);
                 this.setVisible(false);
             }
