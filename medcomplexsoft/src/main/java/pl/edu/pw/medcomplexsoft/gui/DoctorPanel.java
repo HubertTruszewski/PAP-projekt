@@ -11,11 +11,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.github.cliftonlabs.json_simple.JsonArray;
-import com.github.cliftonlabs.json_simple.JsonObject;
-import com.github.cliftonlabs.json_simple.Jsoner;
-
-import pl.edu.pw.medcomplexsoft.data.DataKeeper;
 import pl.edu.pw.medcomplexsoft.model.Patient;
 
 /**
@@ -164,7 +159,6 @@ public class DoctorPanel extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
@@ -188,8 +182,9 @@ public class DoctorPanel extends javax.swing.JFrame {
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
         // TODO add your handling code here:
         MedicineListDialog medicineListDialog = new MedicineListDialog(null, true);
-        int result = medicineListDialog.showDialog();
-        System.out.println(result);
+        medicineListDialog.showDialog();
+        // int result = medicineListDialog.showDialog();
+        // System.out.println(result);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
@@ -205,14 +200,8 @@ public class DoctorPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        // TODO add your handling code here:
         NewPatient newPatientDialog = new NewPatient(null, true);
-        Patient res = newPatientDialog.showDialog();
-        if(DataKeeper.patientsList.isEmpty())
-            res.setId(0);
-        else
-            res.setId(DataKeeper.patientsList.get(DataKeeper.patientsList.size()-1).getId());
-        DataKeeper.patientsList.add(res);
+        newPatientDialog.setVisible(true);
 
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 

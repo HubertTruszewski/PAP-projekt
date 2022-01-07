@@ -6,8 +6,20 @@ package pl.edu.pw.medcomplexsoft.gui;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import javax.swing.JOptionPane;
+import javax.swing.Painter;
+
 import java.time.ZoneId;
 import java.util.ArrayList;
+
+import pl.edu.pw.medcomplexsoft.database.Database;
 import pl.edu.pw.medcomplexsoft.model.*;
 /**
  *
@@ -32,6 +44,7 @@ public class NewPatient extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        genderButtonGroup = new javax.swing.ButtonGroup();
         nameLabel = new javax.swing.JLabel();
         nameField = new javax.swing.JTextField();
         surnameLabel = new javax.swing.JLabel();
@@ -41,7 +54,6 @@ public class NewPatient extends javax.swing.JDialog {
         peselLabel = new javax.swing.JLabel();
         peselField = new javax.swing.JTextField();
         genderLabel = new javax.swing.JLabel();
-        genderField = new javax.swing.JTextField();
         streetLabel = new javax.swing.JLabel();
         streetField = new javax.swing.JTextField();
         houseLabel = new javax.swing.JLabel();
@@ -62,13 +74,15 @@ public class NewPatient extends javax.swing.JDialog {
         passwordField = new javax.swing.JPasswordField();
         cancelButton = new javax.swing.JButton();
         addButton = new javax.swing.JButton();
+        maleRadioButton = new javax.swing.JRadioButton();
+        femaleRadioButton = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Nowy Pacjent");
-        setMaximumSize(new java.awt.Dimension(385, 540));
-        setMinimumSize(new java.awt.Dimension(385, 540));
+        setMaximumSize(new java.awt.Dimension(500, 750));
+        setMinimumSize(new java.awt.Dimension(500, 750));
         setModal(true);
-        setPreferredSize(new java.awt.Dimension(385, 540));
+        setPreferredSize(new java.awt.Dimension(500, 750));
         setResizable(false);
 
         nameLabel.setText("Imię");
@@ -114,8 +128,6 @@ public class NewPatient extends javax.swing.JDialog {
 
         passwordLabel.setText("Hasło");
 
-        passwordField.setText("jPasswordField1");
-
         cancelButton.setText("Anuluj");
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -129,6 +141,13 @@ public class NewPatient extends javax.swing.JDialog {
                 addButtonActionPerformed(evt);
             }
         });
+
+        genderButtonGroup.add(maleRadioButton);
+        maleRadioButton.setSelected(true);
+        maleRadioButton.setText("Mężczyna");
+
+        genderButtonGroup.add(femaleRadioButton);
+        femaleRadioButton.setText("Kobieta");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -153,10 +172,11 @@ public class NewPatient extends javax.swing.JDialog {
                     .addComponent(emailLabel))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(48, 69, Short.MAX_VALUE)
+                        .addGap(48, 83, Short.MAX_VALUE)
                         .addComponent(cancelButton)
                         .addGap(18, 18, 18)
-                        .addComponent(addButton))
+                        .addComponent(addButton)
+                        .addGap(78, 78, 78))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(25, 25, 25)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -167,14 +187,18 @@ public class NewPatient extends javax.swing.JDialog {
                             .addComponent(flatField)
                             .addComponent(houseField)
                             .addComponent(streetField)
-                            .addComponent(genderField)
                             .addComponent(peselField)
                             .addComponent(nameField)
                             .addComponent(surnameField)
                             .addComponent(emailField)
                             .addComponent(passwordField)
-                            .addComponent(dateSpinner))))
-                .addGap(55, 55, 55))
+                            .addComponent(dateSpinner)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(maleRadioButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(femaleRadioButton)
+                                .addGap(23, 23, 23)))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -198,7 +222,8 @@ public class NewPatient extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(genderLabel)
-                    .addComponent(genderField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(maleRadioButton)
+                    .addComponent(femaleRadioButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(streetLabel)
@@ -257,37 +282,67 @@ public class NewPatient extends javax.swing.JDialog {
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        setVisible(false);
-        dispose();
-    }//GEN-LAST:event_addButtonActionPerformed
+        Patient patient = new Patient();
+        Address address = new Address();
+        patient.setName(nameField.getText());
+        patient.setSurname(surnameField.getText());
+        patient.setBirthDate(((Date)dateSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+        patient.setPesel(peselField.getText());
+        patient.setUsername(loginField.getText());
+        String hashedPassword = org.apache.commons.codec.digest.DigestUtils.sha256Hex(String.valueOf(passwordField.getPassword()));
+        patient.setPassword(hashedPassword);
+        if(maleRadioButton.isSelected())
+            patient.setGender('M');
+        else
+            patient.setGender('K');
+        address.setStreet(streetField.getText());
+        address.setHouseNumber(Long.parseLong(houseField.getText()));
+        address.setFlatNumber(Long.getLong(flatField.getText()));
+        address.setCity(cityField.getText());
+        address.setPostalCode(postalCodeField.getText());
+        address.setCountry(countryField.getText());
+        patient.setAddress(address);
+        patient.setMailAddress(emailField.getText());
 
-    public Patient showDialog()
-    {
-        setVisible(true);
-        Address address = new Address(
-                streetField.getText(),
-                Long.parseLong(houseField.getText()),
-                Long.parseLong(flatField.getText()),
-                cityField.getText(),
-                postalCodeField.getText(),
-                countryField.getText()
-        );
-        Patient result = new Patient(
-            (long)8,
-            nameField.getText(),
-            surnameField.getText(),
-            ((Date)dateSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
-            loginField.getText(),
-            String.copyValueOf(passwordField.getPassword()),
-            peselField.getText(),
-            genderField.getText().charAt(0),
-            address,
-            emailField.getText(),
-            new ArrayList<Prescription>(),
-            new ArrayList<Appointment>()
-        );
-        return result;
-    }
+        int selection = JOptionPane.showConfirmDialog(this, "Czy potwierdzasz dodanie pacjenta?", "Potwierdzenie",
+                                                JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if(selection == JOptionPane.OK_OPTION)
+        {
+            boolean unique = true;
+            EntityManager entityManager = Database.getEntityManager();
+
+            //sprawdzanie loginu
+            CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+            CriteriaQuery<Person> criteriaQuery = criteriaBuilder.createQuery(Person.class);
+            Root<Person> personRoot = criteriaQuery.from(Person.class);
+
+            Predicate predicateUserName = criteriaBuilder.equal(personRoot.get("username"), loginField.getText());
+
+            criteriaQuery.where(predicateUserName);
+            List<Person> result = entityManager.createQuery(criteriaQuery).getResultList();
+            if (result.size() != 0){
+                unique = false;
+                JOptionPane.showMessageDialog(this, "Login już w użyciu. Wybierz inny", "Błąd", JOptionPane.ERROR_MESSAGE);
+            }
+
+            //sprawdzanie peselu
+            Predicate predicatePesel = criteriaBuilder.equal(personRoot.get("pesel"), peselField.getText());
+            criteriaQuery.where(predicatePesel);
+            result = entityManager.createQuery(criteriaQuery).getResultList();
+            if (result.size() != 0){
+                unique = false;
+                JOptionPane.showMessageDialog(this, "Osoba o takim peselu jest już w bazie", "Błąd", JOptionPane.ERROR_MESSAGE);
+            }
+
+            if(unique){
+            var tx = entityManager.getTransaction();
+            tx.begin();
+            entityManager.persist(patient);
+            tx.commit();
+            dispose();
+            }
+        }
+    }//GEN-LAST:event_addButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -342,14 +397,16 @@ public class NewPatient extends javax.swing.JDialog {
     private javax.swing.JSpinner dateSpinner;
     private javax.swing.JTextField emailField;
     private javax.swing.JLabel emailLabel;
+    private javax.swing.JRadioButton femaleRadioButton;
     private javax.swing.JTextField flatField;
     private javax.swing.JLabel flatLabel;
-    private javax.swing.JTextField genderField;
+    private javax.swing.ButtonGroup genderButtonGroup;
     private javax.swing.JLabel genderLabel;
     private javax.swing.JTextField houseField;
     private javax.swing.JLabel houseLabel;
     private javax.swing.JTextField loginField;
     private javax.swing.JLabel loginLabel;
+    private javax.swing.JRadioButton maleRadioButton;
     private javax.swing.JTextField nameField;
     private javax.swing.JLabel nameLabel;
     private javax.swing.JPasswordField passwordField;
