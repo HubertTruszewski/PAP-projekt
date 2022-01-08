@@ -121,6 +121,7 @@ public class MedicineListDialog extends javax.swing.JDialog {
 
     private void newButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
         NewMedicineDialog newMedicineDialog = new NewMedicineDialog();
+        newMedicineDialog.setLocationRelativeTo(this.rootPane);
         newMedicineDialog.showDialog();
         loadData();
     }//GEN-LAST:event_newButtonActionPerformed
@@ -131,6 +132,7 @@ public class MedicineListDialog extends javax.swing.JDialog {
         {
             Medicine selectedMedicine = medicineObjectList.get(selectedMedicineIndex);
             NewMedicineDialog newMedicineDialog = new NewMedicineDialog(selectedMedicine);
+            newMedicineDialog.setLocationRelativeTo(this.rootPane);
             newMedicineDialog.showDialog();
             loadData();
         } else {

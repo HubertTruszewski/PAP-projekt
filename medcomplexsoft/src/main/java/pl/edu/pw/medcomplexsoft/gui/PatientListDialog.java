@@ -127,6 +127,7 @@ public class PatientListDialog extends javax.swing.JDialog {
 
     private void newButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
         NewPatient newPatient = new NewPatient(null, true);
+        newPatient.setLocationRelativeTo(this.rootPane);
         newPatient.showDialog();
         loadData();
     }//GEN-LAST:event_newButtonActionPerformed
@@ -137,6 +138,7 @@ public class PatientListDialog extends javax.swing.JDialog {
         {
             Patient selectedPatient = patientObjectList.get(selectedPatientIndex);
             PatientDataViewDialog patientDataViewDialog = new PatientDataViewDialog(null, true, selectedPatient);
+            patientDataViewDialog.setLocationRelativeTo(this.rootPane);
             patientDataViewDialog.showDialog();
         } else {
             JOptionPane.showMessageDialog(this, "Nie wybrano żadnego pacjenta z listy",
@@ -180,6 +182,7 @@ public class PatientListDialog extends javax.swing.JDialog {
         {
             Patient selectedPatient = patientObjectList.get(selectedPatientIndex);
             NewPatient newPatientDialog = new NewPatient(null, true, selectedPatient);
+            newPatientDialog.setLocationRelativeTo(this.rootPane);
             newPatientDialog.showDialog();
             loadData();
         } else {

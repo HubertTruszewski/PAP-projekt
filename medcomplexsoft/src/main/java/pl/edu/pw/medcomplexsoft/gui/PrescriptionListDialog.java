@@ -142,12 +142,14 @@ public class PrescriptionListDialog extends javax.swing.JDialog {
                 "Błąd", JOptionPane.ERROR_MESSAGE);
         else {
             PrescpriptionViewDialog prescpriptionViewDialog = new PrescpriptionViewDialog(null, true, prescriptionObjectList.get(selectedIndex));
+            prescpriptionViewDialog.setLocationRelativeTo(this.rootPane);
             prescpriptionViewDialog.showDialog();
         }
     }//GEN-LAST:event_showReceiptButtonActionPerformed
 
     private void newReceiptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newReceiptButtonActionPerformed
         NewPrescriptionDialog newPrescriptionDialog = new NewPrescriptionDialog(null, true, (Doctor)user);
+        newPrescriptionDialog.setLocationRelativeTo(this.rootPane);
         newPrescriptionDialog.setVisible(true);
     }//GEN-LAST:event_newReceiptButtonActionPerformed
 

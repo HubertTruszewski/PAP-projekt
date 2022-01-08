@@ -168,6 +168,7 @@ public class NewPrescriptionDialog extends javax.swing.JDialog {
 
     private void newPositionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newPositionButtonActionPerformed
         NewPrescriptionPositionDialog newPrescriptionPosition = new NewPrescriptionPositionDialog(null, true);
+        newPrescriptionPosition.setLocationRelativeTo(this.rootPane);
         var result = newPrescriptionPosition.showDialog();
         if(result != null)
             prescriptionPositions.add(result);
@@ -175,8 +176,9 @@ public class NewPrescriptionDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_newPositionButtonActionPerformed
 
     private void choosePatientButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_choosePatientButtonActionPerformed
-        PatientListDialog dialog = new PatientListDialog(null, true);
-        choosenPatient = dialog.showDialog();
+        PatientListDialog patientListDialog = new PatientListDialog(null, true);
+        patientListDialog.setLocationRelativeTo(this.rootPane);
+        choosenPatient = patientListDialog.showDialog();
         if(choosenPatient != null)
             patientNameLabel.setText(choosenPatient.getFullName());
     }//GEN-LAST:event_choosePatientButtonActionPerformed
