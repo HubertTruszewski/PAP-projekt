@@ -158,14 +158,12 @@ public class DoctorPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_exitItemActionPerformed
 
     private void newPrescriptionItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newPrescriptionItemActionPerformed
-        // TODO add your handling code here:
         NewPrescriptionDialog newPrescriptionDialog = new NewPrescriptionDialog(null, true, loggedDoctor);
         newPrescriptionDialog.setLocationRelativeTo(this.rootPane);
         newPrescriptionDialog.setVisible(true);
     }//GEN-LAST:event_newPrescriptionItemActionPerformed
 
     private void newMedicineItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newMedicineItemActionPerformed
-        // TODO add your handling code here:
         NewMedicineDialog newMedicineDialog = new NewMedicineDialog();
         newMedicineDialog.setLocationRelativeTo(this.rootPane);
         newMedicineDialog.setVisible(true);
@@ -178,24 +176,19 @@ public class DoctorPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_patientListItemActionPerformed
 
     private void medicineListItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_medicineListItemActionPerformed
-        // TODO add your handling code here:
         MedicineListDialog medicineListDialog = new MedicineListDialog(null, true);
         medicineListDialog.setLocationRelativeTo(this.rootPane);
         medicineListDialog.showDialog();
-        // int result = medicineListDialog.showDialog();
-        // System.out.println(result);
     }//GEN-LAST:event_medicineListItemActionPerformed
 
     private void prescriptionListItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prescriptionListItemActionPerformed
-        // TODO add your handling code here:
         PrescriptionListDialog receiptListDialog = new PrescriptionListDialog(null, true, loggedDoctor);
         receiptListDialog.setLocationRelativeTo(this.rootPane);
         receiptListDialog.showDialog();
     }//GEN-LAST:event_prescriptionListItemActionPerformed
 
     private void appointmentListItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_appointmentListItemActionPerformed
-        // TODO add your handling code here:
-        AppointmentsList appointmentsList = new AppointmentsList(null, true);
+        AppointmentsList appointmentsList = new AppointmentsList(null, true, loggedDoctor);
         appointmentsList.setLocationRelativeTo(this.rootPane);
         appointmentsList.showDialog();
     }//GEN-LAST:event_appointmentListItemActionPerformed
