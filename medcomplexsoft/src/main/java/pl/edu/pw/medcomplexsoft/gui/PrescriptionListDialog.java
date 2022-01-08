@@ -53,6 +53,7 @@ public class PrescriptionListDialog extends javax.swing.JDialog {
         showReceiptButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Lista recept");
 
         receiptsList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(receiptsList);
@@ -110,6 +111,7 @@ public class PrescriptionListDialog extends javax.swing.JDialog {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cancelReceiptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelReceiptButtonActionPerformed

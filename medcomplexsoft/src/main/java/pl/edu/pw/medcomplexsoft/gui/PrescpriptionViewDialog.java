@@ -98,6 +98,7 @@ public class PrescpriptionViewDialog extends javax.swing.JDialog {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     public void showDialog()

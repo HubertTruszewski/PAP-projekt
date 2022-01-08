@@ -107,6 +107,7 @@ public class LoginWindow extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
@@ -145,6 +146,7 @@ public class LoginWindow extends javax.swing.JFrame {
             {
                 PatientPanel panel = new PatientPanel();
                 panel.setVisible(true);
+                this.setVisible(false);
             }
         }
     }//GEN-LAST:event_loginButtonActionPerformed

@@ -44,9 +44,9 @@ public class MedicineListDialog extends javax.swing.JDialog {
         changeButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
         okButton = new javax.swing.JButton();
-        medicineObjectList = new ArrayList<Medicine>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Lista leków");
 
         medicineList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(medicineList);
@@ -110,6 +110,7 @@ public class MedicineListDialog extends javax.swing.JDialog {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
@@ -238,6 +239,5 @@ public class MedicineListDialog extends javax.swing.JDialog {
     private javax.swing.JList<String> medicineList;
     private javax.swing.JButton newButton;
     private javax.swing.JButton okButton;
-    private List<Medicine> medicineObjectList;
     // End of variables declaration//GEN-END:variables
 }

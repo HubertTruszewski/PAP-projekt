@@ -45,6 +45,7 @@ public class PatientListDialog extends javax.swing.JDialog {
         showDataButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Lista pacjentów");
 
         jScrollPane1.setViewportView(patientList);
 
@@ -116,6 +117,7 @@ public class PatientListDialog extends javax.swing.JDialog {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed

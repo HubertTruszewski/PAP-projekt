@@ -32,7 +32,6 @@ public class ShowCurrentPres extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Aktualne recepty");
         setAlwaysOnTop(true);
-        setPreferredSize(new java.awt.Dimension(400, 300));
         setSize(new java.awt.Dimension(400, 300));
 
         jButton2.setText("ok");
@@ -55,6 +54,7 @@ public class ShowCurrentPres extends javax.swing.JDialog {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     /**

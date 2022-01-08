@@ -35,6 +35,7 @@ public class AppointmentsList extends javax.swing.JDialog {
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Lista wizyt");
 
         jScrollPane1.setViewportView(appointmentList);
 
@@ -76,6 +77,7 @@ public class AppointmentsList extends javax.swing.JDialog {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void loadData(){

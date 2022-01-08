@@ -27,92 +27,92 @@ public class PatientPanel extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
-        jMenuItem7 = new javax.swing.JMenuItem();
+        prescriptionMenu = new javax.swing.JMenu();
+        actualPrescriptionItem = new javax.swing.JMenuItem();
+        pastPrescriptionItem = new javax.swing.JMenuItem();
+        appointmentMenu = new javax.swing.JMenu();
+        newAppointmentItem = new javax.swing.JMenuItem();
+        actualAppointmentsItem = new javax.swing.JMenuItem();
+        pastAppointmentsItem = new javax.swing.JMenuItem();
+        doctorsMenu = new javax.swing.JMenu();
+        doctorsItem = new javax.swing.JMenuItem();
+        serviceMenu = new javax.swing.JMenu();
+        servicesItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(1200, 900));
 
-        jMenu1.setText("Moje Recepty");
+        prescriptionMenu.setText("Moje Recepty");
 
-        jMenuItem2.setText("aktualne");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        actualPrescriptionItem.setText("aktualne");
+        actualPrescriptionItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                actualPrescriptionItemActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem2);
+        prescriptionMenu.add(actualPrescriptionItem);
 
-        jMenuItem1.setText("historia");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        pastPrescriptionItem.setText("historia");
+        pastPrescriptionItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                pastPrescriptionItemActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        prescriptionMenu.add(pastPrescriptionItem);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(prescriptionMenu);
 
-        jMenu2.setText("Wizyty");
+        appointmentMenu.setText("Wizyty");
 
-        jMenuItem5.setText("Nowa Wizyta");
-        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+        newAppointmentItem.setText("Nowa Wizyta");
+        newAppointmentItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem5ActionPerformed(evt);
+                newAppointmentItemActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem5);
+        appointmentMenu.add(newAppointmentItem);
 
-        jMenuItem6.setText("Aktualne Wizyty");
-        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+        actualAppointmentsItem.setText("Aktualne Wizyty");
+        actualAppointmentsItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem6ActionPerformed(evt);
+                actualAppointmentsItemActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem6);
+        appointmentMenu.add(actualAppointmentsItem);
 
-        jMenuItem4.setText("Historia");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+        pastAppointmentsItem.setText("Historia");
+        pastAppointmentsItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
+                pastAppointmentsItemActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem4);
+        appointmentMenu.add(pastAppointmentsItem);
 
-        jMenuBar1.add(jMenu2);
+        jMenuBar1.add(appointmentMenu);
 
-        jMenu3.setText("Lekarze");
+        doctorsMenu.setText("Lekarze");
 
-        jMenuItem3.setText("przeglądaj");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        doctorsItem.setText("przeglądaj");
+        doctorsItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                doctorsItemActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem3);
+        doctorsMenu.add(doctorsItem);
 
-        jMenuBar1.add(jMenu3);
+        jMenuBar1.add(doctorsMenu);
 
-        jMenu4.setText("Usługi");
+        serviceMenu.setText("Usługi");
 
-        jMenuItem7.setText("Przeglądaj");
-        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+        servicesItem.setText("Przeglądaj");
+        servicesItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem7ActionPerformed(evt);
+                servicesItemActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenuItem7);
+        serviceMenu.add(servicesItem);
 
-        jMenuBar1.add(jMenu4);
+        jMenuBar1.add(serviceMenu);
 
         setJMenuBar(jMenuBar1);
 
@@ -128,47 +128,54 @@ public class PatientPanel extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void actualPrescriptionItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualPrescriptionItemActionPerformed
         // TODO add your handling code here:
         PrescriptionListDialog receiptListDialog = new PrescriptionListDialog(null, true, null);
+        receiptListDialog.setLocationRelativeTo(this.rootPane);
         receiptListDialog.showDialog();
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_actualPrescriptionItemActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void pastPrescriptionItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pastPrescriptionItemActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_pastPrescriptionItemActionPerformed
 
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+    private void newAppointmentItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newAppointmentItemActionPerformed
         // TODO add your handling code here:
         CreateNewAppointment window = new CreateNewAppointment(this, true);
+        window.setLocationRelativeTo(this.rootPane);
         window.setVisible(true);
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
+    }//GEN-LAST:event_newAppointmentItemActionPerformed
 
-    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+    private void actualAppointmentsItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualAppointmentsItemActionPerformed
         // TODO add your handling code here:
         ShowCurrentAppointments window = new ShowCurrentAppointments(this, true);
+        window.setLocationRelativeTo(this.rootPane);
         window.setVisible(true);
-    }//GEN-LAST:event_jMenuItem6ActionPerformed
+    }//GEN-LAST:event_actualAppointmentsItemActionPerformed
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+    private void pastAppointmentsItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pastAppointmentsItemActionPerformed
         // TODO add your handling code here:
         ShowAppointmentsHistory window = new  ShowAppointmentsHistory(this, true);
+        window.setLocationRelativeTo(this.rootPane);
         window.setVisible(true);
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
+    }//GEN-LAST:event_pastAppointmentsItemActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    private void doctorsItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doctorsItemActionPerformed
         // TODO add your handling code here:
         ShowDoctors window = new ShowDoctors(this, false);
+        window.setLocationRelativeTo(this.rootPane);
         window.setVisible(true);
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    }//GEN-LAST:event_doctorsItemActionPerformed
 
-    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+    private void servicesItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_servicesItemActionPerformed
         // TODO add your handling code here:
         ShowAvalibleServices window = new ShowAvalibleServices(this, false);
+        window.setLocationRelativeTo(this.rootPane);
         window.setVisible(true);
-    }//GEN-LAST:event_jMenuItem7ActionPerformed
+    }//GEN-LAST:event_servicesItemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -206,17 +213,17 @@ public class PatientPanel extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenuItem actualAppointmentsItem;
+    private javax.swing.JMenuItem actualPrescriptionItem;
+    private javax.swing.JMenu appointmentMenu;
+    private javax.swing.JMenuItem doctorsItem;
+    private javax.swing.JMenu doctorsMenu;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem newAppointmentItem;
+    private javax.swing.JMenuItem pastAppointmentsItem;
+    private javax.swing.JMenuItem pastPrescriptionItem;
+    private javax.swing.JMenu prescriptionMenu;
+    private javax.swing.JMenu serviceMenu;
+    private javax.swing.JMenuItem servicesItem;
     // End of variables declaration//GEN-END:variables
 }

@@ -33,17 +33,14 @@ public class ReceptionistPanel extends javax.swing.JFrame {
         exitItem = new javax.swing.JMenuItem();
         patientMenu = new javax.swing.JMenu();
         newPatientItem = new javax.swing.JMenuItem();
-        deletePatientItem = new javax.swing.JMenuItem();
         patientListItem = new javax.swing.JMenuItem();
         prescriptionMenu = new javax.swing.JMenu();
         prescriptionListItem = new javax.swing.JMenuItem();
         medicineMenu = new javax.swing.JMenu();
         newMedicineItem = new javax.swing.JMenuItem();
-        deleteMedicineItem = new javax.swing.JMenuItem();
         medicineListItem = new javax.swing.JMenuItem();
         appointmentMenu = new javax.swing.JMenu();
         newAppointmentItem = new javax.swing.JMenuItem();
-        deleteAppointmentItem = new javax.swing.JMenuItem();
         appointmentListItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -69,14 +66,6 @@ public class ReceptionistPanel extends javax.swing.JFrame {
             }
         });
         patientMenu.add(newPatientItem);
-
-        deletePatientItem.setText("Usuń pacjenta");
-        deletePatientItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deletePatientItemActionPerformed(evt);
-            }
-        });
-        patientMenu.add(deletePatientItem);
 
         patientListItem.setText("Lista pacjentów");
         patientListItem.addActionListener(new java.awt.event.ActionListener() {
@@ -110,14 +99,6 @@ public class ReceptionistPanel extends javax.swing.JFrame {
         });
         medicineMenu.add(newMedicineItem);
 
-        deleteMedicineItem.setText("Usuń lek");
-        deleteMedicineItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deleteMedicineItemActionPerformed(evt);
-            }
-        });
-        medicineMenu.add(deleteMedicineItem);
-
         medicineListItem.setText("Lista leków");
         medicineListItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -137,14 +118,6 @@ public class ReceptionistPanel extends javax.swing.JFrame {
             }
         });
         appointmentMenu.add(newAppointmentItem);
-
-        deleteAppointmentItem.setText("Odwołaj wizytę");
-        deleteAppointmentItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deleteAppointmentItemActionPerformed(evt);
-            }
-        });
-        appointmentMenu.add(deleteAppointmentItem);
 
         appointmentListItem.setText("Lista wizyt");
         appointmentListItem.addActionListener(new java.awt.event.ActionListener() {
@@ -170,61 +143,59 @@ public class ReceptionistPanel extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void patientListItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_patientListItemActionPerformed
         // TODO add your handling code here:
         PatientListDialog patientsListDialog = new PatientListDialog(null, true);
+        patientsListDialog.setLocationRelativeTo(this.rootPane);
         patientsListDialog.showDialog();
     }//GEN-LAST:event_patientListItemActionPerformed
 
     private void exitItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitItemActionPerformed
-        // TODO add your handling code here:
+        System.exit(0);
     }//GEN-LAST:event_exitItemActionPerformed
 
     private void newPatientItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newPatientItemActionPerformed
-        // TODO add your handling code here:
         NewPatient newPatientDialog = new NewPatient(null, true);
-        // Patient res = newPatientDialog.showDialog();
+        newPatientDialog.setLocationRelativeTo(this.rootPane);
+        newPatientDialog.setVisible(true);
     }//GEN-LAST:event_newPatientItemActionPerformed
-
-    private void deletePatientItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletePatientItemActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_deletePatientItemActionPerformed
 
     private void prescriptionListItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prescriptionListItemActionPerformed
         // TODO add your handling code here:
         PrescriptionListDialog receiptListDialog = new PrescriptionListDialog(null, true, null);
+        receiptListDialog.setLocationRelativeTo(this.rootPane);
         receiptListDialog.showDialog();
     }//GEN-LAST:event_prescriptionListItemActionPerformed
 
     private void newMedicineItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newMedicineItemActionPerformed
         // TODO add your handling code here:
-                NewMedicineDialog window = new NewMedicineDialog();
-        window.setVisible(true);
+        NewMedicineDialog newMedicineDialog = new NewMedicineDialog();
+        newMedicineDialog.setLocationRelativeTo(this.rootPane);
+        newMedicineDialog.setVisible(true);
     }//GEN-LAST:event_newMedicineItemActionPerformed
-
-    private void deleteMedicineItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteMedicineItemActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_deleteMedicineItemActionPerformed
 
     private void medicineListItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_medicineListItemActionPerformed
         // TODO add your handling code here:
         MedicineListDialog medicineListDialog = new MedicineListDialog(null, true);
+        medicineListDialog.setLocationRelativeTo(this.rootPane);
+        medicineListDialog.showDialog();
         // int result = medicineListDialog.showDialog();
         // System.out.println(result);
     }//GEN-LAST:event_medicineListItemActionPerformed
 
     private void newAppointmentItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newAppointmentItemActionPerformed
-        // TODO add your handling code here:
+        NewAppointment newAppointment = new NewAppointment(null, true);
+        newAppointment.setLocationRelativeTo(this.rootPane);
+        newAppointment.setVisible(true);
     }//GEN-LAST:event_newAppointmentItemActionPerformed
 
-    private void deleteAppointmentItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteAppointmentItemActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_deleteAppointmentItemActionPerformed
-
     private void appointmentListItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_appointmentListItemActionPerformed
-        // TODO add your handling code here:
+        AppointmentsList appointmentsList = new AppointmentsList(null, true);
+        appointmentsList.setLocationRelativeTo(this.rootPane);
+        appointmentsList.showDialog();
     }//GEN-LAST:event_appointmentListItemActionPerformed
 
     /**
@@ -265,9 +236,6 @@ public class ReceptionistPanel extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem appointmentListItem;
     private javax.swing.JMenu appointmentMenu;
-    private javax.swing.JMenuItem deleteAppointmentItem;
-    private javax.swing.JMenuItem deleteMedicineItem;
-    private javax.swing.JMenuItem deletePatientItem;
     private javax.swing.JMenuItem exitItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenuBar jMenuBar1;

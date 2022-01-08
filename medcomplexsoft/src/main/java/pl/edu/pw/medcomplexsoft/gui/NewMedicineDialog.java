@@ -95,6 +95,7 @@ public class NewMedicineDialog extends javax.swing.JDialog {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
@@ -168,6 +169,5 @@ public class NewMedicineDialog extends javax.swing.JDialog {
     private javax.swing.JLabel manufactuerLabel;
     private javax.swing.JTextField nameField;
     private javax.swing.JLabel nameLabel;
-    private long changiingMedicineId = -1;
     // End of variables declaration//GEN-END:variables
 }

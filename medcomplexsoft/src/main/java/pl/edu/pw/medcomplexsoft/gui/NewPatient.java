@@ -105,6 +105,12 @@ public class NewPatient extends javax.swing.JDialog {
 
         nameLabel.setText("Imię");
 
+        nameField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nameFieldActionPerformed(evt);
+            }
+        });
+
         surnameLabel.setText("Nazwisko");
 
         birthDateLabel.setText("Data urodzenia");
@@ -122,6 +128,12 @@ public class NewPatient extends javax.swing.JDialog {
 
         flatLabel.setText("Numer mieszkania");
 
+        flatField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                flatFieldActionPerformed(evt);
+            }
+        });
+
         cityLabel.setText("Miasto");
 
         postalCodeLabel.setText("Kod pocztowy");
@@ -135,6 +147,11 @@ public class NewPatient extends javax.swing.JDialog {
         passwordLabel.setText("Hasło");
 
         cancelButton.setText("Anuluj");
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelButtonActionPerformed(evt);
+            }
+        });
 
         addButton.setText("Dodaj");
         addButton.addActionListener(new java.awt.event.ActionListener() {
@@ -267,7 +284,8 @@ public class NewPatient extends javax.swing.JDialog {
                     .addComponent(cancelButton)))
         );
 
-        pack();
+        setSize(new java.awt.Dimension(469, 544));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     public void showDialog() {
