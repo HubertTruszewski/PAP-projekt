@@ -6,6 +6,7 @@ package pl.edu.pw.medcomplexsoft.gui;
 
 import pl.edu.pw.medcomplexsoft.model.Person;
 import pl.edu.pw.medcomplexsoft.model.Doctor;
+import pl.edu.pw.medcomplexsoft.gui.DoctorListDialog;
 
 /**
  *

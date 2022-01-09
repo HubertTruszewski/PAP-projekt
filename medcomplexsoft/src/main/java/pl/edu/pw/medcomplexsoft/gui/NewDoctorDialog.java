@@ -41,6 +41,8 @@ public class NewDoctorDialog extends javax.swing.JDialog {
         changingDoctorId = doctor.getId();
         nameField.setText(doctor.getName());
         surnameField.setText(doctor.getSurname());
+        specializationField.setText(doctor.getSpecialization());
+        salaryField.setText(doctor.getSalary());
         dateSpinner.setValue(java.sql.Date.valueOf(doctor.getBirthDate()));
         peselField.setText(doctor.getPesel());
         if(doctor.getGender() == 'K')
@@ -101,6 +103,8 @@ public class NewDoctorDialog extends javax.swing.JDialog {
         genderLabel = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         specializationField = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        salaryField = new javax.swing.JTextField();
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -170,6 +174,8 @@ public class NewDoctorDialog extends javax.swing.JDialog {
 
         jLabel1.setText("Specjalizacja");
 
+        jLabel2.setText("Pensja");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -221,12 +227,14 @@ public class NewDoctorDialog extends javax.swing.JDialog {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(surnameLabel)
                                     .addComponent(nameLabel)
-                                    .addComponent(jLabel1))
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel2))
                                 .addGap(51, 51, 51)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(nameField)
                                     .addComponent(surnameField)
-                                    .addComponent(specializationField))))))
+                                    .addComponent(specializationField)
+                                    .addComponent(salaryField))))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -244,7 +252,11 @@ public class NewDoctorDialog extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(specializationField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(13, 13, 13)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(salaryField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(birthDateLabel)
                     .addComponent(dateSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -297,11 +309,15 @@ public class NewDoctorDialog extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addButton)
                     .addComponent(cancelButton))
-                .addGap(4, 4, 4))
+                .addGap(19, 19, 19))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    public void showDialog(){
+        setVisible(true);
+    }
 
     private void flatFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_flatFieldActionPerformed
         // TODO add your handling code here:
@@ -316,7 +332,7 @@ public class NewDoctorDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        Patient doctor = new Patient();
+        Doctor doctor = new Doctor();
         Address address = new Address();
         doctor.setName(nameField.getText());
         doctor.setSurname(surnameField.getText());
@@ -338,6 +354,8 @@ public class NewDoctorDialog extends javax.swing.JDialog {
         address.setCountry(countryField.getText());
         doctor.setAddress(address);
         doctor.setMailAddress(emailField.getText());
+        doctor.setHireDate(System.currentTimeMillis());
+        doctor.setSalary((int)salaryField.getText);
 
         int selection = JOptionPane.showConfirmDialog(this, "Czy potwierdzasz dodanie lekarz?", "Potwierdzenie",
             JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
@@ -446,6 +464,7 @@ public class NewDoctorDialog extends javax.swing.JDialog {
     private javax.swing.JLabel houseLabel;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JTextField loginField;
     private javax.swing.JLabel loginLabel;
     private javax.swing.JRadioButton maleRadioButton;
@@ -457,6 +476,7 @@ public class NewDoctorDialog extends javax.swing.JDialog {
     private javax.swing.JLabel peselLabel;
     private javax.swing.JTextField postalCodeField;
     private javax.swing.JLabel postalCodeLabel;
+    private javax.swing.JTextField salaryField;
     private javax.swing.JTextField specializationField;
     private javax.swing.JTextField streetField;
     private javax.swing.JLabel streetLabel;

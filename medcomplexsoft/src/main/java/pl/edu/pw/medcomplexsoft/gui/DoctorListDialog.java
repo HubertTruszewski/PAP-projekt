@@ -15,6 +15,7 @@ import pl.edu.pw.medcomplexsoft.database.Database;
 import pl.edu.pw.medcomplexsoft.model.Person;
 
 import pl.edu.pw.medcomplexsoft.model.Doctor;
+import pl.edu.pw.medcomplexsoft.gui.NewDoctorDialog;
 
 /**
  *
@@ -125,6 +126,7 @@ public class DoctorListDialog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+
     private void newButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
         NewDoctorDialog newDoctor = new NewDoctorDialog(null, true);
         newDoctor.setLocationRelativeTo(this.rootPane);
@@ -158,17 +160,17 @@ public class DoctorListDialog extends javax.swing.JDialog {
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
             if(selection == JOptionPane.OK_OPTION)
             {
-                if(removingDoctor.getPrescriptions().size() != 0 || removingDoctor.getAppointments().size() != 0)
-                {
-                    JOptionPane.showMessageDialog(this, "Nie można usunąć lekarza, który ma umówione wizyty.",
-                        "Błąd", JOptionPane.ERROR_MESSAGE);
-                } else {
-                    var tx = entityManager.getTransaction();
-                    tx.begin();
-                    entityManager.remove(removingDoctor);
-                    tx.commit();
-                    loadData();
-                }
+                // if(removingDoctor.getPrescriptions().size() != 0 || removingDoctor.getAppointments().size() != 0)
+                // {
+                //     JOptionPane.showMessageDialog(this, "Nie można usunąć lekarza, który ma umówione wizyty.",
+                //         "Błąd", JOptionPane.ERROR_MESSAGE);
+                // } else {
+                //     var tx = entityManager.getTransaction();
+                //     tx.begin();
+                //     entityManager.remove(removingDoctor);
+                //     tx.commit();
+                //     loadData();
+                // }
             }
         } else {
             JOptionPane.showMessageDialog(this, "Nie wybrano żadnego lekarza z listy",
@@ -177,17 +179,17 @@ public class DoctorListDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void showDataButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showDataButtonActionPerformed
-        // int selectedDoctorIndex = DoctorList.getSelectedIndex();
-        // if(selectedDoctorIndex != -1)
-        // {
-        //     Doctor selectedDoctor = doctorObjectList.get(selectedDoctortIndex);
-        //     DoctorDataViewDialog doctorDataViewDialog = new DoctorDataViewDialog(null, true, selectedDoctor);
-        //     doctorDataViewDialog.setLocationRelativeTo(this.rootPane);
-        //     doctorDataViewDialog.showDialog();
-        // } else {
-        //     JOptionPane.showMessageDialog(this, "Nie wybrano żadnego lekarza z listy",
-        //         "Błąd", JOptionPane.ERROR_MESSAGE);
-        // }
+        int selectedDoctorIndex = DoctorList.getSelectedIndex();
+        if(selectedDoctorIndex != -1)
+        {
+            Doctor selectedDoctor = doctorObjectList.get(selectedDoctorIndex);
+            DoctorDataViewDialog doctorDataViewDialog = new DoctorDataViewDialog(null, true, selectedDoctor);
+            doctorDataViewDialog.setLocationRelativeTo(this.rootPane);
+            doctorDataViewDialog.showDialog();
+        } else {
+            JOptionPane.showMessageDialog(this, "Nie wybrano żadnego lekarza z listy",
+                "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_showDataButtonActionPerformed
 
     private void loadData(){
@@ -198,7 +200,8 @@ public class DoctorListDialog extends javax.swing.JDialog {
         for(int i=1; i<=doctorObjectList.size(); ++i)
         {
             var doctor = doctorObjectList.get(i-1);
-            listData.add(i + ". " + doctor.getFullName() + " "+ doctor.getSpecialization());
+            listData.add(i + ". " + doctor.getFullName());
+            // + " "+ doctor.getSpecialization()
         }
         DoctorList.setListData(listData);
     }
