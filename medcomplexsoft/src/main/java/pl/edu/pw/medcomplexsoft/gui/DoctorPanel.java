@@ -124,6 +124,11 @@ public class DoctorPanel extends javax.swing.JFrame {
         appointmentMenu.setText("Wizyty");
 
         newAppointmentItem.setText("Zaplanuj");
+        newAppointmentItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newAppointmentItemActionPerformed(evt);
+            }
+        });
         appointmentMenu.add(newAppointmentItem);
 
         appointmentListItem.setText("Lista");
@@ -206,6 +211,12 @@ public class DoctorPanel extends javax.swing.JFrame {
         newPatientDialog.setVisible(true);
 
     }//GEN-LAST:event_newPatientItemActionPerformed
+
+    private void newAppointmentItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newAppointmentItemActionPerformed
+        NewAppointment newAppointment  = new NewAppointment (null, true, loggedDoctor);
+        newAppointment.setLocationRelativeTo(this.rootPane);
+        newAppointment.setVisible(true);
+    }//GEN-LAST:event_newAppointmentItemActionPerformed
 
     /**
      * @param args the command line arguments

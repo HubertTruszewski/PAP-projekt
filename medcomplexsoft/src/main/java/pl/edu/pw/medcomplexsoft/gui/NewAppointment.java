@@ -4,6 +4,9 @@
  */
 package pl.edu.pw.medcomplexsoft.gui;
 
+import pl.edu.pw.medcomplexsoft.model.Person;
+import pl.edu.pw.medcomplexsoft.model.Doctor;
+
 /**
  *
  * @author Grzesiek
@@ -13,9 +16,15 @@ public class NewAppointment extends javax.swing.JDialog {
     /**
      * Creates new form NewAppointment
      */
+
     public NewAppointment(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+        super(parent, modal);      
         initComponents();
+    }
+    public NewAppointment(java.awt.Frame parent, boolean modal, Person person) {
+        super(parent, modal);      
+        initComponents();
+        loggedPerson = person;
     }
 
     /**
@@ -30,7 +39,6 @@ public class NewAppointment extends javax.swing.JDialog {
         patientIdLabel = new javax.swing.JLabel();
         patientIdField = new javax.swing.JTextField();
         doctorIdLabel = new javax.swing.JLabel();
-        doctorIdField = new javax.swing.JTextField();
         dateLabel = new javax.swing.JLabel();
         daySpinner = new javax.swing.JSpinner();
         monthSpinner = new javax.swing.JSpinner();
@@ -46,6 +54,7 @@ public class NewAppointment extends javax.swing.JDialog {
         serviceField = new javax.swing.JTextField();
         addButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
+        selectDoctorButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Nowa wizyta");
@@ -62,13 +71,7 @@ public class NewAppointment extends javax.swing.JDialog {
             }
         });
 
-        doctorIdLabel.setText("ID lekarza");
-
-        doctorIdField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                doctorIdFieldActionPerformed(evt);
-            }
-        });
+        doctorIdLabel.setText("lekarz");
 
         dateLabel.setText("Data");
 
@@ -114,6 +117,13 @@ public class NewAppointment extends javax.swing.JDialog {
             }
         });
 
+        selectDoctorButton.setText("wybierz");
+        selectDoctorButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selectDoctorButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -141,10 +151,6 @@ public class NewAppointment extends javax.swing.JDialog {
                                 .addGap(18, 18, 18)
                                 .addComponent(durationField))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(doctorIdLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(doctorIdField, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(patientIdLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(patientIdField))
@@ -162,8 +168,12 @@ public class NewAppointment extends javax.swing.JDialog {
                                         .addComponent(hourSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(yearSpinner)
-                                    .addComponent(minuteSpinner))))))
+                                    .addComponent(yearSpinner, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+                                    .addComponent(minuteSpinner)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(doctorIdLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(66, 66, 66)
+                                .addComponent(selectDoctorButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addGap(57, 57, 57))
         );
         layout.setVerticalGroup(
@@ -174,10 +184,10 @@ public class NewAppointment extends javax.swing.JDialog {
                     .addComponent(patientIdField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(patientIdLabel))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(doctorIdLabel)
-                    .addComponent(doctorIdField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(selectDoctorButton))
+                .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(yearSpinner, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -201,7 +211,7 @@ public class NewAppointment extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(serviceLabel)
                     .addComponent(serviceField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cancelButton)
                     .addComponent(addButton))
@@ -215,10 +225,6 @@ public class NewAppointment extends javax.swing.JDialog {
     private void patientIdFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_patientIdFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_patientIdFieldActionPerformed
-
-    private void doctorIdFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doctorIdFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_doctorIdFieldActionPerformed
 
     private void durationFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_durationFieldActionPerformed
         // TODO add your handling code here:
@@ -239,6 +245,16 @@ public class NewAppointment extends javax.swing.JDialog {
     private void serviceFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_serviceFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_serviceFieldActionPerformed
+
+    private void selectDoctorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectDoctorButtonActionPerformed
+        DoctorListDialog doctorListDialog = new DoctorListDialog(null, true, loggedPerson);
+        doctorListDialog.setLocationRelativeTo(this.rootPane);
+        choosenDoctor = doctorListDialog.showDialog();
+        if(choosenDoctor != null)
+        {
+            selectDoctorButton.setText(choosenDoctor.getFullName());
+        }
+    }//GEN-LAST:event_selectDoctorButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -281,13 +297,14 @@ public class NewAppointment extends javax.swing.JDialog {
             }
         });
     }
+    private Person loggedPerson;
+    private Doctor choosenDoctor;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
     private javax.swing.JButton cancelButton;
     private javax.swing.JLabel dateLabel;
     private javax.swing.JSpinner daySpinner;
-    private javax.swing.JTextField doctorIdField;
     private javax.swing.JLabel doctorIdLabel;
     private javax.swing.JTextField durationField;
     private javax.swing.JLabel durationLabel;
@@ -298,6 +315,7 @@ public class NewAppointment extends javax.swing.JDialog {
     private javax.swing.JLabel officeLabel;
     private javax.swing.JTextField patientIdField;
     private javax.swing.JLabel patientIdLabel;
+    private javax.swing.JButton selectDoctorButton;
     private javax.swing.JTextField serviceField;
     private javax.swing.JLabel serviceLabel;
     private javax.swing.JLabel timeLabel;

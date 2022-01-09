@@ -59,11 +59,6 @@
                               <Component id="durationField" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
-                              <Component id="doctorIdLabel" min="-2" pref="82" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="doctorIdField" pref="156" max="32767" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
                               <Component id="patientIdLabel" min="-2" pref="82" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="patientIdField" max="32767" attributes="0"/>
@@ -85,9 +80,14 @@
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="yearSpinner" max="32767" attributes="0"/>
+                                  <Component id="yearSpinner" pref="60" max="32767" attributes="0"/>
                                   <Component id="minuteSpinner" max="32767" attributes="0"/>
                               </Group>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="doctorIdLabel" min="-2" pref="82" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
+                              <Component id="selectDoctorButton" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -105,11 +105,11 @@
                   <Component id="patientIdLabel" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="103" groupAlignment="1" attributes="0">
                   <Component id="doctorIdLabel" min="-2" max="-2" attributes="0"/>
-                  <Component id="doctorIdField" min="-2" max="-2" attributes="0"/>
+                  <Component id="selectDoctorButton" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="yearSpinner" alignment="1" max="32767" attributes="0"/>
                   <Group type="103" alignment="0" groupAlignment="3" attributes="0">
@@ -139,7 +139,7 @@
                   <Component id="serviceLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="serviceField" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="30" max="32767" attributes="0"/>
+              <EmptySpace pref="21" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="cancelButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="addButton" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -162,13 +162,8 @@
     </Component>
     <Component class="javax.swing.JLabel" name="doctorIdLabel">
       <Properties>
-        <Property name="text" type="java.lang.String" value="ID lekarza"/>
+        <Property name="text" type="java.lang.String" value="lekarz"/>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="doctorIdField">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="doctorIdFieldActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="dateLabel">
       <Properties>
@@ -237,6 +232,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cancelButtonActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="selectDoctorButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="wybierz"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selectDoctorButtonActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
