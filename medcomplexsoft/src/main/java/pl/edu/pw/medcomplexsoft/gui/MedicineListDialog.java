@@ -4,7 +4,6 @@
  */
 package pl.edu.pw.medcomplexsoft.gui;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -22,6 +21,7 @@ import pl.edu.pw.medcomplexsoft.model.Medicine;
  */
 public class MedicineListDialog extends javax.swing.JDialog {
 
+    private List<Medicine> medicineObjectList;
     /**
      * Creates new form MedicineListDialog
      */
@@ -114,7 +114,6 @@ public class MedicineListDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
-        // TODO add your handling code here:
         setVisible(false);
         dispose();
     }//GEN-LAST:event_okButtonActionPerformed

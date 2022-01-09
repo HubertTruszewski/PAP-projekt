@@ -15,7 +15,7 @@ import pl.edu.pw.medcomplexsoft.model.Medicine;
  * @author hubert
  */
 public class NewMedicineDialog extends javax.swing.JDialog {
-
+    private long changingMedicineId = -1;
     /**
      * Creates new form NewMedicine
      */
@@ -27,7 +27,7 @@ public class NewMedicineDialog extends javax.swing.JDialog {
         initComponents();
         nameField.setText(medicine.getName());
         manufactuerField.setText(medicine.getManufacturer());
-        changiingMedicineId = medicine.getId();
+        changingMedicineId = medicine.getId();
     }
 
     /**
@@ -100,8 +100,8 @@ public class NewMedicineDialog extends javax.swing.JDialog {
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         Medicine medicine = new Medicine();
-        if(changiingMedicineId != -1)
-            medicine.setId(changiingMedicineId);
+        if(changingMedicineId != -1)
+            medicine.setId(changingMedicineId);
         medicine.setName(nameField.getText());
         medicine.setManufacturer(manufactuerField.getText());
         int selection = JOptionPane.showConfirmDialog(this, "Czy potwierdzasz dodanie leku?", "Potwierdzenie",
@@ -111,7 +111,7 @@ public class NewMedicineDialog extends javax.swing.JDialog {
             EntityManager entityManager = Database.getEntityManager();
             var tx = entityManager.getTransaction();
             tx.begin();
-            if(changiingMedicineId != -1)
+            if(changingMedicineId != -1)
                 entityManager.merge(medicine);
             else
                 entityManager.persist(medicine);

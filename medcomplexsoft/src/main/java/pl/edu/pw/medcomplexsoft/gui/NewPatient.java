@@ -105,12 +105,6 @@ public class NewPatient extends javax.swing.JDialog {
 
         nameLabel.setText("Imię");
 
-        nameField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nameFieldActionPerformed(evt);
-            }
-        });
-
         surnameLabel.setText("Nazwisko");
 
         birthDateLabel.setText("Data urodzenia");
@@ -127,12 +121,6 @@ public class NewPatient extends javax.swing.JDialog {
         houseLabel.setText("Numer domu");
 
         flatLabel.setText("Numer mieszkania");
-
-        flatField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                flatFieldActionPerformed(evt);
-            }
-        });
 
         cityLabel.setText("Miasto");
 
@@ -172,7 +160,7 @@ public class NewPatient extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(55, 55, 55)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(passwordLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(surnameLabel)
@@ -190,7 +178,7 @@ public class NewPatient extends javax.swing.JDialog {
                     .addComponent(emailLabel))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(48, 83, Short.MAX_VALUE)
+                        .addGap(48, 121, Short.MAX_VALUE)
                         .addComponent(cancelButton)
                         .addGap(18, 18, 18)
                         .addComponent(addButton)
@@ -284,12 +272,16 @@ public class NewPatient extends javax.swing.JDialog {
                     .addComponent(cancelButton)))
         );
 
-        setSize(new java.awt.Dimension(469, 544));
+        setSize(new java.awt.Dimension(480, 780));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     public void showDialog() {
         setVisible(true);
+    }
+
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        dispose();
     }
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
