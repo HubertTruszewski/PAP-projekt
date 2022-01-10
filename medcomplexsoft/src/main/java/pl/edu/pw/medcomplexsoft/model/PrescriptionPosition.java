@@ -19,5 +19,7 @@ public class PrescriptionPosition {
     private long id;
     private String dosage;
     @ManyToOne
+    private Prescription prescription;
+    @ManyToOne
     private Medicine medicine;
 }

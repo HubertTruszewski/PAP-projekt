@@ -145,6 +145,7 @@ public class NewPrescriptionDialog extends javax.swing.JDialog {
         prescription.setIssueDate(LocalDate.now());
         prescription.setExpirationDate(LocalDate.now().plusDays(14));
         prescription.setPositions(prescriptionPositions);
+        prescription.getPositions().forEach(pp -> {pp.setPrescription(prescription);});
         prescription.setStatus(Status.ACTIVE);
 
         if(choosenPatient == null)
@@ -178,8 +179,9 @@ public class NewPrescriptionDialog extends javax.swing.JDialog {
     private void choosePatientButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_choosePatientButtonActionPerformed
         PatientListDialog patientListDialog = new PatientListDialog(null, true);
         patientListDialog.setLocationRelativeTo(this.rootPane);
-        choosenPatient = patientListDialog.showDialog();
-        if(choosenPatient != null)
+        var result = patientListDialog.showDialog();
+        if(result != null)
+            choosenPatient = result;
             patientNameLabel.setText(choosenPatient.getFullName());
     }//GEN-LAST:event_choosePatientButtonActionPerformed
 

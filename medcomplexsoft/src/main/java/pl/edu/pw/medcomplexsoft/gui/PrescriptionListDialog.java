@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 
 import pl.edu.pw.medcomplexsoft.database.Database;
 import pl.edu.pw.medcomplexsoft.model.Doctor;
+import pl.edu.pw.medcomplexsoft.model.Patient;
 import pl.edu.pw.medcomplexsoft.model.Person;
 import pl.edu.pw.medcomplexsoft.model.Prescription;
 import pl.edu.pw.medcomplexsoft.model.Status;
@@ -35,6 +36,8 @@ public class PrescriptionListDialog extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.user = user;
+        if(!(user instanceof Doctor))
+            cancelReceiptButton.setVisible(false);
     }
 
     /**
@@ -45,12 +48,16 @@ public class PrescriptionListDialog extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jScrollPane1 = new javax.swing.JScrollPane();
         receiptsList = new javax.swing.JList<>();
         newReceiptButton = new javax.swing.JButton();
         cancelReceiptButton = new javax.swing.JButton();
         exitButton = new javax.swing.JButton();
         showReceiptButton = new javax.swing.JButton();
+        activeRadioButton = new javax.swing.JRadioButton();
+        cancelledRadioButton = new javax.swing.JRadioButton();
+        realisedRadioButton = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Lista recept");
@@ -81,6 +88,31 @@ public class PrescriptionListDialog extends javax.swing.JDialog {
             }
         });
 
+        buttonGroup1.add(activeRadioButton);
+        activeRadioButton.setSelected(true);
+        activeRadioButton.setText("Wystawiona");
+        activeRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                activeRadioButtonActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(cancelledRadioButton);
+        cancelledRadioButton.setText("Anulowana");
+        cancelledRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelledRadioButtonActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(realisedRadioButton);
+        realisedRadioButton.setText("Zrealizowana");
+        realisedRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                realisedRadioButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -88,11 +120,15 @@ public class PrescriptionListDialog extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(cancelReceiptButton, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                    .addComponent(newReceiptButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(exitButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(showReceiptButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(cancelReceiptButton, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                        .addComponent(newReceiptButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(exitButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(showReceiptButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(activeRadioButton)
+                    .addComponent(cancelledRadioButton)
+                    .addComponent(realisedRadioButton))
                 .addGap(0, 28, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -103,8 +139,14 @@ public class PrescriptionListDialog extends javax.swing.JDialog {
                 .addComponent(newReceiptButton)
                 .addGap(32, 32, 32)
                 .addComponent(cancelReceiptButton)
-                .addGap(124, 124, 124)
+                .addGap(39, 39, 39)
                 .addComponent(showReceiptButton)
+                .addGap(60, 60, 60)
+                .addComponent(activeRadioButton)
+                .addGap(18, 18, 18)
+                .addComponent(cancelledRadioButton)
+                .addGap(18, 18, 18)
+                .addComponent(realisedRadioButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(exitButton)
                 .addGap(70, 70, 70))
@@ -153,6 +195,18 @@ public class PrescriptionListDialog extends javax.swing.JDialog {
         newPrescriptionDialog.setVisible(true);
     }//GEN-LAST:event_newReceiptButtonActionPerformed
 
+    private void activeRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_activeRadioButtonActionPerformed
+        loadData();
+    }//GEN-LAST:event_activeRadioButtonActionPerformed
+
+    private void cancelledRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelledRadioButtonActionPerformed
+        loadData();
+    }//GEN-LAST:event_cancelledRadioButtonActionPerformed
+
+    private void realisedRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_realisedRadioButtonActionPerformed
+        loadData();
+    }//GEN-LAST:event_realisedRadioButtonActionPerformed
+
     public void showDialog(){
         loadData();
         setVisible(true);
@@ -165,9 +219,25 @@ public class PrescriptionListDialog extends javax.swing.JDialog {
         CriteriaQuery<Prescription> criteriaQuery = criteriaBuilder.createQuery(Prescription.class);
         Root<Prescription> prescriptionRoot = criteriaQuery.from(Prescription.class);
 
-        Predicate doctorId = criteriaBuilder.equal(prescriptionRoot.get("prescribingDoctor").get("id"), user.getId());
+        Predicate statusPredicate = criteriaBuilder.equal(prescriptionRoot.get("status"), Status.ACTIVE);
+        if(cancelledRadioButton.isSelected())
+            statusPredicate = criteriaBuilder.equal(prescriptionRoot.get("status"), Status.CANCELLED);
+        else if(realisedRadioButton.isSelected())
+            statusPredicate = criteriaBuilder.equal(prescriptionRoot.get("status"), Status.REALISED);
 
-        criteriaQuery.where(doctorId);
+        Predicate secondPredicate;
+        Predicate finalPredicate;
+        if(user != null && user instanceof Doctor) {
+            secondPredicate = criteriaBuilder.equal(prescriptionRoot.get("doctor").get("id"), user.getId());
+            finalPredicate = criteriaBuilder.and(secondPredicate, statusPredicate);
+        }
+        else if(user != null && user instanceof Patient) {
+            secondPredicate =  criteriaBuilder.equal(prescriptionRoot.get("patient").get("id"), user.getId());
+            finalPredicate = criteriaBuilder.and(secondPredicate, statusPredicate);
+        } else
+            finalPredicate = statusPredicate;
+
+        criteriaQuery.where(finalPredicate);
         prescriptionObjectList = entityManager.createQuery(criteriaQuery).getResultList();
         Vector<String> listData = new Vector<String>();
         prescriptionObjectList.forEach(p -> listData.add("Recepta nr " + p.getId() + " dla  " + p.getReceivingPatient().getFullName()));
@@ -218,10 +288,14 @@ public class PrescriptionListDialog extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JRadioButton activeRadioButton;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton cancelReceiptButton;
+    private javax.swing.JRadioButton cancelledRadioButton;
     private javax.swing.JButton exitButton;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton newReceiptButton;
+    private javax.swing.JRadioButton realisedRadioButton;
     private javax.swing.JList<String> receiptsList;
     private javax.swing.JButton showReceiptButton;
     // End of variables declaration//GEN-END:variables

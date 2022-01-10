@@ -206,9 +206,9 @@ public class DoctorPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_newPatientItemActionPerformed
 
     private void newAppointmentItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newAppointmentItemActionPerformed
-        NewAppointment newAppointment  = new NewAppointment (null, true, loggedDoctor);
-        newAppointment.setLocationRelativeTo(this.rootPane);
-        newAppointment.setVisible(true);
+        CreateNewAppointment createNewAppointment = new CreateNewAppointment(null, true, loggedDoctor);
+        createNewAppointment.setLocationRelativeTo(this.rootPane);
+        createNewAppointment.showDialog();
     }//GEN-LAST:event_newAppointmentItemActionPerformed
 
     /**

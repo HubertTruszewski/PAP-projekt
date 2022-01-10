@@ -8,15 +8,16 @@ import java.util.List;
 import java.util.Vector;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.swing.JOptionPane;
 
 import pl.edu.pw.medcomplexsoft.database.Database;
-import pl.edu.pw.medcomplexsoft.model.Appointment;
-import pl.edu.pw.medcomplexsoft.model.Person;
-import pl.edu.pw.medcomplexsoft.model.Status;
+import pl.edu.pw.medcomplexsoft.model.*;
+
 
 /**
  *
@@ -47,12 +48,16 @@ public class AppointmentsList extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jScrollPane1 = new javax.swing.JScrollPane();
         appointmentList = new javax.swing.JList<>();
         newAppointmentButton = new javax.swing.JButton();
-        changeAppointmentButton = new javax.swing.JButton();
         cancelAppointmentButton = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        scheduledVisitRadioButton = new javax.swing.JRadioButton();
+        cancelledRadioButton = new javax.swing.JRadioButton();
+        realisedRadioButton = new javax.swing.JRadioButton();
+        detailsButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Lista wizyt");
@@ -60,45 +65,166 @@ public class AppointmentsList extends javax.swing.JDialog {
         jScrollPane1.setViewportView(appointmentList);
 
         newAppointmentButton.setText("Nowa");
-
-        changeAppointmentButton.setText("Edytuj");
+        newAppointmentButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newAppointmentButtonActionPerformed(evt);
+            }
+        });
 
         cancelAppointmentButton.setText("Anuluj");
+        cancelAppointmentButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelAppointmentButtonActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Zamknij");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(scheduledVisitRadioButton);
+        scheduledVisitRadioButton.setSelected(true);
+        scheduledVisitRadioButton.setText("Zaplanowane");
+        scheduledVisitRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                scheduledVisitRadioButtonActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(cancelledRadioButton);
+        cancelledRadioButton.setText("Anulowane");
+        cancelledRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelledRadioButtonActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(realisedRadioButton);
+        realisedRadioButton.setText("Zrealizowane");
+        realisedRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                realisedRadioButtonActionPerformed(evt);
+            }
+        });
+
+        detailsButton.setText("Szczegóły");
+        detailsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                detailsButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(newAppointmentButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(changeAppointmentButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cancelAppointmentButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE))
-                .addGap(0, 28, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(45, 45, 45)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(scheduledVisitRadioButton)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cancelledRadioButton, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addComponent(realisedRadioButton))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(cancelAppointmentButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(newAppointmentButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(detailsButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 713, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(36, 36, 36)
+                .addGap(29, 29, 29)
                 .addComponent(newAppointmentButton)
-                .addGap(46, 46, 46)
-                .addComponent(changeAppointmentButton)
-                .addGap(56, 56, 56)
+                .addGap(18, 18, 18)
+                .addComponent(detailsButton)
+                .addGap(18, 18, 18)
                 .addComponent(cancelAppointmentButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 416, Short.MAX_VALUE)
+                .addGap(61, 61, 61)
+                .addComponent(scheduledVisitRadioButton)
+                .addGap(18, 18, 18)
+                .addComponent(cancelledRadioButton)
+                .addGap(18, 18, 18)
+                .addComponent(realisedRadioButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1)
-                .addGap(47, 47, 47))
+                .addGap(36, 36, 36))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void scheduledVisitRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scheduledVisitRadioButtonActionPerformed
+        loadData();
+    }//GEN-LAST:event_scheduledVisitRadioButtonActionPerformed
+
+    private void cancelledRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelledRadioButtonActionPerformed
+        loadData();
+    }//GEN-LAST:event_cancelledRadioButtonActionPerformed
+
+    private void realisedRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_realisedRadioButtonActionPerformed
+        loadData();
+    }//GEN-LAST:event_realisedRadioButtonActionPerformed
+
+    private void cancelAppointmentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelAppointmentButtonActionPerformed
+        int selectedIndex = appointmentList.getSelectedIndex();
+        if(selectedIndex != -1) {
+            Appointment selectedAppointment = appointmentObjectList.get(selectedIndex);
+            if(selectedAppointment.getStatus() == Status.CANCELLED)
+                JOptionPane.showMessageDialog(this, "Nie można anulować już anulowanej wizyty",
+                                                "Błąd", JOptionPane.ERROR_MESSAGE);
+            else if(selectedAppointment.getStatus() == Status.REALISED)
+                JOptionPane.showMessageDialog(this, "Nie można anulować zrealizowanej wizyty",
+                                                    "Błąd", JOptionPane.ERROR_MESSAGE);
+            else if(selectedAppointment.getStatus() == Status.ACTIVE) {
+                int selection = JOptionPane.showConfirmDialog(this, "Czy na pewno chcesz anulować tę wizytę?",
+                                                                "Potwierdzenie", JOptionPane.OK_CANCEL_OPTION);
+                if(selection == JOptionPane.OK_OPTION) {
+                    EntityManager entityManager = Database.getEntityManager();
+                    EntityTransaction tx = entityManager.getTransaction();
+                    tx.begin();
+                    selectedAppointment.setStatus(Status.CANCELLED);
+                    entityManager.merge(selectedAppointment);
+                    tx.commit();
+                    loadData();
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Nie wybrano wizyty do anulowania",
+                                            "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_cancelAppointmentButtonActionPerformed
+
+    private void detailsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_detailsButtonActionPerformed
+        int selectedIndex = appointmentList.getSelectedIndex();
+        if(selectedIndex != -1)
+        {
+            Appointment selectedAppointment = appointmentObjectList.get(selectedIndex);
+            AppointmentDataView appointmentDataView = new AppointmentDataView(null, true, selectedAppointment, user);
+            appointmentDataView.setLocationRelativeTo(this.rootPane);;
+            if(appointmentDataView.showDialog())
+                loadData();
+        } else {
+            JOptionPane.showMessageDialog(this, "Nie wybrano wizyty z listy", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_detailsButtonActionPerformed
+
+    private void newAppointmentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newAppointmentButtonActionPerformed
+        CreateNewAppointment createNewAppointment = new CreateNewAppointment(null, true, user);
+        createNewAppointment.showDialog();
+    }//GEN-LAST:event_newAppointmentButtonActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void loadData(){
         EntityManager entityManager = Database.getEntityManager();
@@ -107,15 +233,29 @@ public class AppointmentsList extends javax.swing.JDialog {
         CriteriaQuery<Appointment> criteriaQuery = criteriaBuilder.createQuery(Appointment.class);
         Root<Appointment> appointmentRoot = criteriaQuery.from(Appointment.class);
 
-        Predicate doctorId = criteriaBuilder.equal(appointmentRoot.get("doctor").get("id"), user.getId());
-        Predicate status = criteriaBuilder.equal(appointmentRoot.get("status"), Status.ACTIVE);
-        Predicate finalPredicate = criteriaBuilder.and(doctorId, status);
+        Predicate statusPredicate = criteriaBuilder.equal(appointmentRoot.get("status"), Status.ACTIVE);
+        if(cancelledRadioButton.isSelected())
+            statusPredicate = criteriaBuilder.equal(appointmentRoot.get("status"), Status.CANCELLED);
+        else if(realisedRadioButton.isSelected())
+            statusPredicate = criteriaBuilder.equal(appointmentRoot.get("status"), Status.REALISED);
+
+        Predicate secondPredicate;
+        Predicate finalPredicate;
+        if(user != null && user instanceof Doctor) {
+            secondPredicate = criteriaBuilder.equal(appointmentRoot.get("doctor").get("id"), user.getId());
+            finalPredicate = criteriaBuilder.and(secondPredicate, statusPredicate);
+        }
+        else if(user != null && user instanceof Patient) {
+            secondPredicate =  criteriaBuilder.equal(appointmentRoot.get("patient").get("id"), user.getId());
+            finalPredicate = criteriaBuilder.and(secondPredicate, statusPredicate);
+        } else
+            finalPredicate = statusPredicate;
 
         criteriaQuery.where(finalPredicate);
         criteriaQuery.orderBy(criteriaBuilder.asc(appointmentRoot.get("appointmentDate")));
         appointmentObjectList = entityManager.createQuery(criteriaQuery).getResultList();
         Vector<String> listData = new Vector<String>();
-        appointmentObjectList.forEach(p -> listData.add(p.getAppointmentDate().toString() + " | " + p.getPatient().getFullName() + " | Gabinet:" + p.getOffice()));
+        appointmentObjectList.forEach(p -> listData.add(p.getAppointmentDate().toString() + " | " + p.getPatient().getFullName() + " | Gabinet: " + p.getOffice()));
         appointmentList.setListData(listData);
     }
 
@@ -168,10 +308,14 @@ public class AppointmentsList extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> appointmentList;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton cancelAppointmentButton;
-    private javax.swing.JButton changeAppointmentButton;
+    private javax.swing.JRadioButton cancelledRadioButton;
+    private javax.swing.JButton detailsButton;
     private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton newAppointmentButton;
+    private javax.swing.JRadioButton realisedRadioButton;
+    private javax.swing.JRadioButton scheduledVisitRadioButton;
     // End of variables declaration//GEN-END:variables
 }

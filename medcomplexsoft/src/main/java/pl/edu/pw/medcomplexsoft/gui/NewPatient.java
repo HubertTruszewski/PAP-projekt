@@ -33,6 +33,7 @@ public class NewPatient extends javax.swing.JDialog {
     }
 
     public NewPatient(java.awt.Frame parent, boolean modal, Patient patient) {
+        super(parent, modal);
         initComponents();
         changingPatientId = patient.getId();
         nameField.setText(patient.getName());

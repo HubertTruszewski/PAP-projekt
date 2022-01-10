@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
 import lombok.Data;
@@ -21,6 +21,6 @@ public class Service {
     private long id;
     private String name;
     private double price;
-    @ManyToMany
-    private List<Appointment> appointments;
+    @OneToMany(mappedBy = "service")
+    private List<ServicePosition> servicePositions;
 }

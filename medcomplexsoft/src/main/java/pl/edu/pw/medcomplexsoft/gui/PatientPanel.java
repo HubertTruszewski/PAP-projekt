@@ -144,9 +144,9 @@ public class PatientPanel extends javax.swing.JFrame {
 
     private void newAppointmentItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newAppointmentItemActionPerformed
         // TODO add your handling code here:
-        CreateNewAppointment window = new CreateNewAppointment(this, true);
-        window.setLocationRelativeTo(this.rootPane);
-        window.setVisible(true);
+        // CreateNewAppointment window = new CreateNewAppointment(this, true);
+        // window.setLocationRelativeTo(this.rootPane);
+        // window.setVisible(true);
     }//GEN-LAST:event_newAppointmentItemActionPerformed
 
     private void actualAppointmentsItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualAppointmentsItemActionPerformed
