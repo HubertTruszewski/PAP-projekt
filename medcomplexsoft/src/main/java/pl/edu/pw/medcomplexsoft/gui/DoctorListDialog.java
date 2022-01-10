@@ -11,20 +11,30 @@ import java.util.Vector;
 import pl.edu.pw.medcomplexsoft.database.Database;
 
 import pl.edu.pw.medcomplexsoft.model.Doctor;
+import pl.edu.pw.medcomplexsoft.model.Person;
+import pl.edu.pw.medcomplexsoft.model.Patient;
 
 /**
  *
  * @author kubix
  */
 public class DoctorListDialog extends javax.swing.JDialog {
-
+    private Person user;
     /**
      * Creates new form DoctorListDialog
      */
 
-    public DoctorListDialog(java.awt.Frame parent, boolean modal) {
+    public DoctorListDialog(java.awt.Frame parent, boolean modal, Person loggedUser) {
         super(parent, modal);
         initComponents();
+        user = loggedUser;
+        if(user != null && (user instanceof Doctor || user instanceof Patient))
+        {
+            newButton.setVisible(false);
+            editButton.setVisible(false);
+            deleteButton.setVisible(false);
+            showDataButton.setVisible(false);
+        }
     }
 
     /**
@@ -241,7 +251,7 @@ public class DoctorListDialog extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                DoctorListDialog dialog = new DoctorListDialog(new javax.swing.JFrame(), true);
+                DoctorListDialog dialog = new DoctorListDialog(new javax.swing.JFrame(), true, null);
 
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override

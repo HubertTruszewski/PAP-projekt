@@ -31,6 +31,7 @@ public class DoctorPanel extends javax.swing.JFrame {
 
         jMenuBar1 = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
+        changePasswordMenu = new javax.swing.JMenuItem();
         exitItem = new javax.swing.JMenuItem();
         patientMenu = new javax.swing.JMenu();
         newPatientItem = new javax.swing.JMenuItem();
@@ -50,6 +51,14 @@ public class DoctorPanel extends javax.swing.JFrame {
         setSize(new java.awt.Dimension(1200, 900));
 
         fileMenu.setText("Plik");
+
+        changePasswordMenu.setText("Zmień hasło");
+        changePasswordMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                changePasswordMenuActionPerformed(evt);
+            }
+        });
+        fileMenu.add(changePasswordMenu);
 
         exitItem.setText("Wyjście");
         exitItem.addActionListener(new java.awt.event.ActionListener() {
@@ -211,6 +220,12 @@ public class DoctorPanel extends javax.swing.JFrame {
         createNewAppointment.showDialog();
     }//GEN-LAST:event_newAppointmentItemActionPerformed
 
+    private void changePasswordMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changePasswordMenuActionPerformed
+        ChangePasswordDialog changePasswordDialog = new ChangePasswordDialog(null, true, loggedDoctor);
+        changePasswordDialog.setLocationRelativeTo(this.rootPane);
+        changePasswordDialog.showDialog();
+    }//GEN-LAST:event_changePasswordMenuActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -249,6 +264,7 @@ public class DoctorPanel extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem appointmentListItem;
     private javax.swing.JMenu appointmentMenu;
+    private javax.swing.JMenuItem changePasswordMenu;
     private javax.swing.JMenuItem exitItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenuBar jMenuBar1;

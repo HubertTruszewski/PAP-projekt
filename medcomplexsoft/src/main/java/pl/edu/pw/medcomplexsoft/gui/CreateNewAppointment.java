@@ -180,7 +180,7 @@ public class CreateNewAppointment extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void chooseDoctorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseDoctorButtonActionPerformed
-        DoctorListDialog doctorListDialog = new DoctorListDialog(null, true);
+        DoctorListDialog doctorListDialog = new DoctorListDialog(null, true, user);
         doctorListDialog.setLocationRelativeTo(this.rootPane);
         choosenDoctor = doctorListDialog.showDialog();
         if(choosenDoctor != null)

@@ -34,6 +34,7 @@ public class ReceptionistPanel extends javax.swing.JFrame {
 
         jMenuBar1 = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
+        changePasswordItem = new javax.swing.JMenuItem();
         exitItem = new javax.swing.JMenuItem();
         patientMenu = new javax.swing.JMenu();
         newPatientItem = new javax.swing.JMenuItem();
@@ -63,6 +64,14 @@ public class ReceptionistPanel extends javax.swing.JFrame {
         setSize(new java.awt.Dimension(1200, 900));
 
         fileMenu.setText("Plik");
+
+        changePasswordItem.setText("Zmień hasło");
+        changePasswordItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                changePasswordItemActionPerformed(evt);
+            }
+        });
+        fileMenu.add(changePasswordItem);
 
         exitItem.setText("Wyjście");
         exitItem.addActionListener(new java.awt.event.ActionListener() {
@@ -275,7 +284,7 @@ public class ReceptionistPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_addNewDoctorMenuActionPerformed
 
     private void doctorListItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doctorListItemActionPerformed
-        DoctorListDialog doctorsListDialog = new DoctorListDialog(null, true);
+        DoctorListDialog doctorsListDialog = new DoctorListDialog(null, true, loggedReceptionist);
         doctorsListDialog.setLocationRelativeTo(this.rootPane);
         doctorsListDialog.showDialog();
     }//GEN-LAST:event_doctorListItemActionPerformed
@@ -286,7 +295,7 @@ public class ReceptionistPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_serviceListItemActionPerformed
 
     private void serviceListMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_serviceListMenuActionPerformed
-        ServiceListDialog serviceListDiaog = new ServiceListDialog(null, true);
+        ServiceListDialog serviceListDiaog = new ServiceListDialog(null, true, loggedReceptionist);
         serviceListDiaog.showDialog();
     }//GEN-LAST:event_serviceListMenuActionPerformed
 
@@ -301,6 +310,12 @@ public class ReceptionistPanel extends javax.swing.JFrame {
         receptionistListDialog.setLocationRelativeTo(this.rootPane);
         receptionistListDialog.showDialog();
     }//GEN-LAST:event_receptionistListMenuActionPerformed
+
+    private void changePasswordItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changePasswordItemActionPerformed
+        ChangePasswordDialog changePasswordDialog = new ChangePasswordDialog(null, true, loggedReceptionist);
+        changePasswordDialog.setLocationRelativeTo(this.rootPane);
+        changePasswordDialog.showDialog();
+    }//GEN-LAST:event_changePasswordItemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -341,6 +356,7 @@ public class ReceptionistPanel extends javax.swing.JFrame {
     private javax.swing.JMenuItem addNewDoctorMenu;
     private javax.swing.JMenuItem appointmentListItem;
     private javax.swing.JMenu appointmentMenu;
+    private javax.swing.JMenuItem changePasswordItem;
     private javax.swing.JMenuItem doctorListItem;
     private javax.swing.JMenu doctorMenu;
     private javax.swing.JMenuItem exitItem;

@@ -138,13 +138,13 @@ public class LoginWindow extends javax.swing.JFrame {
             }
             else if(user instanceof Receptionist)
             {
-                ReceptionistPanel panel = new ReceptionistPanel();
+                ReceptionistPanel panel = new ReceptionistPanel((Receptionist)user);
                 panel.setVisible(true);
                 this.setVisible(false);
             }
             else if(user instanceof Patient)
             {
-                PatientPanel panel = new PatientPanel();
+                PatientPanel panel = new PatientPanel((Patient)user);
                 panel.setVisible(true);
                 this.setVisible(false);
             }

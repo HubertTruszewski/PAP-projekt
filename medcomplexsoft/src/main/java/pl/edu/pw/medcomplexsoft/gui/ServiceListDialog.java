@@ -13,6 +13,9 @@ import javax.swing.JOptionPane;
 
 import pl.edu.pw.medcomplexsoft.database.Database;
 import pl.edu.pw.medcomplexsoft.model.Service;
+import pl.edu.pw.medcomplexsoft.model.Person;
+import pl.edu.pw.medcomplexsoft.model.Doctor;
+import pl.edu.pw.medcomplexsoft.model.Patient;
 
 
 /**
@@ -20,14 +23,21 @@ import pl.edu.pw.medcomplexsoft.model.Service;
  * @author hubert
  */
 public class ServiceListDialog extends javax.swing.JDialog {
-
+    private Person loggedUser;
     private List<Service> serviceObjectList;
     /**
      * Creates new form MedicineListDialog
      */
-    public ServiceListDialog(java.awt.Frame parent, boolean modal) {
+    public ServiceListDialog(java.awt.Frame parent, boolean modal, Person user) {
         super(parent, modal);
         initComponents();
+        loggedUser = user;
+        if(loggedUser != null && (loggedUser instanceof Doctor || loggedUser instanceof Patient))
+        {
+            newButton.setVisible(false);
+            changeButton.setVisible(false);
+            deleteButton.setVisible(false);
+        }
     }
 
     /**
@@ -46,7 +56,7 @@ public class ServiceListDialog extends javax.swing.JDialog {
         okButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Lista leków");
+        setTitle("Lista usług");
 
         serviceList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(serviceList);
@@ -84,15 +94,15 @@ public class ServiceListDialog extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(51, 51, 51)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(newButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(changeButton, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
-                        .addComponent(okButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(changeButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(okButton, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 75, Short.MAX_VALUE))
+                .addGap(50, 50, 50))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -177,7 +187,7 @@ public class ServiceListDialog extends javax.swing.JDialog {
         for(int i=1; i<=serviceObjectList.size(); ++i)
         {
             var service= serviceObjectList.get(i-1);
-            stringServiceVector.add(i + ". " + service.getName() + " " + service.getPrice());
+            stringServiceVector.add(i + ". " + service.getName() + " " + service.getPrice() + " zł");
         }
         serviceList.setListData(stringServiceVector);
     }
@@ -221,7 +231,7 @@ public class ServiceListDialog extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                ServiceListDialog dialog = new ServiceListDialog(new javax.swing.JFrame(), true);
+                ServiceListDialog dialog = new ServiceListDialog(new javax.swing.JFrame(), true, null);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

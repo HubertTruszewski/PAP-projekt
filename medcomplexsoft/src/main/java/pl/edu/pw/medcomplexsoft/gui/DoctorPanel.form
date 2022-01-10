@@ -9,6 +9,14 @@
             <Property name="text" type="java.lang.String" value="Plik"/>
           </Properties>
           <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="changePasswordMenu">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Zmie&#x144; has&#x142;o"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="changePasswordMenuActionPerformed"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="exitItem">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Wyj&#x15b;cie"/>
