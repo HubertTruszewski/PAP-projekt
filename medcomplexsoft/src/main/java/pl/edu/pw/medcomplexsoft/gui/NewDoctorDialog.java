@@ -125,12 +125,6 @@ public class NewDoctorDialog extends javax.swing.JDialog {
 
         flatLabel.setText("Numer mieszkania");
 
-        flatField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                flatFieldActionPerformed(evt);
-            }
-        });
-
         cityLabel.setText("Miasto");
 
         postalCodeLabel.setText("Kod pocztowy");
@@ -140,12 +134,6 @@ public class NewDoctorDialog extends javax.swing.JDialog {
         emailLabel.setText("E-mail");
 
         nameLabel.setText("Imię");
-
-        nameField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nameFieldActionPerformed(evt);
-            }
-        });
 
         loginLabel.setText("Login");
 
@@ -338,14 +326,6 @@ public class NewDoctorDialog extends javax.swing.JDialog {
     public void showDialog(){
         setVisible(true);
     }
-
-    private void flatFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_flatFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_flatFieldActionPerformed
-
-    private void nameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nameFieldActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         dispose();

@@ -262,9 +262,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="flatField">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="flatFieldActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="cityLabel">
       <Properties>
@@ -300,9 +297,6 @@
     <Component class="javax.swing.JTextField" name="emailField">
     </Component>
     <Component class="javax.swing.JTextField" name="nameField">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="nameFieldActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="loginLabel">
       <Properties>
