@@ -102,9 +102,10 @@ public class NewServiceDialog extends javax.swing.JDialog {
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         Service service = new Service();
-        if(changingService != null)
+        if(changingService != null) {
             service.setId(changingService.getId());
             service.setServicePositions(changingService.getServicePositions());
+        }
 
         service.setName(nameField.getText());
         service.setPrice((Double)priceSpinner.getValue());

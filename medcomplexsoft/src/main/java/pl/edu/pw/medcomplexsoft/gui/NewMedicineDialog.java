@@ -100,9 +100,10 @@ public class NewMedicineDialog extends javax.swing.JDialog {
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         Medicine medicine = new Medicine();
-        if(changingMedicine != null)
+        if(changingMedicine != null) {
             medicine.setId(changingMedicine.getId());
             medicine.setPositions(changingMedicine.getPositions());
+        }
 
         medicine.setName(nameField.getText());
         medicine.setManufacturer(manufactuerField.getText());
