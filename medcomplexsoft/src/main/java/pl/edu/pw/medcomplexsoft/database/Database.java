@@ -10,10 +10,9 @@ public class Database {
 
     public static void initialize()
     {
-        if(entityManagerFactory == null) {
-        entityManagerFactory = Persistence.createEntityManagerFactory("medcomplexsoft");
-        entityManager = entityManagerFactory.createEntityManager();
-        System.out.println("Stan entity managera: "+entityManager.isOpen());
+            if(entityManagerFactory == null) {
+            entityManagerFactory = Persistence.createEntityManagerFactory("medcomplexsoft");
+            entityManager = entityManagerFactory.createEntityManager();
         }
     }
 
@@ -27,28 +26,4 @@ public class Database {
     {
         return entityManager;
     }
-
-
-    // public static <T> List<T> getObjects(Class<T> cls) {
-    //     CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-    //     CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(cls);
-    //     Root<T> tRoot = criteriaQuery.from(cls);
-    //     return entityManager.createQuery(criteriaQuery.select(tRoot)).getResultList();
-    // }
-
-    // public static <T> List<T> getObjects(Class<T> cls, Predicate predicate) {
-    //     CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-    //     CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(cls);
-    //     Root<T> tRoot = criteriaQuery.from(cls);
-    //     criteriaQuery.where(predicate);
-    //     return entityManager.createQuery(criteriaQuery).getResultList();
-    // }
-
-    // public static <T> void save(T obj) {
-    //     EntityTransaction tx =  entityManager.getTransaction();
-    //     tx.begin();
-    //     entityManager.persist(obj);
-    //     tx.commit();
-    // }
-
 }
