@@ -84,6 +84,11 @@ public class PrescriptionListDialog extends javax.swing.JDialog {
         });
 
         exitButton.setText("Zamknij");
+        exitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitButtonActionPerformed(evt);
+            }
+        });
 
         showReceiptButton.setText("Wyswietl");
         showReceiptButton.addActionListener(new java.awt.event.ActionListener() {
@@ -198,6 +203,7 @@ public class PrescriptionListDialog extends javax.swing.JDialog {
         NewPrescriptionDialog newPrescriptionDialog = new NewPrescriptionDialog(null, true, (Doctor)user);
         newPrescriptionDialog.setLocationRelativeTo(this.rootPane);
         newPrescriptionDialog.setVisible(true);
+        loadData();
     }//GEN-LAST:event_newReceiptButtonActionPerformed
 
     private void activeRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_activeRadioButtonActionPerformed
@@ -211,6 +217,10 @@ public class PrescriptionListDialog extends javax.swing.JDialog {
     private void realisedRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_realisedRadioButtonActionPerformed
         loadData();
     }//GEN-LAST:event_realisedRadioButtonActionPerformed
+
+    private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
+        dispose();
+    }//GEN-LAST:event_exitButtonActionPerformed
 
     public void showDialog(){
         loadData();
