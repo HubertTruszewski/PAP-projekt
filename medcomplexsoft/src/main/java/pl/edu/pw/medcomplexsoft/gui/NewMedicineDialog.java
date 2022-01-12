@@ -99,27 +99,34 @@ public class NewMedicineDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        Medicine medicine = new Medicine();
-        if(changingMedicine != null) {
-            medicine.setId(changingMedicine.getId());
-            medicine.setPositions(changingMedicine.getPositions());
-        }
+        if(nameField.getText().isEmpty())
+            JOptionPane.showMessageDialog(this, "Nazwa leku nie może być pusta", "Błąd", JOptionPane.ERROR_MESSAGE);
+        else if(manufactuerField.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Nazwa producenta nie może być pusta", "Błąd", JOptionPane.ERROR_MESSAGE);
+        } else {
 
-        medicine.setName(nameField.getText());
-        medicine.setManufacturer(manufactuerField.getText());
-        int selection = JOptionPane.showConfirmDialog(this, "Czy potwierdzasz dodanie leku?", "Potwierdzenie",
-                                                JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if(selection == JOptionPane.OK_OPTION)
-        {
-            EntityManager entityManager = Database.getEntityManager();
-            var tx = entityManager.getTransaction();
-            tx.begin();
-            if(changingMedicine != null)
-                entityManager.merge(medicine);
-            else
-                entityManager.persist(medicine);
-            tx.commit();
-            dispose();
+            Medicine medicine = new Medicine();
+            if(changingMedicine != null) {
+                medicine.setId(changingMedicine.getId());
+                medicine.setPositions(changingMedicine.getPositions());
+            }
+
+            medicine.setName(nameField.getText());
+            medicine.setManufacturer(manufactuerField.getText());
+            int selection = JOptionPane.showConfirmDialog(this, "Czy potwierdzasz dodanie leku?", "Potwierdzenie",
+                                                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if(selection == JOptionPane.OK_OPTION)
+            {
+                EntityManager entityManager = Database.getEntityManager();
+                var tx = entityManager.getTransaction();
+                tx.begin();
+                if(changingMedicine != null)
+                    entityManager.merge(medicine);
+                else
+                    entityManager.persist(medicine);
+                tx.commit();
+                dispose();
+            }
         }
     }//GEN-LAST:event_addButtonActionPerformed
 

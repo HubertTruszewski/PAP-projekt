@@ -6,7 +6,14 @@ package pl.edu.pw.medcomplexsoft.gui;
 
 import java.util.Vector;
 
+import javax.persistence.EntityManager;
+import javax.swing.JOptionPane;
+
+import pl.edu.pw.medcomplexsoft.database.Database;
+import pl.edu.pw.medcomplexsoft.model.Patient;
+import pl.edu.pw.medcomplexsoft.model.Person;
 import pl.edu.pw.medcomplexsoft.model.Prescription;
+import pl.edu.pw.medcomplexsoft.model.Status;
 
 /**
  *
@@ -14,6 +21,7 @@ import pl.edu.pw.medcomplexsoft.model.Prescription;
  */
 public class PrescpriptionViewDialog extends javax.swing.JDialog {
     private Prescription prescription;
+    private Person loggedUser = null;
 
     /**
      * Creates new form PrescpriptionViewDialog
@@ -23,10 +31,14 @@ public class PrescpriptionViewDialog extends javax.swing.JDialog {
         initComponents();
     }
 
-    public PrescpriptionViewDialog(java.awt.Frame parent, boolean modal, Prescription prescription) {
+    public PrescpriptionViewDialog(java.awt.Frame parent, boolean modal, Prescription prescription, Person user) {
         super(parent, modal);
         this.prescription = prescription;
         initComponents();
+        if(loggedUser != null && !(loggedUser instanceof Patient))
+        {
+            realisedButton.setVisible(false);
+        }
     }
 
     /**
@@ -46,13 +58,16 @@ public class PrescpriptionViewDialog extends javax.swing.JDialog {
         statusLabel = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         prescribingDoctorLabel = new javax.swing.JLabel();
+        realisedButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Podgląd recepty");
 
         jLabel1.setText("Pacjent");
 
         patientNameLabel.setText("jLabel2");
 
+        jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(jList1);
 
         jLabel2.setText("RECEPTA");
@@ -64,6 +79,13 @@ public class PrescpriptionViewDialog extends javax.swing.JDialog {
         jLabel4.setText("Wystawiona przez");
 
         prescribingDoctorLabel.setText("jLabel5");
+
+        realisedButton.setText("Oznacz jako zrealizowana");
+        realisedButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                realisedButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -85,8 +107,13 @@ public class PrescpriptionViewDialog extends javax.swing.JDialog {
                     .addComponent(statusLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20))
             .addGroup(layout.createSequentialGroup()
-                .addGap(171, 171, 171)
-                .addComponent(jLabel2)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(171, 171, 171)
+                        .addComponent(jLabel2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(114, 114, 114)
+                        .addComponent(realisedButton)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -106,13 +133,29 @@ public class PrescpriptionViewDialog extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(prescribingDoctorLabel)
                     .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addComponent(realisedButton)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void realisedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_realisedButtonActionPerformed
+        int selection = JOptionPane.showConfirmDialog(this, "Czy oznaczyć receoptę jako zrealizowaną?", "Potwierdzenie",
+                                                JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if(selection == JOptionPane.OK_OPTION) {
+            prescription.setStatus(Status.REALISED);
+            statusLabel.setText("Zrealizowana");
+            EntityManager entityManager = Database.getEntityManager();
+            var tx = entityManager.getTransaction();
+            tx.begin();
+            entityManager.merge(prescription);
+            tx.commit();
+        }
+    }//GEN-LAST:event_realisedButtonActionPerformed
 
     public void showDialog()
     {
@@ -191,6 +234,7 @@ public class PrescpriptionViewDialog extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel patientNameLabel;
     private javax.swing.JLabel prescribingDoctorLabel;
+    private javax.swing.JButton realisedButton;
     private javax.swing.JLabel statusLabel;
     // End of variables declaration//GEN-END:variables
 }

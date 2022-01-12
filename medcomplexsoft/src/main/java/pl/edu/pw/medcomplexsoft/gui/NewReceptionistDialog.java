@@ -13,6 +13,8 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.swing.JOptionPane;
 
+import org.apache.commons.validator.routines.EmailValidator;
+
 import java.time.LocalDate;
 import java.time.ZoneId;
 
@@ -26,7 +28,7 @@ import pl.edu.pw.medcomplexsoft.model.*;
  * @author kubix
  */
 public class NewReceptionistDialog extends javax.swing.JDialog {
-
+    private Receptionist changingReceptionist = null;
     /**
      * Creates new form NewDoctorDialog
      */
@@ -41,9 +43,11 @@ public class NewReceptionistDialog extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         changingReceptionistId = receptionist.getId();
+        changingReceptionist = receptionist;
         nameField.setText(receptionist.getName());
         surnameField.setText(receptionist.getSurname());
         salaryField.setText(Double.toString(receptionist.getSalary()));
+        hireDateSpinner.setValue(java.sql.Date.valueOf(receptionist.getHireDate()));
         dateSpinner.setValue(java.sql.Date.valueOf(receptionist.getBirthDate()));
         peselField.setText(receptionist.getPesel());
         if(receptionist.getGender() == 'K')
@@ -104,10 +108,13 @@ public class NewReceptionistDialog extends javax.swing.JDialog {
         genderLabel = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         salaryField = new javax.swing.JTextField();
+        hireDatelabel = new javax.swing.JLabel();
+        hireDateSpinner = new javax.swing.JSpinner();
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Nowy recepcjonista");
 
         buttonGroup1.add(maleRadioButton);
         maleRadioButton.setSelected(true);
@@ -163,84 +170,90 @@ public class NewReceptionistDialog extends javax.swing.JDialog {
 
         jLabel2.setText("Pensja");
 
+        hireDatelabel.setText("Data zatrudnienia");
+
+        hireDateSpinner.setModel(new javax.swing.SpinnerDateModel());
+        hireDateSpinner.setOpaque(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(55, 55, 55)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(addButton)
-                        .addGap(18, 18, 18)
-                        .addComponent(cancelButton)
-                        .addGap(28, 28, 28))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(55, 55, 55)
+                        .addComponent(birthDateLabel)
+                        .addGap(32, 32, 32)
+                        .addComponent(dateSpinner))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(passwordLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(peselLabel)
+                            .addComponent(genderLabel)
+                            .addComponent(streetLabel)
+                            .addComponent(houseLabel)
+                            .addComponent(flatLabel)
+                            .addComponent(cityLabel)
+                            .addComponent(postalCodeLabel)
+                            .addComponent(countryLabel)
+                            .addComponent(loginLabel)
+                            .addComponent(emailLabel))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(25, 25, 25)
+                                .addComponent(maleRadioButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(femaleRadioButton)
+                                .addGap(23, 23, 23))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(11, 11, 11)
+                                .addComponent(peselField))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(houseField, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(streetField)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cityField, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(flatField)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(countryField, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(postalCodeField)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(loginField, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(emailField)
+                                    .addComponent(passwordField, javax.swing.GroupLayout.Alignment.TRAILING)))))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(passwordLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(birthDateLabel)
-                                    .addComponent(peselLabel)
-                                    .addComponent(genderLabel)
-                                    .addComponent(streetLabel)
-                                    .addComponent(houseLabel)
-                                    .addComponent(flatLabel)
-                                    .addComponent(cityLabel)
-                                    .addComponent(postalCodeLabel)
-                                    .addComponent(countryLabel)
-                                    .addComponent(loginLabel)
-                                    .addComponent(emailLabel))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(25, 25, 25)
-                                        .addComponent(maleRadioButton)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(femaleRadioButton)
-                                        .addGap(23, 23, 23))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(11, 11, 11)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(dateSpinner, javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(peselField)))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(houseField, javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(streetField)))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(cityField, javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(flatField)))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(countryField, javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(postalCodeField)))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(loginField, javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(emailField)
-                                            .addComponent(passwordField, javax.swing.GroupLayout.Alignment.TRAILING)))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(surnameLabel)
-                                    .addComponent(nameLabel)
-                                    .addComponent(jLabel2))
-                                .addGap(71, 71, 71)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(nameField)
-                                    .addComponent(surnameField)
-                                    .addComponent(salaryField))))))
+                            .addComponent(surnameLabel)
+                            .addComponent(nameLabel)
+                            .addComponent(jLabel2)
+                            .addComponent(hireDatelabel))
+                        .addGap(15, 15, 15)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(hireDateSpinner)
+                            .addComponent(nameField)
+                            .addComponent(surnameField)
+                            .addComponent(salaryField))))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(addButton)
+                .addGap(18, 18, 18)
+                .addComponent(cancelButton)
+                .addGap(34, 34, 34))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(36, 36, 36)
+                .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nameLabel)
                     .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -252,11 +265,15 @@ public class NewReceptionistDialog extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(salaryField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(19, 19, 19)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(hireDatelabel)
+                    .addComponent(hireDateSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(birthDateLabel)
                     .addComponent(dateSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(peselLabel)
                     .addComponent(peselField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -321,67 +338,135 @@ public class NewReceptionistDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        Receptionist receptionist = new Receptionist();
-        Address address = new Address();
-        receptionist.setName(nameField.getText());
-        receptionist.setSurname(surnameField.getText());
-        receptionist.setBirthDate(((Date)dateSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-        receptionist.setPesel(peselField.getText());
-        receptionist.setUsername(loginField.getText());
-        String hashedPassword = org.apache.commons.codec.digest.DigestUtils.sha256Hex(String.valueOf(passwordField.getPassword()));
-        receptionist.setPassword(hashedPassword);
-        if(maleRadioButton.isSelected())
-        receptionist.setGender('M');
-        else
-        receptionist.setGender('K');
-        address.setStreet(streetField.getText());
-        address.setHouseNumber(Long.parseLong(houseField.getText()));
-        address.setFlatNumber(Long.getLong(flatField.getText()));
-        address.setCity(cityField.getText());
-        address.setPostalCode(postalCodeField.getText());
-        address.setCountry(countryField.getText());
-        receptionist.setAddress(address);
-        receptionist.setMailAddress(emailField.getText());
-        receptionist.setHireDate(LocalDate.now());
-        receptionist.setSalary(Double.parseDouble(salaryField.getText()));
+        boolean correct = true;
+        EntityManager entityManager = Database.getEntityManager();
 
-        int selection = JOptionPane.showConfirmDialog(this, "Czy potwierdzasz dodanie recepcjonisty?", "Potwierdzenie",
-            JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if(selection == JOptionPane.OK_OPTION)
-        {
-            boolean unique = true;
-            EntityManager entityManager = Database.getEntityManager();
+        //sprawdzanie loginu
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Person> criteriaQuery = criteriaBuilder.createQuery(Person.class);
+        Root<Person> personRoot = criteriaQuery.from(Person.class);
 
-            //sprawdzanie loginu
-            CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-            CriteriaQuery<Person> criteriaQuery = criteriaBuilder.createQuery(Person.class);
-            Root<Person> personRoot = criteriaQuery.from(Person.class);
+        Predicate predicateUserName = criteriaBuilder.equal(personRoot.get("username"), loginField.getText());
 
-            Predicate predicateUserName = criteriaBuilder.equal(personRoot.get("username"), loginField.getText());
+        criteriaQuery.where(predicateUserName);
+        List<Person> result = entityManager.createQuery(criteriaQuery).getResultList();
+        if (result.size() != 0){
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Login już w użyciu. Wybierz inny", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
 
-            criteriaQuery.where(predicateUserName);
-            List<Person> result = entityManager.createQuery(criteriaQuery).getResultList();
-            if (result.size() != 0){
-                unique = false;
-                JOptionPane.showMessageDialog(this, "Login już w użyciu. Wybierz inny", "Błąd", JOptionPane.ERROR_MESSAGE);
-            }
+        //sprawdzanie peselu
+        Predicate predicatePesel = criteriaBuilder.equal(personRoot.get("pesel"), peselField.getText());
+        criteriaQuery.where(predicatePesel);
+        result = entityManager.createQuery(criteriaQuery).getResultList();
+        if (result.size() != 0){
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Osoba o takim peselu jest już w bazie", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+        else if (nameField.getText().length() == 0) {
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Pole imię nie może być puste", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+        else if (surnameField.getText().length() == 0) {
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Pole nazwisko nie może być puste", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+        else if(!salaryField.getText().matches("\\d*\\.?\\d{2}")){
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Błędny format pensji", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+        else if(((Date)hireDateSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate().compareTo(LocalDate.now()) > 0){
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Data zatrudnienia nie moża być późniejsza niż dzisiejsza data", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+        else if(((Date)dateSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate().compareTo(LocalDate.now()) > 0){
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Data urodzenia nie moża być późniejsza niż dzisiejsza data", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+        else if(peselField.getText().length() != 11) {
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Pesel powinien mieć 11 znaków", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+        else if(!peselField.getText().matches("[0-9]+")){
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Pesel może zawierać tylko cyfry", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+        else if (streetField.getText().length() == 0) {
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Pole ulica nie może być puste", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+        else if (houseField.getText().length() == 0) {
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Pole numer domu nie może być puste", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+        else if (cityField.getText().length() == 0) {
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Pole miasto nie może być puste", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+        else if (postalCodeField.getText().length() != 6 || postalCodeField.getText().charAt(2) != '-') {
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Nieprawidłowy format kodu pocztowego", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+        else if (countryField.getText().length() == 0) {
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Pole kraj nie może być puste", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+        else if (emailField.getText().length() == 0) {
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Pole adres e-mail nie może być puste", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+        else if (!EmailValidator.getInstance().isValid(emailField.getText())) {
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Błędny adres e-mail", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+        else if (loginField.getText().length() == 0) {
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Pole kraj nie może być puste", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+        else if (changingReceptionist == null && passwordField.getPassword().length < 3) {
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Hasło musi zawierać conajmniej 3 znaki", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
 
-            //sprawdzanie peselu
-            Predicate predicatePesel = criteriaBuilder.equal(personRoot.get("pesel"), peselField.getText());
-            criteriaQuery.where(predicatePesel);
-            result = entityManager.createQuery(criteriaQuery).getResultList();
-            if (result.size() != 0){
-                unique = false;
-                JOptionPane.showMessageDialog(this, "Osoba o takim peselu jest już w bazie", "Błąd", JOptionPane.ERROR_MESSAGE);
-            }
+        if(correct){
+            int selection = JOptionPane.showConfirmDialog(this, "Czy potwierdzasz dodanie recepcjonisty?", "Potwierdzenie",
+                                                JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if(selection == JOptionPane.OK_OPTION) {
+                Receptionist receptionist = new Receptionist();
+                Address address = new Address();
+                receptionist.setName(nameField.getText());
+                receptionist.setSurname(surnameField.getText());
+                receptionist.setBirthDate(((Date)dateSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+                receptionist.setPesel(peselField.getText());
+                receptionist.setUsername(loginField.getText());
+                if(maleRadioButton.isSelected())
+                    receptionist.setGender('M');
+                else
+                    receptionist.setGender('K');
+                address.setStreet(streetField.getText());
+                address.setHouseNumber(Long.parseLong(houseField.getText()));
+                if(flatField.getText().length() == 0)
+                    address.setFlatNumber(null);
+                else
+                    address.setFlatNumber(Long.getLong(flatField.getText()));
+                address.setCity(cityField.getText());
+                address.setPostalCode(postalCodeField.getText());
+                address.setCountry(countryField.getText());
+                receptionist.setAddress(address);
+                receptionist.setMailAddress(emailField.getText());
+                receptionist.setHireDate(LocalDate.now());
+                receptionist.setSalary(Double.parseDouble(salaryField.getText()));
 
-            if(unique){
                 var tx = entityManager.getTransaction();
                 tx.begin();
-                if(changingReceptionistId != -1)
-                entityManager.persist(receptionist);
+                if(changingReceptionistId != -1){
+                    String hashedPassword = org.apache.commons.codec.digest.DigestUtils.sha256Hex(String.valueOf(passwordField.getPassword()));
+                    receptionist.setPassword(hashedPassword);
+                    entityManager.persist(receptionist);
+                }
                 else {
                     receptionist.setId(changingReceptionistId);
+                    receptionist.setPassword(changingReceptionist.getPassword());
                     entityManager.merge(receptionist);
                 }
                 tx.commit();
@@ -450,6 +535,8 @@ public class NewReceptionistDialog extends javax.swing.JDialog {
     private javax.swing.JTextField flatField;
     private javax.swing.JLabel flatLabel;
     private javax.swing.JLabel genderLabel;
+    private javax.swing.JSpinner hireDateSpinner;
+    private javax.swing.JLabel hireDatelabel;
     private javax.swing.JTextField houseField;
     private javax.swing.JLabel houseLabel;
     private javax.swing.JComboBox<String> jComboBox1;

@@ -101,27 +101,30 @@ public class NewServiceDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        if(nameField.getText().length() == 0) {
+            JOptionPane.showMessageDialog(this, "Nazwa usługo nie może być pusta", "Błąd", JOptionPane.ERROR_MESSAGE);
+        } else {
         Service service = new Service();
-        if(changingService != null) {
-            service.setId(changingService.getId());
-            service.setServicePositions(changingService.getServicePositions());
-        }
-
-        service.setName(nameField.getText());
-        service.setPrice((Double)priceSpinner.getValue());
-        int selection = JOptionPane.showConfirmDialog(this, "Czy potwierdzasz dodanie usługi?", "Potwierdzenie",
-                                                JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if(selection == JOptionPane.OK_OPTION)
-        {
-            EntityManager entityManager = Database.getEntityManager();
-            var tx = entityManager.getTransaction();
-            tx.begin();
-            if(changingService != null)
-                entityManager.merge(service);
-            else
-                entityManager.persist(service);
-            tx.commit();
-            dispose();
+            if(changingService != null) {
+                service.setId(changingService.getId());
+                service.setServicePositions(changingService.getServicePositions());
+            }
+            service.setName(nameField.getText());
+            service.setPrice((Double)priceSpinner.getValue());
+            int selection = JOptionPane.showConfirmDialog(this, "Czy potwierdzasz dodanie usługi?", "Potwierdzenie",
+                                                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if(selection == JOptionPane.OK_OPTION)
+            {
+                EntityManager entityManager = Database.getEntityManager();
+                var tx = entityManager.getTransaction();
+                tx.begin();
+                if(changingService != null)
+                    entityManager.merge(service);
+                else
+                    entityManager.persist(service);
+                tx.commit();
+                dispose();
+            }
         }
     }//GEN-LAST:event_addButtonActionPerformed
 

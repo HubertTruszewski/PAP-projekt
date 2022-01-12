@@ -92,6 +92,7 @@ public class AppointmentDataView extends javax.swing.JDialog {
         amountSpinner = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Szczegóły wizyty");
 
         jLabel1.setText("Pacjent");
 

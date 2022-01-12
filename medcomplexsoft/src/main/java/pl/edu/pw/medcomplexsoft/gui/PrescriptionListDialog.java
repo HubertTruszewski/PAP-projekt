@@ -183,7 +183,7 @@ public class PrescriptionListDialog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Nie wybrano żadnej recepty do anulowania do usunięcia",
                 "Błąd", JOptionPane.ERROR_MESSAGE);
         else {
-            PrescpriptionViewDialog prescpriptionViewDialog = new PrescpriptionViewDialog(null, true, prescriptionObjectList.get(selectedIndex));
+            PrescpriptionViewDialog prescpriptionViewDialog = new PrescpriptionViewDialog(null, true, prescriptionObjectList.get(selectedIndex), user);
             prescpriptionViewDialog.setLocationRelativeTo(this.rootPane);
             prescpriptionViewDialog.showDialog();
         }

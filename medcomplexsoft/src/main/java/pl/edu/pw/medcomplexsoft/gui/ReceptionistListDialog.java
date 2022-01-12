@@ -44,7 +44,9 @@ public class ReceptionistListDialog extends javax.swing.JDialog {
         okButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Lista recepcjonistów");
 
+        receptionistList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(receptionistList);
 
         newButton.setText("Nowy");

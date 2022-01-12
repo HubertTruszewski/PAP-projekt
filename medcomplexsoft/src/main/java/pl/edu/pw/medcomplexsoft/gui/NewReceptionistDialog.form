@@ -22,6 +22,7 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="2"/>
+    <Property name="title" type="java.lang.String" value="Nowy recepcjonista"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -42,103 +43,102 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" attributes="0">
+              <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="addButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="cancelButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                  </Group>
                   <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="birthDateLabel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+                      <Component id="dateSpinner" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="passwordLabel" alignment="0" max="32767" attributes="0"/>
+                          <Component id="peselLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="genderLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="streetLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="houseLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="flatLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="cityLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="postalCodeLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="countryLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="loginLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="emailLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                              <Component id="maleRadioButton" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="femaleRadioButton" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+                              <Component id="peselField" max="32767" attributes="0"/>
+                          </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="passwordLabel" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="birthDateLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="peselLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="genderLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="streetLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="houseLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="flatLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="cityLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="postalCodeLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="countryLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="loginLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="emailLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-                                      <Component id="maleRadioButton" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="32767" attributes="0"/>
-                                      <Component id="femaleRadioButton" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" attributes="0">
-                                      <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="dateSpinner" alignment="1" max="32767" attributes="0"/>
-                                          <Component id="peselField" max="32767" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="houseField" alignment="1" max="32767" attributes="0"/>
-                                          <Component id="streetField" max="32767" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="cityField" alignment="1" max="32767" attributes="0"/>
-                                          <Component id="flatField" max="32767" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="countryField" alignment="1" max="32767" attributes="0"/>
-                                          <Component id="postalCodeField" max="32767" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="loginField" alignment="1" max="32767" attributes="0"/>
-                                          <Component id="emailField" max="32767" attributes="0"/>
-                                          <Component id="passwordField" alignment="1" max="32767" attributes="0"/>
-                                      </Group>
-                                  </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="houseField" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="streetField" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="surnameLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="nameLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="cityField" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="flatField" max="32767" attributes="0"/>
                               </Group>
-                              <EmptySpace min="-2" pref="71" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="nameField" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="surnameField" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="salaryField" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="countryField" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="postalCodeField" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="loginField" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="emailField" max="32767" attributes="0"/>
+                                  <Component id="passwordField" alignment="1" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
                   </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="surnameLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="nameLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="hireDatelabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="hireDateSpinner" max="32767" attributes="0"/>
+                          <Component id="nameField" alignment="0" max="32767" attributes="0"/>
+                          <Component id="surnameField" alignment="0" max="32767" attributes="0"/>
+                          <Component id="salaryField" alignment="0" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="32767" attributes="0"/>
+              <Component id="addButton" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="cancelButton" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="nameLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="nameField" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -153,12 +153,17 @@
                   <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="salaryField" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="hireDatelabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="hireDateSpinner" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="birthDateLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="dateSpinner" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="peselLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="peselField" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -219,7 +224,7 @@
                   <Component id="cancelButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="addButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -366,6 +371,19 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="salaryField">
+    </Component>
+    <Component class="javax.swing.JLabel" name="hireDatelabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Data zatrudnienia"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JSpinner" name="hireDateSpinner">
+      <Properties>
+        <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+          <SpinnerModel initial="now" stepSize="5" type="date"/>
+        </Property>
+        <Property name="opaque" type="boolean" value="false"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

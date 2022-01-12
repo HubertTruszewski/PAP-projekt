@@ -13,6 +13,8 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.swing.JOptionPane;
 
+import org.apache.commons.validator.routines.EmailValidator;
+
 import java.time.LocalDate;
 import java.time.ZoneId;
 
@@ -26,7 +28,7 @@ import pl.edu.pw.medcomplexsoft.model.*;
  * @author kubix
  */
 public class NewDoctorDialog extends javax.swing.JDialog {
-
+    private Doctor changingDoctor = null;
     /**
      * Creates new form NewDoctorDialog
      */
@@ -41,10 +43,12 @@ public class NewDoctorDialog extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         changingDoctorId = doctor.getId();
+        changingDoctor = doctor;
         nameField.setText(doctor.getName());
         surnameField.setText(doctor.getSurname());
         specializationField.setText(doctor.getSpecialization());
         salaryField.setText(Double.toString(doctor.getSalary()));
+        hireDateSpinner.setValue(java.sql.Date.valueOf(doctor.getHireDate()));
         dateSpinner.setValue(java.sql.Date.valueOf(doctor.getBirthDate()));
         peselField.setText(doctor.getPesel());
         if(doctor.getGender() == 'K')
@@ -107,10 +111,13 @@ public class NewDoctorDialog extends javax.swing.JDialog {
         specializationField = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         salaryField = new javax.swing.JTextField();
+        hireDateLabel = new javax.swing.JLabel();
+        hireDateSpinner = new javax.swing.JSpinner();
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Nowy lekarz");
 
         buttonGroup1.add(maleRadioButton);
         maleRadioButton.setSelected(true);
@@ -167,6 +174,11 @@ public class NewDoctorDialog extends javax.swing.JDialog {
         jLabel1.setText("Specjalizacja");
 
         jLabel2.setText("Pensja");
+
+        hireDateLabel.setText("Data zatrudnienia");
+
+        hireDateSpinner.setModel(new javax.swing.SpinnerDateModel());
+        hireDateSpinner.setOpaque(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -235,9 +247,11 @@ public class NewDoctorDialog extends javax.swing.JDialog {
                                     .addComponent(surnameLabel)
                                     .addComponent(nameLabel)
                                     .addComponent(jLabel1)
-                                    .addComponent(jLabel2))
-                                .addGap(51, 51, 51)
+                                    .addComponent(jLabel2)
+                                    .addComponent(hireDateLabel))
+                                .addGap(15, 15, 15)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(hireDateSpinner)
                                     .addComponent(nameField)
                                     .addComponent(surnameField)
                                     .addComponent(specializationField)
@@ -247,7 +261,7 @@ public class NewDoctorDialog extends javax.swing.JDialog {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(36, 36, 36)
+                .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nameLabel)
                     .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -263,7 +277,11 @@ public class NewDoctorDialog extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(salaryField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(19, 19, 19)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(hireDateLabel)
+                    .addComponent(hireDateSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(birthDateLabel)
                     .addComponent(dateSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -316,7 +334,7 @@ public class NewDoctorDialog extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cancelButton)
                     .addComponent(addButton))
-                .addGap(19, 19, 19))
+                .addGap(20, 20, 20))
         );
 
         pack();
@@ -332,67 +350,138 @@ public class NewDoctorDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        Doctor doctor = new Doctor();
-        Address address = new Address();
-        doctor.setName(nameField.getText());
-        doctor.setSurname(surnameField.getText());
-        doctor.setSpecialization(specializationField.getText());
-        doctor.setBirthDate(((Date)dateSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-        doctor.setPesel(peselField.getText());
-        doctor.setUsername(loginField.getText());
-        String hashedPassword = org.apache.commons.codec.digest.DigestUtils.sha256Hex(String.valueOf(passwordField.getPassword()));
-        doctor.setPassword(hashedPassword);
-        if(maleRadioButton.isSelected())
-        doctor.setGender('M');
-        else
-        doctor.setGender('K');
-        address.setStreet(streetField.getText());
-        address.setHouseNumber(Long.parseLong(houseField.getText()));
-        address.setFlatNumber(Long.getLong(flatField.getText()));
-        address.setCity(cityField.getText());
-        address.setPostalCode(postalCodeField.getText());
-        address.setCountry(countryField.getText());
-        doctor.setAddress(address);
-        doctor.setMailAddress(emailField.getText());
-        doctor.setHireDate(LocalDate.now());
-        doctor.setSalary(Double.parseDouble(salaryField.getText()));
+        boolean correct = true;
+        EntityManager entityManager = Database.getEntityManager();
 
-        int selection = JOptionPane.showConfirmDialog(this, "Czy potwierdzasz dodanie lekarz?", "Potwierdzenie",
-            JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if(selection == JOptionPane.OK_OPTION)
-        {
-            boolean unique = true;
-            EntityManager entityManager = Database.getEntityManager();
+        //sprawdzanie loginu
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Person> criteriaQuery = criteriaBuilder.createQuery(Person.class);
+        Root<Person> personRoot = criteriaQuery.from(Person.class);
 
-            //sprawdzanie loginu
-            CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-            CriteriaQuery<Person> criteriaQuery = criteriaBuilder.createQuery(Person.class);
-            Root<Person> personRoot = criteriaQuery.from(Person.class);
+        Predicate predicateUserName = criteriaBuilder.equal(personRoot.get("username"), loginField.getText());
 
-            Predicate predicateUserName = criteriaBuilder.equal(personRoot.get("username"), loginField.getText());
+        criteriaQuery.where(predicateUserName);
+        List<Person> result = entityManager.createQuery(criteriaQuery).getResultList();
+        if (result.size() != 0){
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Login już w użyciu. Wybierz inny", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
 
-            criteriaQuery.where(predicateUserName);
-            List<Person> result = entityManager.createQuery(criteriaQuery).getResultList();
-            if (result.size() != 0){
-                unique = false;
-                JOptionPane.showMessageDialog(this, "Login już w użyciu. Wybierz inny", "Błąd", JOptionPane.ERROR_MESSAGE);
-            }
+        //sprawdzanie peselu
+        Predicate predicatePesel = criteriaBuilder.equal(personRoot.get("pesel"), peselField.getText());
+        criteriaQuery.where(predicatePesel);
+        result = entityManager.createQuery(criteriaQuery).getResultList();
+        if (result.size() != 0){
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Osoba o takim peselu jest już w bazie", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+        else if (nameField.getText().length() == 0) {
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Pole imię nie może być puste", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+        else if (surnameField.getText().length() == 0) {
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Pole nazwisko nie może być puste", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+        else if (specializationField.getText().length() == 0) {
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Pole specjalizacja nie może być puste", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+        else if(!salaryField.getText().matches("\\d*\\.?\\d{2}")){
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Błędny format pensji", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+        else if(((Date)hireDateSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate().compareTo(LocalDate.now()) > 0){
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Data zatrudnienia nie moża być późniejsza niż dzisiejsza data", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+        else if(((Date)dateSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate().compareTo(LocalDate.now()) > 0){
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Data urodzenia nie moża być późniejsza niż dzisiejsza data", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+        else if(peselField.getText().length() != 11) {
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Pesel powinien mieć 11 znaków", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+        else if(!peselField.getText().matches("[0-9]+")){
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Pesel może zawierać tylko cyfry", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+        else if (streetField.getText().length() == 0) {
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Pole ulica nie może być puste", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+        else if (houseField.getText().length() == 0) {
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Pole numer domu nie może być puste", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+        else if (cityField.getText().length() == 0) {
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Pole miasto nie może być puste", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+        else if (postalCodeField.getText().length() != 6 || postalCodeField.getText().charAt(2) != '-') {
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Nieprawidłowy format kodu pocztowego", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+        else if (countryField.getText().length() == 0) {
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Pole kraj nie może być puste", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+        else if (emailField.getText().length() == 0) {
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Pole adres e-mail nie może być puste", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+        else if (!EmailValidator.getInstance().isValid(emailField.getText())) {
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Błędny adres e-mail", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+        else if (loginField.getText().length() == 0) {
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Pole kraj nie może być puste", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+        else if (changingDoctor == null && passwordField.getPassword().length < 3) {
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Hasło musi zawierać conajmniej 3 znaki", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
 
-            //sprawdzanie peselu
-            Predicate predicatePesel = criteriaBuilder.equal(personRoot.get("pesel"), peselField.getText());
-            criteriaQuery.where(predicatePesel);
-            result = entityManager.createQuery(criteriaQuery).getResultList();
-            if (result.size() != 0){
-                unique = false;
-                JOptionPane.showMessageDialog(this, "Osoba o takim peselu jest już w bazie", "Błąd", JOptionPane.ERROR_MESSAGE);
-            }
-
-            if(unique){
+        if(correct) {
+            int selection = JOptionPane.showConfirmDialog(this, "Czy potwierdzasz dodanie lekarza?", "Potwierdzenie",
+                                                JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if(selection == JOptionPane.OK_OPTION) {
+                Doctor doctor = new Doctor();
+                Address address = new Address();
+                doctor.setName(nameField.getText());
+                doctor.setSurname(surnameField.getText());
+                doctor.setSpecialization(specializationField.getText());
+                doctor.setBirthDate(((Date)dateSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+                doctor.setPesel(peselField.getText());
+                doctor.setUsername(loginField.getText());
+                if(maleRadioButton.isSelected())
+                    doctor.setGender('M');
+                else
+                    doctor.setGender('K');
+                address.setStreet(streetField.getText());
+                address.setHouseNumber(Long.parseLong(houseField.getText()));
+                if(flatField.getText().length() == 0)
+                    address.setFlatNumber(null);
+                else
+                    address.setFlatNumber(Long.getLong(flatField.getText()));
+                address.setCity(cityField.getText());
+                address.setPostalCode(postalCodeField.getText());
+                address.setCountry(countryField.getText());
+                doctor.setAddress(address);
+                doctor.setMailAddress(emailField.getText());
+                doctor.setHireDate(((Date)hireDateSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+                doctor.setSalary(Double.parseDouble(salaryField.getText()));
                 var tx = entityManager.getTransaction();
                 tx.begin();
-                if(changingDoctorId != -1)
-                entityManager.persist(doctor);
+                if(changingDoctorId != -1){
+                    String hashedPassword = org.apache.commons.codec.digest.DigestUtils.sha256Hex(String.valueOf(passwordField.getPassword()));
+                    doctor.setPassword(hashedPassword);
+                    entityManager.persist(doctor);
+                }
                 else {
+                    doctor.setPassword(changingDoctor.getPassword());
                     doctor.setId(changingDoctorId);
                     entityManager.merge(doctor);
                 }
@@ -461,6 +550,8 @@ public class NewDoctorDialog extends javax.swing.JDialog {
     private javax.swing.JTextField flatField;
     private javax.swing.JLabel flatLabel;
     private javax.swing.JLabel genderLabel;
+    private javax.swing.JLabel hireDateLabel;
+    private javax.swing.JSpinner hireDateSpinner;
     private javax.swing.JTextField houseField;
     private javax.swing.JLabel houseLabel;
     private javax.swing.JComboBox<String> jComboBox1;

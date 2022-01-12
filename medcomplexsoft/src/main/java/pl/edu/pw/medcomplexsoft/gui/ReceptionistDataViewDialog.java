@@ -64,6 +64,7 @@ public class ReceptionistDataViewDialog extends javax.swing.JDialog {
         salaryLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Dane recepcjonisty");
 
         flatNumberLabel.setText("(brak)");
 

@@ -51,6 +51,7 @@ public class ChangePasswordDialog extends javax.swing.JDialog {
         cancelButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Zmiana hasła");
 
         jLabel1.setText("Użytkownik");
 

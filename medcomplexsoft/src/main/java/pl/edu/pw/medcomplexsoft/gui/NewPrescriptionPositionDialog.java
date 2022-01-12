@@ -38,6 +38,7 @@ public class NewPrescriptionPositionDialog extends javax.swing.JDialog {
         okButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Nowa pozycja");
 
         medicineLabel.setText("Lek:");
 

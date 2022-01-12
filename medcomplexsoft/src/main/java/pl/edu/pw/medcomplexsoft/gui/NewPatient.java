@@ -14,6 +14,9 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.swing.JOptionPane;
 
+import org.apache.commons.validator.routines.EmailValidator;
+
+import java.time.LocalDate;
 import java.time.ZoneId;
 
 import pl.edu.pw.medcomplexsoft.database.Database;
@@ -23,6 +26,7 @@ import pl.edu.pw.medcomplexsoft.model.*;
  * @author Grzesiek
  */
 public class NewPatient extends javax.swing.JDialog {
+    Patient changingPatient = null;
 
     /**
      * Creates new form NewPatient
@@ -35,6 +39,7 @@ public class NewPatient extends javax.swing.JDialog {
     public NewPatient(java.awt.Frame parent, boolean modal, Patient patient) {
         super(parent, modal);
         initComponents();
+        changingPatient = patient;
         changingPatientId = patient.getId();
         nameField.setText(patient.getName());
         surnameField.setText(patient.getSurname());
@@ -97,12 +102,11 @@ public class NewPatient extends javax.swing.JDialog {
         femaleRadioButton = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Nowy Pacjent");
-        setMaximumSize(new java.awt.Dimension(500, 750));
-        setMinimumSize(new java.awt.Dimension(500, 750));
+        setTitle("Nowy pacjent");
+        setMaximumSize(new java.awt.Dimension(420, 600));
+        setMinimumSize(new java.awt.Dimension(420, 600));
         setModal(true);
-        setPreferredSize(new java.awt.Dimension(500, 750));
-        setResizable(false);
+        setPreferredSize(new java.awt.Dimension(420, 600));
 
         nameLabel.setText("Imię");
 
@@ -179,11 +183,11 @@ public class NewPatient extends javax.swing.JDialog {
                     .addComponent(emailLabel))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(48, 121, Short.MAX_VALUE)
-                        .addComponent(cancelButton)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(addButton)
-                        .addGap(78, 78, 78))
+                        .addGap(18, 18, 18)
+                        .addComponent(cancelButton)
+                        .addGap(26, 26, 26))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(25, 25, 25)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -202,7 +206,7 @@ public class NewPatient extends javax.swing.JDialog {
                             .addComponent(dateSpinner)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(maleRadioButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                                 .addComponent(femaleRadioButton)
                                 .addGap(23, 23, 23)))))
                 .addContainerGap())
@@ -273,7 +277,7 @@ public class NewPatient extends javax.swing.JDialog {
                     .addComponent(cancelButton)))
         );
 
-        setSize(new java.awt.Dimension(480, 780));
+        pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -286,69 +290,128 @@ public class NewPatient extends javax.swing.JDialog {
     }
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        Patient patient = new Patient();
-        Address address = new Address();
-        patient.setName(nameField.getText());
-        patient.setSurname(surnameField.getText());
-        patient.setBirthDate(((Date)dateSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-        patient.setPesel(peselField.getText());
-        patient.setUsername(loginField.getText());
-        String hashedPassword = org.apache.commons.codec.digest.DigestUtils.sha256Hex(String.valueOf(passwordField.getPassword()));
-        patient.setPassword(hashedPassword);
-        if(maleRadioButton.isSelected())
-            patient.setGender('M');
-        else
-            patient.setGender('K');
-        address.setStreet(streetField.getText());
-        address.setHouseNumber(Long.parseLong(houseField.getText()));
-        address.setFlatNumber(Long.getLong(flatField.getText()));
-        address.setCity(cityField.getText());
-        address.setPostalCode(postalCodeField.getText());
-        address.setCountry(countryField.getText());
-        patient.setAddress(address);
-        patient.setMailAddress(emailField.getText());
+        boolean correct = false;
+        EntityManager entityManager = Database.getEntityManager();
 
-        int selection = JOptionPane.showConfirmDialog(this, "Czy potwierdzasz dodanie pacjenta?", "Potwierdzenie",
+        //sprawdzanie loginu
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Person> criteriaQuery = criteriaBuilder.createQuery(Person.class);
+        Root<Person> personRoot = criteriaQuery.from(Person.class);
+
+        Predicate predicateUserName = criteriaBuilder.equal(personRoot.get("username"), loginField.getText());
+
+        criteriaQuery.where(predicateUserName);
+        List<Person> result = entityManager.createQuery(criteriaQuery).getResultList();
+        if (result.size() != 0){
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Login już w użyciu. Wybierz inny", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+
+        //sprawdzanie peselu
+        Predicate predicatePesel = criteriaBuilder.equal(personRoot.get("pesel"), peselField.getText());
+        criteriaQuery.where(predicatePesel);
+        result = entityManager.createQuery(criteriaQuery).getResultList();
+        if (result.size() != 0){
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Osoba o takim peselu jest już w bazie", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+        else if (nameField.getText().length() == 0) {
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Pole imię nie może być puste", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+        else if (surnameField.getText().length() == 0) {
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Pole nazwisko nie może być puste", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+        else if(((Date)dateSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate().compareTo(LocalDate.now()) > 0){
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Data urodzenia nie moża być późniejsza niż dzisiejsza data", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+        else if(peselField.getText().length() != 11) {
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Pesel powinien mieć 11 znaków", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+        else if(!peselField.getText().matches("[0-9]+")){
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Pesel może zawierać tylko cyfry", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+        else if (streetField.getText().length() == 0) {
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Pole ulica nie może być puste", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+        else if (houseField.getText().length() == 0) {
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Pole numer domu nie może być puste", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+        else if (cityField.getText().length() == 0) {
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Pole miasto nie może być puste", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+        else if (postalCodeField.getText().length() == 0 || postalCodeField.getText().charAt(2) != '-') {
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Nieprawidłowy format kodu pocztowego", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+        else if (countryField.getText().length() == 0) {
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Pole kraj nie może być puste", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+        else if (emailField.getText().length() == 0) {
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Pole adres e-mail nie może być puste", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+        else if (!EmailValidator.getInstance().isValid(emailField.getText())) {
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Błędny adres e-mail", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+        else if (loginField.getText().length() == 0) {
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Pole kraj nie może być puste", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+        else if (changingPatient == null && passwordField.getPassword().length < 3) {
+            correct = false;
+            JOptionPane.showMessageDialog(this, "Hasło musi zawierać conajmniej 3 znaki", "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+
+        if(correct) {
+            int selection = JOptionPane.showConfirmDialog(this, "Czy potwierdzasz dodanie pacjenta?", "Potwierdzenie",
                                                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if(selection == JOptionPane.OK_OPTION)
-        {
-            boolean unique = true;
-            EntityManager entityManager = Database.getEntityManager();
-
-            //sprawdzanie loginu
-            CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-            CriteriaQuery<Person> criteriaQuery = criteriaBuilder.createQuery(Person.class);
-            Root<Person> personRoot = criteriaQuery.from(Person.class);
-
-            Predicate predicateUserName = criteriaBuilder.equal(personRoot.get("username"), loginField.getText());
-
-            criteriaQuery.where(predicateUserName);
-            List<Person> result = entityManager.createQuery(criteriaQuery).getResultList();
-            if (result.size() != 0){
-                unique = false;
-                JOptionPane.showMessageDialog(this, "Login już w użyciu. Wybierz inny", "Błąd", JOptionPane.ERROR_MESSAGE);
-            }
-
-            //sprawdzanie peselu
-            Predicate predicatePesel = criteriaBuilder.equal(personRoot.get("pesel"), peselField.getText());
-            criteriaQuery.where(predicatePesel);
-            result = entityManager.createQuery(criteriaQuery).getResultList();
-            if (result.size() != 0){
-                unique = false;
-                JOptionPane.showMessageDialog(this, "Osoba o takim peselu jest już w bazie", "Błąd", JOptionPane.ERROR_MESSAGE);
-            }
-
-            if(unique){
-            var tx = entityManager.getTransaction();
-            tx.begin();
-            if(changingPatientId != -1)
-                entityManager.persist(patient);
-            else {
-                patient.setId(changingPatientId);
-                entityManager.merge(patient);
-            }
-            tx.commit();
-            dispose();
+            if(selection == JOptionPane.OK_OPTION) {
+                Patient patient = new Patient();
+                Address address = new Address();
+                patient.setName(nameField.getText());
+                patient.setSurname(surnameField.getText());
+                patient.setBirthDate(((Date)dateSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+                patient.setPesel(peselField.getText());
+                patient.setUsername(loginField.getText());
+                if(maleRadioButton.isSelected())
+                    patient.setGender('M');
+                else
+                    patient.setGender('K');
+                address.setStreet(streetField.getText());
+                address.setHouseNumber(Long.parseLong(houseField.getText()));
+                if(flatField.getText().length() == 0)
+                    address.setFlatNumber(null);
+                else
+                    address.setFlatNumber(Long.getLong(flatField.getText()));
+                address.setCity(cityField.getText());
+                address.setPostalCode(postalCodeField.getText());
+                address.setCountry(countryField.getText());
+                patient.setAddress(address);
+                patient.setMailAddress(emailField.getText());
+                var tx = entityManager.getTransaction();
+                tx.begin();
+                if(changingPatientId != -1) {
+                    String hashedPassword = org.apache.commons.codec.digest.DigestUtils.sha256Hex(String.valueOf(passwordField.getPassword()));
+                    patient.setPassword(hashedPassword);
+                    entityManager.persist(patient);
+                }
+                else {
+                    patient.setPassword(changingPatient.getPassword());
+                    patient.setId(changingPatientId);
+                    entityManager.merge(patient);
+                }
+                tx.commit();
+                dispose();
             }
         }
     }//GEN-LAST:event_addButtonActionPerformed

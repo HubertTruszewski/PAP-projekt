@@ -64,6 +64,7 @@ public class CreateNewAppointment extends javax.swing.JDialog {
         dateTimePicker = new com.github.lgooddatepicker.components.DateTimePicker();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Nowa wizyta");
 
         jLabel4.setText("Pacjent");
 

@@ -47,6 +47,7 @@ public class PatientListDialog extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Lista pacjentów");
 
+        patientList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(patientList);
 
         newButton.setText("Nowy");

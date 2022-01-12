@@ -54,7 +54,9 @@ public class DoctorListDialog extends javax.swing.JDialog {
         showDataButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Lista lekarzy");
 
+        DoctorList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(DoctorList);
 
         editButton.setText("Edytuj");
@@ -165,9 +167,13 @@ public class DoctorListDialog extends javax.swing.JDialog {
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
             if(selection == JOptionPane.OK_OPTION)
             {
-                if(removingDoctor.getPrescriptions().size() != 0 || removingDoctor.getAppointments().size() != 0)
-                {
+                if(removingDoctor.getAppointments().size() != 0) {
                     JOptionPane.showMessageDialog(this, "Nie można usunąć lekarza, który ma umówione wizyty.",
+                        "Błąd", JOptionPane.ERROR_MESSAGE);
+                }
+                else if(removingDoctor.getPrescriptions().size() != 0 || removingDoctor.getAppointments().size() != 0)
+                {
+                    JOptionPane.showMessageDialog(this, "Nie można usunąć lekarza, który wystawił recepty.",
                         "Błąd", JOptionPane.ERROR_MESSAGE);
                 } else {
                     var tx = entityManager.getTransaction();

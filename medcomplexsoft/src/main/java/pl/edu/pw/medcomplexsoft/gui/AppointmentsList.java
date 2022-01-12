@@ -62,6 +62,7 @@ public class AppointmentsList extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Lista wizyt");
 
+        appointmentList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(appointmentList);
 
         newAppointmentButton.setText("Nowa");
