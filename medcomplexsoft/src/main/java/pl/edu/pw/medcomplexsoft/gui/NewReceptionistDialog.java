@@ -350,7 +350,7 @@ public class NewReceptionistDialog extends javax.swing.JDialog {
 
         criteriaQuery.where(predicateUserName);
         List<Person> result = entityManager.createQuery(criteriaQuery).getResultList();
-        if (result.size() != 0){
+        if (changingReceptionistId == -1 && result.size() != 0){
             correct = false;
             JOptionPane.showMessageDialog(this, "Login już w użyciu. Wybierz inny", "Błąd", JOptionPane.ERROR_MESSAGE);
         }
@@ -359,7 +359,7 @@ public class NewReceptionistDialog extends javax.swing.JDialog {
         Predicate predicatePesel = criteriaBuilder.equal(personRoot.get("pesel"), peselField.getText());
         criteriaQuery.where(predicatePesel);
         result = entityManager.createQuery(criteriaQuery).getResultList();
-        if (result.size() != 0){
+        if (changingReceptionistId == -1 && result.size() != 0){
             correct = false;
             JOptionPane.showMessageDialog(this, "Osoba o takim peselu jest już w bazie", "Błąd", JOptionPane.ERROR_MESSAGE);
         }
@@ -459,7 +459,7 @@ public class NewReceptionistDialog extends javax.swing.JDialog {
 
                 var tx = entityManager.getTransaction();
                 tx.begin();
-                if(changingReceptionistId != -1){
+                if(changingReceptionistId == -1){
                     String hashedPassword = org.apache.commons.codec.digest.DigestUtils.sha256Hex(String.valueOf(passwordField.getPassword()));
                     receptionist.setPassword(hashedPassword);
                     entityManager.persist(receptionist);
@@ -467,6 +467,7 @@ public class NewReceptionistDialog extends javax.swing.JDialog {
                 else {
                     receptionist.setId(changingReceptionistId);
                     receptionist.setPassword(changingReceptionist.getPassword());
+                    receptionist.getAddress().setId((changingReceptionist.getAddress().getId()));
                     entityManager.merge(receptionist);
                 }
                 tx.commit();

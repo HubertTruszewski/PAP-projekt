@@ -290,7 +290,7 @@ public class NewPatient extends javax.swing.JDialog {
     }
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        boolean correct = false;
+        boolean correct = true;
         EntityManager entityManager = Database.getEntityManager();
 
         //sprawdzanie loginu
@@ -302,7 +302,7 @@ public class NewPatient extends javax.swing.JDialog {
 
         criteriaQuery.where(predicateUserName);
         List<Person> result = entityManager.createQuery(criteriaQuery).getResultList();
-        if (result.size() != 0){
+        if (changingPatientId == -1 && result.size() != 0){
             correct = false;
             JOptionPane.showMessageDialog(this, "Login już w użyciu. Wybierz inny", "Błąd", JOptionPane.ERROR_MESSAGE);
         }
@@ -311,7 +311,7 @@ public class NewPatient extends javax.swing.JDialog {
         Predicate predicatePesel = criteriaBuilder.equal(personRoot.get("pesel"), peselField.getText());
         criteriaQuery.where(predicatePesel);
         result = entityManager.createQuery(criteriaQuery).getResultList();
-        if (result.size() != 0){
+        if (changingPatientId == -1 && result.size() != 0){
             correct = false;
             JOptionPane.showMessageDialog(this, "Osoba o takim peselu jest już w bazie", "Błąd", JOptionPane.ERROR_MESSAGE);
         }
@@ -392,7 +392,7 @@ public class NewPatient extends javax.swing.JDialog {
                 if(flatField.getText().length() == 0)
                     address.setFlatNumber(null);
                 else
-                    address.setFlatNumber(Long.getLong(flatField.getText()));
+                    address.setFlatNumber(Long.parseLong(flatField.getText()));
                 address.setCity(cityField.getText());
                 address.setPostalCode(postalCodeField.getText());
                 address.setCountry(countryField.getText());
@@ -400,7 +400,7 @@ public class NewPatient extends javax.swing.JDialog {
                 patient.setMailAddress(emailField.getText());
                 var tx = entityManager.getTransaction();
                 tx.begin();
-                if(changingPatientId != -1) {
+                if(changingPatientId == -1) {
                     String hashedPassword = org.apache.commons.codec.digest.DigestUtils.sha256Hex(String.valueOf(passwordField.getPassword()));
                     patient.setPassword(hashedPassword);
                     entityManager.persist(patient);
@@ -408,6 +408,9 @@ public class NewPatient extends javax.swing.JDialog {
                 else {
                     patient.setPassword(changingPatient.getPassword());
                     patient.setId(changingPatientId);
+                    patient.getAddress().setId(changingPatient.getAddress().getId());
+                    patient.setPrescriptions(changingPatient.getPrescriptions());
+                    patient.setAppointments(changingPatient.getAppointments());
                     entityManager.merge(patient);
                 }
                 tx.commit();

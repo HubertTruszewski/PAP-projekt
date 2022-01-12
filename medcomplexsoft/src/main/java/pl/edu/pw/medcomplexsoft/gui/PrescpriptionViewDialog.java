@@ -34,8 +34,13 @@ public class PrescpriptionViewDialog extends javax.swing.JDialog {
     public PrescpriptionViewDialog(java.awt.Frame parent, boolean modal, Prescription prescription, Person user) {
         super(parent, modal);
         this.prescription = prescription;
+        loggedUser = user;
         initComponents();
         if(loggedUser != null && !(loggedUser instanceof Patient))
+        {
+            realisedButton.setVisible(false);
+        }
+        if(prescription.getStatus() != Status.ACTIVE)
         {
             realisedButton.setVisible(false);
         }
@@ -59,6 +64,10 @@ public class PrescpriptionViewDialog extends javax.swing.JDialog {
         jLabel4 = new javax.swing.JLabel();
         prescribingDoctorLabel = new javax.swing.JLabel();
         realisedButton = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        issueDateLabel = new javax.swing.JLabel();
+        expiryDateLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Podgląd recepty");
@@ -87,6 +96,14 @@ public class PrescpriptionViewDialog extends javax.swing.JDialog {
             }
         });
 
+        jLabel5.setText("Data wystawienia");
+
+        jLabel6.setText("Data ważności:");
+
+        issueDateLabel.setText("jLabel7");
+
+        expiryDateLabel.setText("jLabel8");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -99,12 +116,18 @@ public class PrescpriptionViewDialog extends javax.swing.JDialog {
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel3))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel4)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel6))
                         .addGap(31, 31, 31)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(patientNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(prescribingDoctorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(statusLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(patientNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(prescribingDoctorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(statusLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(issueDateLabel)
+                    .addComponent(expiryDateLabel))
                 .addGap(20, 20, 20))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -133,10 +156,18 @@ public class PrescpriptionViewDialog extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(prescribingDoctorLabel)
                     .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(issueDateLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(expiryDateLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addComponent(realisedButton)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -149,6 +180,7 @@ public class PrescpriptionViewDialog extends javax.swing.JDialog {
         if(selection == JOptionPane.OK_OPTION) {
             prescription.setStatus(Status.REALISED);
             statusLabel.setText("Zrealizowana");
+            realisedButton.setVisible(false);
             EntityManager entityManager = Database.getEntityManager();
             var tx = entityManager.getTransaction();
             tx.begin();
@@ -180,6 +212,8 @@ public class PrescpriptionViewDialog extends javax.swing.JDialog {
                 break;
         }
         statusLabel.setText(receiptStatus);
+        expiryDateLabel.setText(prescription.getExpirationDate().toString());
+        issueDateLabel.setText(prescription.getIssueDate().toString());
         setVisible(true);
     }
 
@@ -226,10 +260,14 @@ public class PrescpriptionViewDialog extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel expiryDateLabel;
+    private javax.swing.JLabel issueDateLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel patientNameLabel;

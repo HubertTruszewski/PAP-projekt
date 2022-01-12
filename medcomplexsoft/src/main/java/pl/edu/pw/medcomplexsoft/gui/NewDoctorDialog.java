@@ -362,7 +362,7 @@ public class NewDoctorDialog extends javax.swing.JDialog {
 
         criteriaQuery.where(predicateUserName);
         List<Person> result = entityManager.createQuery(criteriaQuery).getResultList();
-        if (result.size() != 0){
+        if (changingDoctorId == -1 && result.size() != 0){
             correct = false;
             JOptionPane.showMessageDialog(this, "Login już w użyciu. Wybierz inny", "Błąd", JOptionPane.ERROR_MESSAGE);
         }
@@ -371,7 +371,7 @@ public class NewDoctorDialog extends javax.swing.JDialog {
         Predicate predicatePesel = criteriaBuilder.equal(personRoot.get("pesel"), peselField.getText());
         criteriaQuery.where(predicatePesel);
         result = entityManager.createQuery(criteriaQuery).getResultList();
-        if (result.size() != 0){
+        if (changingDoctorId == -1 && result.size() != 0){
             correct = false;
             JOptionPane.showMessageDialog(this, "Osoba o takim peselu jest już w bazie", "Błąd", JOptionPane.ERROR_MESSAGE);
         }
@@ -465,7 +465,7 @@ public class NewDoctorDialog extends javax.swing.JDialog {
                 if(flatField.getText().length() == 0)
                     address.setFlatNumber(null);
                 else
-                    address.setFlatNumber(Long.getLong(flatField.getText()));
+                    address.setFlatNumber(Long.parseLong(flatField.getText()));
                 address.setCity(cityField.getText());
                 address.setPostalCode(postalCodeField.getText());
                 address.setCountry(countryField.getText());
@@ -475,7 +475,7 @@ public class NewDoctorDialog extends javax.swing.JDialog {
                 doctor.setSalary(Double.parseDouble(salaryField.getText()));
                 var tx = entityManager.getTransaction();
                 tx.begin();
-                if(changingDoctorId != -1){
+                if(changingDoctorId == -1){
                     String hashedPassword = org.apache.commons.codec.digest.DigestUtils.sha256Hex(String.valueOf(passwordField.getPassword()));
                     doctor.setPassword(hashedPassword);
                     entityManager.persist(doctor);
@@ -483,6 +483,9 @@ public class NewDoctorDialog extends javax.swing.JDialog {
                 else {
                     doctor.setPassword(changingDoctor.getPassword());
                     doctor.setId(changingDoctorId);
+                    doctor.getAddress().setId(changingDoctor.getAddress().getId());
+                    doctor.setAppointments(changingDoctor.getAppointments());
+                    doctor.setPrescriptions(changingDoctor.getPrescriptions());
                     entityManager.merge(doctor);
                 }
                 tx.commit();

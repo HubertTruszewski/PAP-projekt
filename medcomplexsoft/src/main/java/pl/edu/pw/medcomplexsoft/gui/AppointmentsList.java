@@ -38,6 +38,10 @@ public class AppointmentsList extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         user = person;
+        if(user instanceof Patient){
+            newAppointmentButton.setVisible(false);
+            cancelAppointmentButton.setVisible(false);
+        }
     }
 
     /**

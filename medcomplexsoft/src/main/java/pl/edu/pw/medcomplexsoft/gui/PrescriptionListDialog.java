@@ -37,7 +37,11 @@ public class PrescriptionListDialog extends javax.swing.JDialog {
         initComponents();
         this.user = user;
         if(!(user instanceof Doctor))
+            newReceiptButton.setVisible(false);
             cancelReceiptButton.setVisible(false);
+        if(user instanceof Patient){
+            newReceiptButton.setVisible(false);
+        }
     }
 
     /**
@@ -173,6 +177,7 @@ public class PrescriptionListDialog extends javax.swing.JDialog {
                 tx.begin();
                 entityManager.merge(selectedPrescription);
                 tx.commit();
+                loadData();
             }
         }
     }//GEN-LAST:event_cancelReceiptButtonActionPerformed
@@ -228,11 +233,11 @@ public class PrescriptionListDialog extends javax.swing.JDialog {
         Predicate secondPredicate;
         Predicate finalPredicate;
         if(user != null && user instanceof Doctor) {
-            secondPredicate = criteriaBuilder.equal(prescriptionRoot.get("doctor").get("id"), user.getId());
+            secondPredicate = criteriaBuilder.equal(prescriptionRoot.get("prescribingDoctor").get("id"), user.getId());
             finalPredicate = criteriaBuilder.and(secondPredicate, statusPredicate);
         }
         else if(user != null && user instanceof Patient) {
-            secondPredicate =  criteriaBuilder.equal(prescriptionRoot.get("patient").get("id"), user.getId());
+            secondPredicate =  criteriaBuilder.equal(prescriptionRoot.get("receivingPatient").get("id"), user.getId());
             finalPredicate = criteriaBuilder.and(secondPredicate, statusPredicate);
         } else
             finalPredicate = statusPredicate;
