@@ -4,10 +4,18 @@
  */
 package pl.edu.pw.medcomplexsoft.gui;
 
+import java.time.LocalDate;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
-import pl.edu.pw.medcomplexsoft.model.Patient;
+import pl.edu.pw.medcomplexsoft.model.*;
+import pl.edu.pw.medcomplexsoft.database.*;
 
 /**
  *
@@ -22,6 +30,7 @@ public class PatientPanel extends javax.swing.JFrame {
     public PatientPanel(Patient patient) {
         initComponents();
         loggedPatient = patient;
+        loadData();
     }
 
     /**
@@ -32,6 +41,15 @@ public class PatientPanel extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        welcomeLabel = new javax.swing.JLabel();
+        todayDateLabel = new javax.swing.JLabel();
+        namesDayLabel = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        appointmentsTable = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        prescriptionsTable = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         changePasswordItem = new javax.swing.JMenuItem();
@@ -48,7 +66,77 @@ public class PatientPanel extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Panel pacjenta");
+        setPreferredSize(new java.awt.Dimension(1200, 900));
+        setResizable(false);
         setSize(new java.awt.Dimension(1200, 900));
+
+        welcomeLabel.setFont(new java.awt.Font("Ubuntu", 0, 36)); // NOI18N
+        welcomeLabel.setText("Witaj, <name>!");
+
+        todayDateLabel.setFont(new java.awt.Font("Ubuntu", 0, 36)); // NOI18N
+        todayDateLabel.setText("2022-01-13");
+
+        namesDayLabel.setFont(new java.awt.Font("Ubuntu", 2, 28)); // NOI18N
+        namesDayLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        namesDayLabel.setText("Imieniny:");
+
+        jLabel1.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
+        jLabel1.setText("Najbliższe wizyty:");
+
+        appointmentsTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Data i godzina", "Pacjent", "Lekarz", "Sala"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        appointmentsTable.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(appointmentsTable);
+
+        jLabel2.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
+        jLabel2.setText("Aktualne recepty:");
+
+        prescriptionsTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Data wystawienia", "Data wygaśnięcia", "Wystawiona przez"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        prescriptionsTable.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(prescriptionsTable);
 
         jMenu1.setText("Plik");
 
@@ -132,11 +220,49 @@ public class PatientPanel extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1200, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 525, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(1061, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(welcomeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(todayDateLabel)
+                        .addContainerGap())))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 525, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(namesDayLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 1574, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 865, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(welcomeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(todayDateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(namesDayLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(58, 58, 58)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 338, Short.MAX_VALUE))
         );
 
         pack();
@@ -187,6 +313,39 @@ public class PatientPanel extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_logoutMenuItemActionPerformed
 
+    private void loadData() {
+        welcomeLabel.setText("Witaj, " + loggedPatient.getFullName() + "!");
+        LocalDate todayDate = LocalDate.now();
+        todayDateLabel.setText(todayDate.toString());
+        EntityManager entityManager = Database.getEntityManager();
+        String sqlQuery = "SELECT a FROM Appointment a WHERE status='ACTIVE' AND patient_id=?1 ORDER BY appointmentdate ASC";
+        TypedQuery<Appointment> query = entityManager.createQuery(sqlQuery, Appointment.class).setMaxResults(5);
+        query.setParameter(1, loggedPatient.getId());
+        List<Appointment> results = query.getResultList();
+        DefaultTableModel model = (DefaultTableModel)appointmentsTable.getModel();
+        results.forEach(a -> {
+            String data[] = {a.getAppointmentDate().toString(), a.getPatient().getFullName(),
+                             a.getDoctor().getFullName(), a.getOffice()};
+            model.addRow(data);
+        });
+        sqlQuery = "SELECT p FROM Prescription p WHERE status='ACTIVE' AND receivingpatient_id=?1 ORDER BY issuedate ASC";
+        TypedQuery<Prescription> prescriptionQuery = entityManager.createQuery(sqlQuery, Prescription.class).setMaxResults(5);
+        prescriptionQuery.setParameter(1, loggedPatient.getId());
+        query.setParameter(1, loggedPatient.getId());
+        List<Prescription> prescriptionResults = prescriptionQuery.getResultList();
+        DefaultTableModel prescpriptionModel = (DefaultTableModel)prescriptionsTable.getModel();
+        prescriptionResults.forEach(p -> {
+            String data[] = {p.getIssueDate().toString(), p.getExpirationDate().toString(),
+                             p.getPrescribingDoctor().getFullName()};
+            prescpriptionModel.addRow(data);
+        });
+        Query namesQuery = entityManager.createNativeQuery("SELECT names FROM namesdays WHERE day=?1 AND month=?2");
+        namesQuery.setParameter(1, todayDate.getDayOfMonth());
+        namesQuery.setParameter(2, todayDate.getMonthValue());
+        String result = (String)namesQuery.getSingleResult();
+        namesDayLabel.setText("Imieniny: "+result);
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -225,16 +384,25 @@ public class PatientPanel extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem appointmentListMenu;
     private javax.swing.JMenu appointmentMenu;
+    private javax.swing.JTable appointmentsTable;
     private javax.swing.JMenuItem changePasswordItem;
     private javax.swing.JMenuItem doctorsItem;
     private javax.swing.JMenu doctorsMenu;
     private javax.swing.JMenuItem exitItem;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JMenuItem logoutMenuItem;
+    private javax.swing.JLabel namesDayLabel;
     private javax.swing.JMenuItem prescpriptionListMenu;
     private javax.swing.JMenu prescriptionMenu;
+    private javax.swing.JTable prescriptionsTable;
     private javax.swing.JMenu serviceMenu;
     private javax.swing.JMenuItem servicesItem;
+    private javax.swing.JLabel todayDateLabel;
+    private javax.swing.JLabel welcomeLabel;
     // End of variables declaration//GEN-END:variables
 }
