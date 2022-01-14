@@ -121,9 +121,9 @@ public class ReceptionistListDialog extends javax.swing.JDialog {
 
 
     private void newButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
-        NewDoctorDialog newDoctor = new NewDoctorDialog(null, true);
-        newDoctor.setLocationRelativeTo(this.rootPane);
-        newDoctor.showDialog();
+        NewReceptionistDialog newReceptionist = new NewReceptionistDialog(null, true);
+        newReceptionist.setLocationRelativeTo(this.rootPane);
+        newReceptionist.showDialog();
         loadData();
     }//GEN-LAST:event_newButtonActionPerformed
 
