@@ -132,21 +132,21 @@ public class LoginWindow extends javax.swing.JFrame {
             Person user = result.get(0);
             if(user instanceof Doctor)
             {
+                dispose();
                 DoctorPanel panel = new DoctorPanel((Doctor)user);
                 panel.setVisible(true);
-                this.setVisible(false);
             }
             else if(user instanceof Receptionist)
             {
+                dispose();
                 ReceptionistPanel panel = new ReceptionistPanel((Receptionist)user);
                 panel.setVisible(true);
-                this.setVisible(false);
             }
             else if(user instanceof Patient)
             {
+                dispose();
                 PatientPanel panel = new PatientPanel((Patient)user);
                 panel.setVisible(true);
-                this.setVisible(false);
             }
         }
     }//GEN-LAST:event_loginButtonActionPerformed

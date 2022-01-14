@@ -4,6 +4,9 @@
  */
 package pl.edu.pw.medcomplexsoft.gui;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 import pl.edu.pw.medcomplexsoft.model.Patient;
 
 /**
@@ -32,6 +35,7 @@ public class PatientPanel extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         changePasswordItem = new javax.swing.JMenuItem();
+        logoutMenuItem = new javax.swing.JMenuItem();
         exitItem = new javax.swing.JMenuItem();
         prescriptionMenu = new javax.swing.JMenu();
         prescpriptionListMenu = new javax.swing.JMenuItem();
@@ -55,6 +59,14 @@ public class PatientPanel extends javax.swing.JFrame {
             }
         });
         jMenu1.add(changePasswordItem);
+
+        logoutMenuItem.setText("Wyloguj");
+        logoutMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoutMenuItemActionPerformed(evt);
+            }
+        });
+        jMenu1.add(logoutMenuItem);
 
         exitItem.setText("Wyjście");
         exitItem.addActionListener(new java.awt.event.ActionListener() {
@@ -165,6 +177,16 @@ public class PatientPanel extends javax.swing.JFrame {
         changePasswordDialog.showDialog();
     }//GEN-LAST:event_changePasswordItemActionPerformed
 
+    private void logoutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutMenuItemActionPerformed
+        int selection = JOptionPane.showConfirmDialog(this, "Czy na pewno chcesz się wylogować?", "Wylogowywanie",
+                                                      JOptionPane.OK_CANCEL_OPTION);
+        if(selection == JOptionPane.OK_OPTION) {
+            dispose();
+            JFrame loginWindow = new LoginWindow();
+            loginWindow.setVisible(true);
+        }
+    }//GEN-LAST:event_logoutMenuItemActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -209,6 +231,7 @@ public class PatientPanel extends javax.swing.JFrame {
     private javax.swing.JMenuItem exitItem;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem logoutMenuItem;
     private javax.swing.JMenuItem prescpriptionListMenu;
     private javax.swing.JMenu prescriptionMenu;
     private javax.swing.JMenu serviceMenu;

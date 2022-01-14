@@ -4,6 +4,9 @@
  */
 package pl.edu.pw.medcomplexsoft.gui;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 import pl.edu.pw.medcomplexsoft.model.Doctor;
 
 
@@ -32,6 +35,7 @@ public class DoctorPanel extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         changePasswordMenu = new javax.swing.JMenuItem();
+        logoutMenuItem = new javax.swing.JMenuItem();
         exitItem = new javax.swing.JMenuItem();
         patientMenu = new javax.swing.JMenu();
         newPatientItem = new javax.swing.JMenuItem();
@@ -59,6 +63,14 @@ public class DoctorPanel extends javax.swing.JFrame {
             }
         });
         fileMenu.add(changePasswordMenu);
+
+        logoutMenuItem.setText("Wyloguj");
+        logoutMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoutMenuItemActionPerformed(evt);
+            }
+        });
+        fileMenu.add(logoutMenuItem);
 
         exitItem.setText("Wyjście");
         exitItem.addActionListener(new java.awt.event.ActionListener() {
@@ -226,6 +238,16 @@ public class DoctorPanel extends javax.swing.JFrame {
         changePasswordDialog.showDialog();
     }//GEN-LAST:event_changePasswordMenuActionPerformed
 
+    private void logoutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutMenuItemActionPerformed
+        int selection = JOptionPane.showConfirmDialog(this, "Czy na pewno chcesz się wylogować?", "Wylogowywanie",
+                                                      JOptionPane.OK_CANCEL_OPTION);
+        if(selection == JOptionPane.OK_OPTION) {
+            dispose();
+            JFrame loginWindow = new LoginWindow();
+            loginWindow.setVisible(true);
+        }
+    }//GEN-LAST:event_logoutMenuItemActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -268,6 +290,7 @@ public class DoctorPanel extends javax.swing.JFrame {
     private javax.swing.JMenuItem exitItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem logoutMenuItem;
     private javax.swing.JMenuItem medicineListItem;
     private javax.swing.JMenu medicineMenu;
     private javax.swing.JMenuItem newAppointmentItem;
