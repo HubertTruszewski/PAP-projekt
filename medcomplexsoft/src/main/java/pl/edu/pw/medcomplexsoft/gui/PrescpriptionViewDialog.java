@@ -98,7 +98,7 @@ public class PrescpriptionViewDialog extends javax.swing.JDialog {
 
         jLabel5.setText("Data wystawienia");
 
-        jLabel6.setText("Data ważności:");
+        jLabel6.setText("Data ważności");
 
         issueDateLabel.setText("jLabel7");
 

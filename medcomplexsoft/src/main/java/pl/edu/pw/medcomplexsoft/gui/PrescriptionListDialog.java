@@ -36,11 +36,9 @@ public class PrescriptionListDialog extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.user = user;
-        if(!(user instanceof Doctor))
+        if(!(user instanceof Doctor)) {
             newReceiptButton.setVisible(false);
             cancelReceiptButton.setVisible(false);
-        if(user instanceof Patient){
-            newReceiptButton.setVisible(false);
         }
     }
 

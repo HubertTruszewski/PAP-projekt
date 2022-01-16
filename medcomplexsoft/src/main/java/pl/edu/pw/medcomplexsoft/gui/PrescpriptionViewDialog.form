@@ -176,7 +176,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel6">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Data wa&#x17c;no&#x15b;ci:"/>
+        <Property name="text" type="java.lang.String" value="Data wa&#x17c;no&#x15b;ci"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="issueDateLabel">

@@ -123,6 +123,7 @@ public class DoctorPanel extends javax.swing.JFrame {
         });
         fileMenu.add(changePasswordMenu);
 
+        logoutMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         logoutMenuItem.setText("Wyloguj");
         logoutMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -131,6 +132,7 @@ public class DoctorPanel extends javax.swing.JFrame {
         });
         fileMenu.add(logoutMenuItem);
 
+        exitItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         exitItem.setText("Wyjście");
         exitItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -268,7 +270,9 @@ public class DoctorPanel extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void exitItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitItemActionPerformed
-        System.exit(0);
+        int selection = JOptionPane.showConfirmDialog(this, "Czy chcesz wyjść z programu?", "Wyjście", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if(selection == JOptionPane.OK_OPTION)
+            System.exit(0);
     }//GEN-LAST:event_exitItemActionPerformed
 
     private void newPrescriptionItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newPrescriptionItemActionPerformed

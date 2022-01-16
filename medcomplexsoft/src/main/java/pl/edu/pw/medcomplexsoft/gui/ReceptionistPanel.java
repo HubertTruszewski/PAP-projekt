@@ -49,8 +49,8 @@ public class ReceptionistPanel extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         appointmentsTable = new javax.swing.JTable();
-        namesDayLabel = new javax.swing.JLabel();
         weekDayLabel = new javax.swing.JLabel();
+        namesDayLabel = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         changePasswordItem = new javax.swing.JMenuItem();
@@ -123,13 +123,13 @@ public class ReceptionistPanel extends javax.swing.JFrame {
             appointmentsTable.getColumnModel().getColumn(3).setMaxWidth(50);
         }
 
-        namesDayLabel.setFont(new java.awt.Font("Ubuntu", 2, 28)); // NOI18N
-        namesDayLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        namesDayLabel.setText("Imieniny:");
-
         weekDayLabel.setFont(new java.awt.Font("Ubuntu", 2, 28)); // NOI18N
         weekDayLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         weekDayLabel.setText("Imieniny:");
+
+        namesDayLabel.setFont(new java.awt.Font("Ubuntu", 2, 28)); // NOI18N
+        namesDayLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        namesDayLabel.setText("Imieniny:");
 
         fileMenu.setText("Plik");
 
@@ -141,6 +141,7 @@ public class ReceptionistPanel extends javax.swing.JFrame {
         });
         fileMenu.add(changePasswordItem);
 
+        logoutMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         logoutMenuItem.setText("Wyloguj");
         logoutMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -149,6 +150,7 @@ public class ReceptionistPanel extends javax.swing.JFrame {
         });
         fileMenu.add(logoutMenuItem);
 
+        exitItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         exitItem.setText("Wyjście");
         exitItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -300,21 +302,19 @@ public class ReceptionistPanel extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(namesDayLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(weekDayLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(welcomeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
                         .addComponent(todayDateLabel))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(336, 336, 336))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 525, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(12, 12, 12)
-                        .addComponent(weekDayLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(namesDayLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -325,9 +325,9 @@ public class ReceptionistPanel extends javax.swing.JFrame {
                     .addComponent(welcomeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(todayDateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(namesDayLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addComponent(weekDayLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(namesDayLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
@@ -346,7 +346,9 @@ public class ReceptionistPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_patientListItemActionPerformed
 
     private void exitItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitItemActionPerformed
-        System.exit(0);
+        int selection = JOptionPane.showConfirmDialog(this, "Czy chcesz wyjść z programu?", "Wyjście", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if(selection == JOptionPane.OK_OPTION)
+            System.exit(0);
     }//GEN-LAST:event_exitItemActionPerformed
 
     private void newPatientItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newPatientItemActionPerformed
@@ -356,7 +358,7 @@ public class ReceptionistPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_newPatientItemActionPerformed
 
     private void prescriptionListItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prescriptionListItemActionPerformed
-        PrescriptionListDialog receiptListDialog = new PrescriptionListDialog(null, true, null);
+        PrescriptionListDialog receiptListDialog = new PrescriptionListDialog(null, true, loggedReceptionist);
         receiptListDialog.setLocationRelativeTo(this.rootPane);
         receiptListDialog.showDialog();
     }//GEN-LAST:event_prescriptionListItemActionPerformed
